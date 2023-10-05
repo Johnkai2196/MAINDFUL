@@ -16,26 +16,25 @@ class HomePage extends StatelessWidget {
                 style: TextStyle(
                   color: Colors.white, // Color for the "M" letter
                   fontWeight: FontWeight.bold, // Make it bold
-                  fontSize: 30.0,
-                  fontFamily: "ConcertOne",
-                  // Increase font size
+                  fontSize: 30.0, // Increase font size
+                  fontFamily: "ConcertOne", // Font family
                 ),
               ),
               TextSpan(
                 text: "AI",
                 style: TextStyle(
-                  color: Colors.red,
-                  fontWeight: FontWeight.bold,
+                  color: Colors.red, // Color for the "AI" letters
+                  fontWeight: FontWeight.bold, // Make it bold
                   fontSize: 30.0, // Color for the "AI" letters
-                  fontFamily: "ConcertOne",
+                  fontFamily: "ConcertOne", // Font family
                 ),
               ),
               TextSpan(
                 text: "NFULL",
                 style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30.0,
+                  color: Colors.white, // Color for the "NFULL" letters
+                  fontWeight: FontWeight.bold, // Make it bold
+                  fontSize: 30.0, // Color for the "NFULL" letters
                   fontFamily: "ConcertOne", // Font family
                 ),
               ),
@@ -44,6 +43,7 @@ class HomePage extends StatelessWidget {
         ),
         backgroundColor: Colors.black,
       ),
+      body: const Placeholder(),
     );
   }
 }
