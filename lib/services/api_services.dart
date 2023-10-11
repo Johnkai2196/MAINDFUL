@@ -1,7 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'dart:convert';
-import 'dart:developer';
+
 import 'dart:io';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
