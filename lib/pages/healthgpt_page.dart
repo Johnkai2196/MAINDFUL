@@ -117,6 +117,7 @@ class _HealthGptState extends State<HealthGpt> {
       setState(
         () {
           _isTyping = true;
+          chatList.add(ChatModel(msg: textController.text, sender: true));
         },
       );
       chatList = await ApiService.sendMessage(message: textController.text);
