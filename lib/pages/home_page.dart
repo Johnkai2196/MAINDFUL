@@ -10,7 +10,9 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black, // Set the background color to black
-      appBar: const CustomAppBar(), // Use the custom AppBar
+      appBar: const CustomAppBar(
+        withIcon: false,
+      ), // Use the custom AppBar
       body: Column(
         children: [
           Container(

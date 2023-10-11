@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+  final bool withIcon;
   const CustomAppBar({
     super.key,
+    required this.withIcon,
   });
 
   @override
@@ -43,6 +45,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       backgroundColor: Colors.transparent,
+      actions: withIcon
+          ? [
+              IconButton(
+                icon: const Icon(Icons.delete),
+                onPressed: () {
+                  // TODO functionality for when the icon is pressed
+                },
+              ),
+            ]
+          : [],
     );
   }
 

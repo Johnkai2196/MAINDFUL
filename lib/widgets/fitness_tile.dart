@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:innovation_project/constants/constants.dart';
 
 class FitnessTile extends StatelessWidget {
   const FitnessTile({super.key});
@@ -23,7 +24,7 @@ class FitnessTile extends StatelessWidget {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
-                child: const Align(
+                child: Align(
                   alignment: Alignment.center,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
@@ -31,14 +32,14 @@ class FitnessTile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Padding(
-                        padding: EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                           horizontal: 12,
                           vertical: 10,
                         ),
                         child: Text(
                           "Sleep",
                           style: TextStyle(
-                            color: Color.fromRGBO(223, 183, 255, 1),
+                            color: textPurple,
                             fontSize: 32,
                           ),
                         ),
@@ -46,7 +47,7 @@ class FitnessTile extends StatelessWidget {
                       Text(
                         "8h",
                         style: TextStyle(
-                          color: Colors.white,
+                          color: textWhite,
                           fontSize: 32,
                         ),
                       ),
