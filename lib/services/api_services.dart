@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -23,7 +24,11 @@ class ApiService {
           {
             "model": GPT3,
             "messages": [
-              {"role": "user", "content": message}
+              {
+                "role": "user",
+                "content":
+                    "I need you to only answer health questions related to sleep, daily steps, oxygen saturation and heart rate. If im trying to ask anything non-related to topics mentioned before. You'll answer Your question is not health related. I cannot help you on that topic.  You cannot answer questions from any other topics.$message"
+              }
             ],
           },
         ),
@@ -37,8 +42,6 @@ class ApiService {
       List<ChatModel> chatList = [];
 
       if (jsonResponse["choices"].length > 0) {
-        //log("jsonResponse[choices]text: ${jsonResponse["choices"][0]["message"]["content"]}");
-
         chatList = List.generate(
           jsonResponse["choices"].length,
           (index) => ChatModel(

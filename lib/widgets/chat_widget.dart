@@ -1,3 +1,4 @@
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:innovation_project/constants/constants.dart';
 
@@ -46,13 +47,27 @@ class ChatWidget extends StatelessWidget {
           Radius.circular(12),
         ),
       ),
-      child: Text(
-        message,
-        style: TextStyle(
-          color: isSender ? darkerPurple : textWhite,
-          fontSize: 14,
-        ),
-      ),
+      child: isSender
+          ? Text(
+              message,
+              style: TextStyle(
+                color: darkerPurple,
+                fontSize: 14,
+              ),
+            )
+          : DefaultTextStyle(
+              style: TextStyle(color: textWhite, fontSize: 14),
+              child: AnimatedTextKit(
+                  isRepeatingAnimation: false,
+                  repeatForever: false,
+                  displayFullTextOnTap: true,
+                  totalRepeatCount: 1,
+                  animatedTexts: [
+                    TypewriterAnimatedText(
+                      message.trim(),
+                    ),
+                  ]),
+            ),
     );
   }
 }
