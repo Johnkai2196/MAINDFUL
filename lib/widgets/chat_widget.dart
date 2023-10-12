@@ -5,7 +5,12 @@ import 'package:innovation_project/constants/constants.dart';
 class ChatWidget extends StatelessWidget {
   final bool isSender;
   final String message;
-  const ChatWidget({super.key, required this.isSender, required this.message});
+  final bool shouldAnimate;
+  const ChatWidget(
+      {super.key,
+      required this.isSender,
+      required this.message,
+      this.shouldAnimate = false});
 
   @override
   Widget build(BuildContext context) {
@@ -55,19 +60,28 @@ class ChatWidget extends StatelessWidget {
                 fontSize: 14,
               ),
             )
-          : DefaultTextStyle(
-              style: TextStyle(color: textWhite, fontSize: 14),
-              child: AnimatedTextKit(
-                  isRepeatingAnimation: false,
-                  repeatForever: false,
-                  displayFullTextOnTap: true,
-                  totalRepeatCount: 1,
-                  animatedTexts: [
-                    TypewriterAnimatedText(
-                      message.trim(),
-                    ),
-                  ]),
-            ),
+          : shouldAnimate
+              ? DefaultTextStyle(
+                  style: TextStyle(color: textWhite, fontSize: 14),
+                  child: AnimatedTextKit(
+                    isRepeatingAnimation: false,
+                    repeatForever: false,
+                    displayFullTextOnTap: true,
+                    totalRepeatCount: 1,
+                    animatedTexts: [
+                      TypewriterAnimatedText(
+                        message.trim(),
+                      ),
+                    ],
+                  ),
+                )
+              : Text(
+                  message,
+                  style: TextStyle(
+                    color: textWhite,
+                    fontSize: 14,
+                  ),
+                ),
     );
   }
 }

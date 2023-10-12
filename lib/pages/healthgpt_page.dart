@@ -59,6 +59,7 @@ class _HealthGptState extends State<HealthGpt> {
                   return ChatWidget(
                     message: chatProvider.getChatList[index].msg,
                     isSender: isSender,
+                    shouldAnimate: chatProvider.getChatList.length - 1 == index,
                   );
                 },
               ),
