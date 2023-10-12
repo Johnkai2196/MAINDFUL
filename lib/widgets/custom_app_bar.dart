@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:innovation_project/providers/chat_providers.dart';
+import 'package:provider/provider.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool withIcon;
@@ -9,6 +11,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    final chatProvider = Provider.of<ChatProvider>(context);
     return AppBar(
       centerTitle: true,
       title: RichText(
@@ -51,6 +54,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 icon: const Icon(Icons.delete),
                 onPressed: () {
                   // TODO functionality for when the icon is pressed
+                  chatProvider.resetChat();
                 },
               ),
             ]

@@ -20,7 +20,6 @@ class _HealthGptState extends State<HealthGpt> {
   late FocusNode focusNode;
   late ScrollController _listScrollController;
   late TextEditingController textController;
-
   @override
   void initState() {
     _listScrollController = ScrollController();
@@ -37,7 +36,6 @@ class _HealthGptState extends State<HealthGpt> {
     super.dispose();
   }
 
-  // List<ChatModel> chatList = [];
   @override
   Widget build(BuildContext context) {
     final chatProvider = Provider.of<ChatProvider>(context);

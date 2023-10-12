@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'dart:convert';
+import 'dart:developer';
 
 import 'dart:io';
 
@@ -24,11 +25,7 @@ class ApiService {
           {
             "model": GPT3,
             "messages": [
-              {
-                "role": "user",
-                "content":
-                    "I need you to only answer health questions related to sleep, daily steps, oxygen saturation and heart rate. If im trying to ask anything non-related to topics mentioned before. You'll answer Your question is not health related. I cannot help you on that topic.  You cannot answer questions from any other topics.$message"
-              }
+              {"role": "user", "content": message}
             ],
           },
         ),
@@ -45,7 +42,10 @@ class ApiService {
         chatList = List.generate(
           jsonResponse["choices"].length,
           (index) => ChatModel(
-              msg: jsonResponse["choices"][index]["message"]["content"],
+              msg: utf8.decode(
+                  latin1.encode(
+                      jsonResponse["choices"][index]["message"]["content"]),
+                  allowMalformed: true),
               sender: false),
         );
       }
