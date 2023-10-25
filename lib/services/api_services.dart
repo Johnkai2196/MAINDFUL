@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'dart:convert';
 import 'dart:developer';
 
@@ -49,10 +47,9 @@ class ApiService {
               sender: false),
         );
       }
-
       return chatList;
     } catch (error) {
-      print("error $error");
+      log("error $error");
       rethrow;
     }
   }
