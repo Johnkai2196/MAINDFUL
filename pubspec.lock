@@ -139,10 +139,11 @@ packages:
   health:
     dependency: "direct main"
     description:
-      name: health
-      sha256: b2eea6fbae995800d2c6831359618525deb9ec148e2b638a133bf87c3ef1d5cf
-      url: "https://pub.dev"
-    source: hosted
+      path: "packages/health"
+      ref: "feature/add-vo2max-data-type"
+      resolved-ref: "2a04ec9106055abea86eda374335efb8fe2be942"
+      url: "https://github.com/Kaspear/flutter-plugins.git"
+    source: git
     version: "8.0.0"
   http:
     dependency: "direct main"
