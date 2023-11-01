@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:innovation_project/providers/chat_providers.dart';
 import 'package:provider/provider.dart';
 
+// Custom appbar to display the logo and the delete icon
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool withIcon;
+  final Function()? onIconPressed;
   const CustomAppBar({
     super.key,
+    this.onIconPressed,
     required this.withIcon,
   });
 
@@ -58,7 +61,16 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 },
               ),
             ]
-          : [],
+          : [
+              IconButton(
+                icon: const Icon(Icons.refresh),
+                onPressed: () {
+                  if (onIconPressed != null) {
+                    onIconPressed!();
+                  }
+                },
+              )
+            ],
     );
   }
 

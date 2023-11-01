@@ -1,9 +1,8 @@
 // ignore_for_file: avoid_print
 
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:innovation_project/pages/healthgpt_page.dart';
+import 'package:innovation_project/services/hearth_data_service.dart';
 import 'package:innovation_project/widgets/custom_app_bar.dart';
 import 'package:innovation_project/widgets/fitness_tile.dart';
 import 'package:health/health.dart';
@@ -16,7 +15,35 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  void updateSteps(int steps) {
+    setState(() {
+      _nofSteps = steps;
+    });
+  }
+
+  void updateV02Max(double v02Max) {
+    setState(() {
+      _v02Max = v02Max;
+    });
+  }
+
+  void updateHearthRate(int hearthRate) {
+    setState(() {
+      _hearthRate = hearthRate;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    authorize();
+    fetchData();
+  }
+
   int _nofSteps = 0;
+  double _v02Max = 0;
+  int _hearthRate = 0;
+
   static final types = [
     HealthDataType.STEPS,
     HealthDataType.VO2MAX,
@@ -41,40 +68,42 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
-  /// Fetch steps from the health plugin and show them in the app.
-  Future fetchStepData() async {
-    int? steps;
-
-    // get steps for today (i.e., since midnight)
-    final now = DateTime.now();
-    final midnight = DateTime(now.year, now.month, now.day);
-    final yesterday = now.subtract(const Duration(hours: 24));
-    bool requested = await health.requestAuthorization([HealthDataType.STEPS]);
-
+  // sleeping
+  Future fetchSleepData() async {
+    List<HealthDataPoint> sleep = [];
+    bool requested =
+        await health.requestAuthorization([HealthDataType.SLEEP_ASLEEP]);
+    final test = DateTime.now().subtract(const Duration(days: 7));
     if (requested) {
       try {
-        steps = await health.getTotalStepsInInterval(midnight, now);
+        sleep = await health.getHealthDataFromTypes(yesterday, now, [
+          HealthDataType.SLEEP_ASLEEP,
+        ]);
       } catch (error) {
-        print("Caught exception in getTotalStepsInInterval: $error");
+        print("Caught exception in getting Sleep: $error");
       }
-      print("$now $yesterday");
-      print('Total number of steps: $steps');
 
-      setState(() {
-        _nofSteps = (steps == null) ? 0 : steps;
-      });
+      if (sleep.isNotEmpty) {
+        print("Sleep: $sleep");
+      }
     } else {
       print("Authorization not granted - error in authorization");
     }
+  }
+
+  Future fetchData() async {
+    await fetchStepData(health, updateSteps);
+    await fetchV02MaxData(health, updateV02Max);
+    await fetchHearthRateData(health, updateHearthRate);
+    await fetchSleepData();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black, // Set the background color to black
-      appBar: const CustomAppBar(
-        withIcon: false,
-      ), // Use the custom AppBar
+      appBar: CustomAppBar(
+          withIcon: false, onIconPressed: fetchData), // Use the custom AppBar
       body: Column(
         children: [
           Container(
@@ -106,17 +135,26 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               children: [
                 TextButton(
-                    onPressed: authorize,
-                    style: const ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll(Colors.blue)),
-                    child: const Text("Auth",
-                        style: TextStyle(color: Colors.white))),
-                TextButton(
-                    onPressed: fetchStepData,
-                    style: const ButtonStyle(
-                        backgroundColor: MaterialStatePropertyAll(Colors.blue)),
-                    child: const Text("Fetch Data",
-                        style: TextStyle(color: Colors.white))),
+                  onPressed: authorize,
+                  style: const ButtonStyle(
+                      backgroundColor: MaterialStatePropertyAll(Colors.blue)),
+                  child: const Text(
+                    "Auth",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                Text(
+                  "Steps: $_nofSteps",
+                  style: const TextStyle(color: Colors.white),
+                ),
+                Text(
+                  "V02Max: $_v02Max",
+                  style: const TextStyle(color: Colors.white),
+                ),
+                Text(
+                  "Hearth Rate: $_hearthRate",
+                  style: const TextStyle(color: Colors.white),
+                ),
               ],
             ),
           ),

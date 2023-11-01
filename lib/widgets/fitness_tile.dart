@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:innovation_project/constants/constants.dart';
 
+//the tile to display the fitness data
 class FitnessTile extends StatelessWidget {
   const FitnessTile({super.key});
 
