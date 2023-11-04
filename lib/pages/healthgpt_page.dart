@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:innovation_project/constants/constants.dart';
+import 'package:innovation_project/models/chat_models.dart';
 import 'package:innovation_project/providers/chat_providers.dart';
 import 'package:innovation_project/widgets/chat_widget.dart';
 import 'package:innovation_project/widgets/custom_app_bar.dart';
@@ -52,10 +53,10 @@ class _HealthGptState extends State<HealthGpt> {
                 controller: _listScrollController,
                 itemCount: chatProvider.getChatList.length,
                 itemBuilder: (context, index) {
-                  final dynamic sender = chatProvider.getChatList[index].sender;
-                  final bool isSender = sender as bool? ?? false;
+                  final dynamic role = chatProvider.getChatList[index].role;
+                  final isSender = role == "user";
                   return ChatWidget(
-                    message: chatProvider.getChatList[index].msg,
+                    message: chatProvider.getChatList[index].context,
                     isSender: isSender,
                     shouldAnimate: chatProvider.getChatList.length - 1 == index,
                   );
@@ -160,7 +161,6 @@ class _HealthGptState extends State<HealthGpt> {
         },
       );
       await chatProvider.sendMessageAndGetAnswer(message: text);
-      setState(() {});
     } catch (e) {
       log("Error $e");
     } finally {

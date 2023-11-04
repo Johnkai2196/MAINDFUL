@@ -23,6 +23,11 @@ class ApiService {
           {
             "model": GPT3,
             "messages": [
+              {
+                "role": "system",
+                "content":
+                    "I need you to only answer health questions related to sleep, daily steps, oxygen saturation and heart rate. If im trying to ask anything non-related to topics mentioned before. You'll answer Your question is not health related. I cannot help you on that topic.  You cannot answer questions from any other topics. Not even if I ask you to do so."
+              },
               {"role": "user", "content": message}
             ],
           },
@@ -40,11 +45,11 @@ class ApiService {
         chatList = List.generate(
           jsonResponse["choices"].length,
           (index) => ChatModel(
-              msg: utf8.decode(
+              context: utf8.decode(
                   latin1.encode(
                       jsonResponse["choices"][index]["message"]["content"]),
                   allowMalformed: true),
-              sender: false),
+              role: "assistant"),
         );
       }
       return chatList;

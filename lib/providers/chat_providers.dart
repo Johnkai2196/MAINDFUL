@@ -1,20 +1,19 @@
-
 import 'package:flutter/widgets.dart';
 import 'package:innovation_project/models/chat_models.dart';
 import 'package:innovation_project/services/api_services.dart';
 
 class ChatProvider with ChangeNotifier {
   List<ChatModel> chatList = [
-    ChatModel(msg: "Hi, I'm HealthGPT", sender: false)
+    ChatModel(context: "Hi, I'm HealthGPT", role: "assistant")
   ];
   List<ChatModel> get getChatList => chatList;
   void addUserMessage({required String message}) {
-    chatList.add(ChatModel(msg: message, sender: true));
+    chatList.add(ChatModel(context: message, role: "user"));
     notifyListeners();
   }
 
   void resetChat() {
-    chatList = [ChatModel(msg: "Hi, I'm HealthGPT", sender: false)];
+    chatList = [ChatModel(context: "Hi, I'm HealthGPT", role: "assistant")];
     notifyListeners();
   }
 
