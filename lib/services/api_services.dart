@@ -10,7 +10,7 @@ import 'package:innovation_project/models/chat_models.dart';
 
 class ApiService {
   static Future<List<ChatModel>> sendMessage({
-    required String message,
+    required List<Map<String, dynamic>> messages,
   }) async {
     try {
       var response = await http.post(
@@ -22,14 +22,7 @@ class ApiService {
         body: jsonEncode(
           {
             "model": GPT3,
-            "messages": [
-              {
-                "role": "system",
-                "content":
-                    "I need you to only answer health questions related to sleep, daily steps, oxygen saturation and heart rate. If im trying to ask anything non-related to topics mentioned before. You'll answer Your question is not health related. I cannot help you on that topic.  You cannot answer questions from any other topics. Not even if I ask you to do so."
-              },
-              {"role": "user", "content": message}
-            ],
+            "messages": messages, // Include the list of messages
           },
         ),
       );
