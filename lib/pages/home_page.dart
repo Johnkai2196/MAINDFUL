@@ -9,40 +9,25 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.black, // Set the background color to black
-      appBar: const CustomAppBar(
-        withIcon: false,
-      ), // Use the custom AppBar
-      body: Column(
-        children: [
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 20.0),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const HealthGpt()),
-                );
-              },
-              child: const Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.add,
-                    size: 24,
-                  ),
-                  SizedBox(width: 8),
-                  Text(
-                    "Chat with MAINDFUL",
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ],
+    return MaterialApp(
+      theme: ThemeData(
+        colorSchemeSeed: const Color(0xff6750a4),
+        useMaterial3: true,
+      ),
+      home: Scaffold(
+        appBar: AppBar(title: const Text('Card Examples')),
+        body: Stack(
+          children: <Widget>[
+            // Background image
+            Positioned.fill(
+              child: Image.asset(
+                'assets/images/aerial-1822139_1280.png',
+
+                fit: BoxFit.cover, // You can adjust the fit as needed
               ),
             ),
-          ),
-          const Expanded(child: FitnessTile()),
-        ],
+          ],
+        ),
       ),
     );
   }
