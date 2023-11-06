@@ -15,13 +15,17 @@ class HomePage extends StatelessWidget {
         useMaterial3: true,
       ),
       home: Scaffold(
-        appBar: AppBar(title: const Text('Card Examples')),
+        backgroundColor: Colors.black,
+        appBar: const CustomAppBar(
+          withIcon: false,
+        ),
         body: Stack(
           children: <Widget>[
+            const ElevatedCardExample(),
             // Background image
             Positioned.fill(
               child: Image.asset(
-                'assets/images/blob-scene-haikei (4).png',
+                'assets/images/forest-5442598_1280.png',
 
                 fit: BoxFit.cover, // You can adjust the fit as needed
               ),

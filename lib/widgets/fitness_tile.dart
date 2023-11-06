@@ -1,6 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:innovation_project/constants/constants.dart';
 
+class ElevatedCardExample extends StatelessWidget {
+  const ElevatedCardExample({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const Center(
+      child: Card(
+        elevation: 0,
+        color: Colors.grey,
+        child: SizedBox(
+          width: 300,
+          height: 100,
+          child: Center(child: Text('Elevated Card')),
+        ),
+      ),
+    );
+  }
+}
+
 class FitnessTile extends StatelessWidget {
   const FitnessTile({super.key});
 
