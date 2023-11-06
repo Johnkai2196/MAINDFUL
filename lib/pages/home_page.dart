@@ -33,16 +33,22 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void updateSleep(String sleep) {
+    setState(() {
+      _sleep = sleep;
+    });
+  }
+
   @override
   void initState() {
     super.initState();
     authorize();
-    fetchData();
   }
 
   int _nofSteps = 0;
   double _v02Max = 0;
   int _hearthRate = 0;
+  String _sleep = "";
 
   static final types = [
     HealthDataType.STEPS,
@@ -62,32 +68,10 @@ class _HomePageState extends State<HomePage> {
     if (!hasPersmission) {
       try {
         await health.requestAuthorization(types);
+        fetchData();
       } catch (e) {
         print("Exception in authorize: $e");
       }
-    }
-  }
-
-  // sleeping
-  Future fetchSleepData() async {
-    List<HealthDataPoint> sleep = [];
-    bool requested =
-        await health.requestAuthorization([HealthDataType.SLEEP_ASLEEP]);
-    final test = DateTime.now().subtract(const Duration(days: 7));
-    if (requested) {
-      try {
-        sleep = await health.getHealthDataFromTypes(yesterday, now, [
-          HealthDataType.SLEEP_ASLEEP,
-        ]);
-      } catch (error) {
-        print("Caught exception in getting Sleep: $error");
-      }
-
-      if (sleep.isNotEmpty) {
-        print("Sleep: $sleep");
-      }
-    } else {
-      print("Authorization not granted - error in authorization");
     }
   }
 
@@ -95,15 +79,17 @@ class _HomePageState extends State<HomePage> {
     await fetchStepData(health, updateSteps);
     await fetchV02MaxData(health, updateV02Max);
     await fetchHearthRateData(health, updateHearthRate);
-    await fetchSleepData();
+    await fetchSleepData(health, updateSleep);
+    await fetchWeekHealthData(health);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black, // Set the background color to black
-      appBar: CustomAppBar(
-          withIcon: false, onIconPressed: fetchData), // Use the custom AppBar
+      // Set the background color to black
+      backgroundColor: Colors.black,
+      // Use the custom AppBar with a logo
+      appBar: CustomAppBar(withIcon: false, onIconPressed: fetchData),
       body: Column(
         children: [
           Container(
@@ -134,25 +120,20 @@ class _HomePageState extends State<HomePage> {
           Expanded(
             child: Column(
               children: [
-                TextButton(
-                  onPressed: authorize,
-                  style: const ButtonStyle(
-                      backgroundColor: MaterialStatePropertyAll(Colors.blue)),
-                  child: const Text(
-                    "Auth",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
                 Text(
                   "Steps: $_nofSteps",
                   style: const TextStyle(color: Colors.white),
                 ),
                 Text(
-                  "V02Max: $_v02Max",
+                  "V02Max AVG: $_v02Max",
                   style: const TextStyle(color: Colors.white),
                 ),
                 Text(
-                  "Hearth Rate: $_hearthRate",
+                  "Hearth Rate: $_hearthRate BPM",
+                  style: const TextStyle(color: Colors.white),
+                ),
+                Text(
+                  "Sleep: $_sleep",
                   style: const TextStyle(color: Colors.white),
                 ),
               ],
