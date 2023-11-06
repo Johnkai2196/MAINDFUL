@@ -21,7 +21,7 @@ class HomePage extends StatelessWidget {
             // Background image
             Positioned.fill(
               child: Image.asset(
-                'assets/images/aerial-1822139_1280.png',
+                'assets/images/blob-scene-haikei (4).png',
 
                 fit: BoxFit.cover, // You can adjust the fit as needed
               ),
