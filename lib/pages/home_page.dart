@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 // import 'package:innovation_project/pages/healthgpt_page.dart';
 import 'package:innovation_project/widgets/custom_app_bar.dart';
 import 'package:innovation_project/widgets/fitness_tile.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -21,10 +22,10 @@ class HomePage extends StatelessWidget {
         ),
         body: Stack(
           children: <Widget>[
-            // Background image
+            // Background image (SVG)
             Positioned.fill(
-              child: Image.asset(
-                'assets/images/blob-scene-haikei (4).png',
+              child: SvgPicture.asset(
+                'assets/images/blob-scene-haikei (3).svg',
                 fit: BoxFit.cover, // You can adjust the fit as needed
               ),
             ),
