@@ -24,31 +24,42 @@ class HomePage extends StatelessWidget {
             // Background image
             Positioned.fill(
               child: Image.asset(
-                'assets/images/aerial-1822139_1280.png',
+                'assets/images/blob-scene-haikei (4).png',
                 fit: BoxFit.cover, // You can adjust the fit as needed
               ),
             ),
             const Column(
+              mainAxisAlignment:
+                  MainAxisAlignment.end, // Align content to the bottom
               children: <Widget>[
                 ChatCard(),
-                Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      SleepCard(),
-                      HeartCard(),
-                    ],
+                Padding(
+                  padding: EdgeInsets.only(
+                      top: 16.0), // Adjust the top padding as needed
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        SleepCard(),
+                        HeartCard(),
+                      ],
+                    ),
                   ),
                 ),
-                Center(
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      StepsCard(),
-                      BreathingCard(),
-                    ],
+                Padding(
+                  padding: EdgeInsets.only(
+                      top: 16.0,
+                      bottom: 16.0), // Adjust the top padding as needed
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        StepsCard(),
+                        BreathingCard(),
+                      ],
+                    ),
                   ),
-                ),
+                )
               ],
             ),
           ],
