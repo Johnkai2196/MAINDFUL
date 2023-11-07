@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:innovation_project/constants/constants.dart';
-import 'package:innovation_project/pages/healthgpt_page.dart';
+// import 'package:innovation_project/constants/constants.dart';
+// import 'package:innovation_project/pages/healthgpt_page.dart';
 import 'package:innovation_project/widgets/custom_app_bar.dart';
 import 'package:innovation_project/widgets/fitness_tile.dart';
 
@@ -28,7 +28,29 @@ class HomePage extends StatelessWidget {
                 fit: BoxFit.cover, // You can adjust the fit as needed
               ),
             ),
-            const ElevatedCardExample(),
+            const Column(
+              children: <Widget>[
+                ChatCard(),
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      SleepCard(),
+                      HeartCard(),
+                    ],
+                  ),
+                ),
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      StepsCard(),
+                      BreathingCard(),
+                    ],
+                  ),
+                ),
+              ],
+            ),
           ],
         ),
       ),

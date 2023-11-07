@@ -1,20 +1,133 @@
 import 'package:flutter/material.dart';
 import 'package:innovation_project/constants/constants.dart';
 
-class ElevatedCardExample extends StatelessWidget {
-  const ElevatedCardExample({super.key});
+class SleepCard extends StatelessWidget {
+  const SleepCard({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
+    return Center(
       child: Card(
-        elevation: 0,
-        color: Colors.grey,
-        child: SizedBox(
-          width: 300,
-          height: 100,
-          child: Center(child: Text('Elevated Card')),
+        color: surfaceContainerHighest,
+        child: const SizedBox(
+          width: 164,
+          height: 154,
+          child: Center(
+              child: Text(
+            'SLEEP',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 32,
+              fontFamily: "ConcertOne",
+            ),
+          )),
         ),
+      ),
+    );
+  }
+}
+
+class HeartCard extends StatelessWidget {
+  const HeartCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Card(
+        color: surfaceContainerHighest,
+        child: const SizedBox(
+          width: 164,
+          height: 154,
+          child: Center(
+              child: Text(
+            'HEART',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 32,
+              fontFamily: "ConcertOne",
+            ),
+          )),
+        ),
+      ),
+    );
+  }
+}
+
+class StepsCard extends StatelessWidget {
+  const StepsCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Card(
+        color: surfaceContainerHighest,
+        child: const SizedBox(
+          width: 164,
+          height: 154,
+          child: Center(
+              child: Text(
+            'STEPS',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 32,
+              fontFamily: "ConcertOne",
+            ),
+          )),
+        ),
+      ),
+    );
+  }
+}
+
+class BreathingCard extends StatelessWidget {
+  const BreathingCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Card(
+        color: surfaceContainerHighest,
+        child: const SizedBox(
+          width: 164,
+          height: 154,
+          child: Center(
+              child: Text(
+            'BREATHING',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 32,
+              fontFamily: "ConcertOne",
+            ),
+          )),
+        ),
+      ),
+    );
+  }
+}
+
+class ChatCard extends StatelessWidget {
+  const ChatCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Card(
+        color: surfaceContainerHighest,
+        child: const SizedBox(
+            width: 348,
+            height: 134,
+            child: Center(
+              child: Wrap(children: <Widget>[
+                Text(
+                  'CHAT WITH MAINDFUL',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 32,
+                    fontFamily: "ConcertOne",
+                  ),
+                )
+              ]),
+            )),
       ),
     );
   }
