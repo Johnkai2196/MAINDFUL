@@ -21,15 +21,14 @@ class HomePage extends StatelessWidget {
         ),
         body: Stack(
           children: <Widget>[
-            const ElevatedCardExample(),
             // Background image
             Positioned.fill(
               child: Image.asset(
-                'assets/images/forest-5442598_1280.png',
-
+                'assets/images/aerial-1822139_1280.png',
                 fit: BoxFit.cover, // You can adjust the fit as needed
               ),
             ),
+            const ElevatedCardExample(),
           ],
         ),
       ),
