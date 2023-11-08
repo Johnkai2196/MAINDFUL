@@ -2,7 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:innovation_project/pages/healthgpt_page.dart';
-import 'package:innovation_project/services/hearth_data_service.dart';
+import 'package:innovation_project/providers/health_providers.dart';
+
 import 'package:innovation_project/widgets/custom_app_bar.dart';
 import 'package:innovation_project/widgets/fitness_tile.dart';
 import 'package:health/health.dart';
@@ -15,29 +16,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  void updateSteps(int steps) {
-    setState(() {
-      _nofSteps = steps;
-    });
-  }
-
-  void updateV02Max(double v02Max) {
-    setState(() {
-      _v02Max = v02Max;
-    });
-  }
-
-  void updateHearthRate(int hearthRate) {
-    setState(() {
-      _hearthRate = hearthRate;
-    });
-  }
-
-  void updateSleep(String sleep) {
-    setState(() {
-      _sleep = sleep;
-    });
-  }
+  HealthDataProvider healthDataProvider = HealthDataProvider();
 
   @override
   void initState() {
@@ -45,15 +24,11 @@ class _HomePageState extends State<HomePage> {
     authorize();
   }
 
-  int _nofSteps = 0;
-  double _v02Max = 0;
-  int _hearthRate = 0;
-  String _sleep = "";
-
   static final types = [
     HealthDataType.STEPS,
     HealthDataType.VO2MAX,
     HealthDataType.SLEEP_ASLEEP,
+    HealthDataType.SLEEP_IN_BED,
     HealthDataType.HEART_RATE,
   ];
 
@@ -68,19 +43,20 @@ class _HomePageState extends State<HomePage> {
     if (!hasPersmission) {
       try {
         await health.requestAuthorization(types);
-        fetchData();
+        fetchHealthData();
       } catch (e) {
         print("Exception in authorize: $e");
       }
     }
   }
 
-  Future fetchData() async {
-    await fetchStepData(health, updateSteps);
-    await fetchV02MaxData(health, updateV02Max);
-    await fetchHearthRateData(health, updateHearthRate);
-    await fetchSleepData(health, updateSleep);
-    await fetchWeekHealthData(health);
+  Future<void> fetchHealthData() async {
+    await healthDataProvider.fetchStepData(health);
+    await healthDataProvider.fetchV02MaxData(health);
+    await healthDataProvider.fetchHearthRateData(health);
+    await healthDataProvider.fetchSleepData(health);
+    await healthDataProvider.fetchWeekHealthData(health);
+    setState(() {});
   }
 
   @override
@@ -89,7 +65,7 @@ class _HomePageState extends State<HomePage> {
       // Set the background color to black
       backgroundColor: Colors.black,
       // Use the custom AppBar with a logo
-      appBar: CustomAppBar(withIcon: false, onIconPressed: fetchData),
+      appBar: CustomAppBar(withIcon: false, onIconPressed: fetchHealthData),
       body: Column(
         children: [
           Container(
@@ -121,19 +97,19 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               children: [
                 Text(
-                  "Steps: $_nofSteps",
+                  "Steps: ${healthDataProvider.steps}",
                   style: const TextStyle(color: Colors.white),
                 ),
                 Text(
-                  "V02Max AVG: $_v02Max",
+                  "V02Max AVG: ${healthDataProvider.v02Max}",
                   style: const TextStyle(color: Colors.white),
                 ),
                 Text(
-                  "Hearth Rate: $_hearthRate BPM",
+                  "Hearth Rate: ${healthDataProvider.heartRate} BPM",
                   style: const TextStyle(color: Colors.white),
                 ),
                 Text(
-                  "Sleep: $_sleep",
+                  "Sleep: ${healthDataProvider.sleepData}",
                   style: const TextStyle(color: Colors.white),
                 ),
               ],

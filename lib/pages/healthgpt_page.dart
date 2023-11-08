@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -5,6 +7,7 @@ import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:innovation_project/constants/constants.dart';
 import 'package:innovation_project/models/chat_models.dart';
 import 'package:innovation_project/providers/chat_providers.dart';
+import 'package:innovation_project/providers/health_providers.dart';
 import 'package:innovation_project/widgets/chat_widget.dart';
 import 'package:innovation_project/widgets/custom_app_bar.dart';
 import 'package:provider/provider.dart';
@@ -17,6 +20,8 @@ class HealthGpt extends StatefulWidget {
 }
 
 class _HealthGptState extends State<HealthGpt> {
+  HealthDataProvider healthDataProvider = HealthDataProvider();
+
   bool _isTyping = false;
   late FocusNode focusNode;
   late ScrollController _listScrollController;
