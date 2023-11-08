@@ -143,7 +143,6 @@ Future fetchSleepData(
       int hours = totalMinutes ~/ 60;
       int minutes = totalMinutes % 60;
       String formattedMinutes = minutes < 10 ? '0$minutes' : minutes.toString();
-      print("Sleep: ${hours}h ${formattedMinutes}m");
       updateSleep("${hours}h ${formattedMinutes}m");
     }
   } else {
@@ -155,7 +154,7 @@ Future<Map<String, Map<String, dynamic>>> fetchWeekHealthData(
     HealthFactory health) async {
   Map<String, Map<String, dynamic>> categorizedData = {};
   Map<String, Map<String, dynamic>> weeklyAverages = {
-    'STEPS': {'count': 0, 'avgValue': 0.0},
+    'STEPS': {'avgValue': 0.0},
     'VO2MAX': {'count': 0, 'avgValue': 0.0},
     'SLEEP_IN_BED': {'count': 0, 'avgValue': 0.0},
     'HEART_RATE': {'count': 0, 'avgValue': 0.0},
@@ -176,40 +175,39 @@ Future<Map<String, Map<String, dynamic>>> fetchWeekHealthData(
       HealthDataType.SLEEP_IN_BED,
       HealthDataType.HEART_RATE,
     ]);
-
+    int? steps;
+    steps = await health.getTotalStepsInInterval(sixDaysAgo, now);
     for (var dataPoint in data) {
       String dataType = dataPoint.typeString;
       DateTime date = dataPoint.dateFrom;
       String dateString = date.toLocal().toString().split(' ')[0];
       String sourceName = dataPoint.sourceName;
       data = HealthFactory.removeDuplicates(data);
+
       if (!categorizedData.containsKey(dateString)) {
         categorizedData[dateString] = {};
       }
 
       if (!categorizedData[dateString]!.containsKey(sourceName)) {
         categorizedData[dateString]![sourceName] = {
-          'STEPS': {'count': 0},
+          'STEPS': {'count': 0, 'avgValue': 0.0},
           'VO2MAX': {'count': 0, 'avgValue': 0.0},
           'SLEEP_IN_BED': {'count': 0, 'avgValue': 0.0},
           'HEART_RATE': {'count': 0, 'avgValue': 0.0},
         };
       }
-
+      double value = num.parse(dataPoint.value.toString()).toDouble();
       if (dataType != "STEPS") {
         categorizedData[dateString]![sourceName][dataType]!['count']++;
         categorizedData[dateString]![sourceName][dataType]!['avgValue'] +=
             num.parse(dataPoint.value.toString()).toDouble();
-        weeklyAverages[dataType]!['count']++;
-        weeklyAverages[dataType]!['avgValue'] +=
-            num.parse(dataPoint.value.toString()).toDouble();
+        if (value > 0.0) {
+          weeklyAverages[dataType]!['count']++;
+          weeklyAverages[dataType]!['avgValue'] += value;
+        }
       } else {
         categorizedData[dateString]![sourceName][dataType]!['count'] +=
             num.parse(dataPoint.value.toString()).toInt();
-
-        weeklyAverages[dataType]!['count']++;
-        weeklyAverages[dataType]!['avgValue'] +=
-            num.parse(dataPoint.value.toString()).toDouble();
       }
     }
 
@@ -221,16 +219,36 @@ Future<Map<String, Map<String, dynamic>>> fetchWeekHealthData(
               dataTypeData.containsKey('avgValue')) {
             dataTypeData['avgValue'] =
                 dataTypeData['avgValue'] / dataTypeData['count'];
+            dataTypeData.remove('count');
           }
         }
       }
     }
 
-    for (var dataTypeData in weeklyAverages.values) {
-      if (dataTypeData.containsKey('count') && dataTypeData['count'] > 0) {
-        dataTypeData['avgValue'] =
-            dataTypeData['avgValue'] / dataTypeData['count'];
+    // Calculate weekly averages
+    for (var dataType in weeklyAverages.keys) {
+      var dataTypeData = weeklyAverages[dataType];
+      if (dataTypeData == null) continue;
+
+      switch (dataType) {
+        case 'HEART_RATE':
+        case 'VO2MAX':
+          dataTypeData['avgValue'] =
+              dataTypeData['avgValue'] / dataTypeData['count'];
+          print(dataTypeData['avgValue']);
+          break;
+        case 'STEPS':
+          if (steps != null) {
+            dataTypeData['avgValue'] = steps / 7;
+          }
+          break;
+        case 'SLEEP_IN_BED':
+          dataTypeData['avgValue'] = dataTypeData['avgValue'] / 7;
+          break;
+        default:
+          break; // Handle any other data types here if needed
       }
+      dataTypeData.remove('count');
     }
 
     categorizedData['WeeklyAverages'] = weeklyAverages;
