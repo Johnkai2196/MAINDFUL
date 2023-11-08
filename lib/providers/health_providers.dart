@@ -66,7 +66,7 @@ class HealthDataProvider extends ChangeNotifier {
 
       if (v02max.isNotEmpty) {
         v02MaxAvg = v02MaxAvg / v02max.length;
-        print("V02Max: $v02MaxAvg");
+
         _v02Max = v02MaxAvg;
         notifyListeners();
       }
@@ -164,7 +164,7 @@ class HealthDataProvider extends ChangeNotifier {
         int minutes = totalMinutes % 60;
         String formattedMinutes =
             minutes < 10 ? '0$minutes' : minutes.toString();
-        print("Sleep: ${hours}h ${formattedMinutes}m");
+
         _sleepData = "${hours}h ${formattedMinutes}m";
         notifyListeners();
       }
@@ -214,14 +214,14 @@ class HealthDataProvider extends ChangeNotifier {
 
         if (!categorizedData[dateString]!.containsKey(sourceName)) {
           categorizedData[dateString]![sourceName] = {
-            'STEPS': {'count': 0, 'avgValue': 0.0},
+            'STEPS': {'value': 0.0},
             'VO2MAX': {'count': 0, 'avgValue': 0.0},
-            'SLEEP_IN_BED': {'count': 0, 'avgValue': 0.0},
+            'SLEEP_IN_BED': {'value': 0.0},
             'HEART_RATE': {'count': 0, 'avgValue': 0.0},
           };
         }
         double value = num.parse(dataPoint.value.toString()).toDouble();
-        if (dataType != "STEPS") {
+        if (dataType == "HEART_RATE" || dataType == "VO2MAX") {
           if (categorizedData[dateString] != null &&
               categorizedData[dateString]![sourceName] != null &&
               categorizedData[dateString]![sourceName][dataType] != null) {
@@ -235,8 +235,9 @@ class HealthDataProvider extends ChangeNotifier {
             weeklyAverages[dataType]!['avgValue'] += value;
           }
         } else {
-          categorizedData[dateString]![sourceName][dataType]!['count'] +=
+          categorizedData[dateString]![sourceName][dataType]!['value'] +=
               num.parse(dataPoint.value.toString()).toInt();
+          weeklyAverages[dataType]!['avgValue'] += value;
         }
       }
 
@@ -248,8 +249,8 @@ class HealthDataProvider extends ChangeNotifier {
                 dataTypeData.containsKey('avgValue')) {
               dataTypeData['avgValue'] =
                   dataTypeData['avgValue'] / dataTypeData['count'];
-              dataTypeData.remove('count');
             }
+            dataTypeData.remove('count');
           }
         }
       }
