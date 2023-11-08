@@ -227,6 +227,7 @@ Future<Map<String, Map<String, dynamic>>> fetchWeekHealthData(
 
     // Calculate weekly averages
     for (var dataType in weeklyAverages.keys) {
+      print(dataType);
       var dataTypeData = weeklyAverages[dataType];
       if (dataTypeData == null) continue;
 
@@ -252,7 +253,7 @@ Future<Map<String, Map<String, dynamic>>> fetchWeekHealthData(
     }
 
     categorizedData['WeeklyAverages'] = weeklyAverages;
-    print(categorizedData);
+
     return categorizedData;
   } else {
     print("Authorization not granted - error in authorization");
