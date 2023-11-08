@@ -12,24 +12,29 @@ class SleepCard extends StatelessWidget {
       child: Center(
         child: Card(
           color: surfaceContainerHighest,
-          child: Column(
-            children: [
-              SvgPicture.asset(
-                'assets/icons/moon-svgrepo-com (1).svg', // Replace with the path to your SVG icon
-                width: 64, // Adjust the width as needed
-                height: 64, // Adjust the height as needed
-              ),
-              const SizedBox(
-                  height: 16), // Add spacing between the icon and text
-              const Text(
-                'SLEEP',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 32,
-                  fontFamily: "ConcertOne",
+          child: SizedBox(
+            width: 164,
+            height: 154,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  'assets/icons/moon-svgrepo-com (1).svg',
+                  width: 46,
+                  height: 46,
                 ),
-              ),
-            ],
+                const SizedBox(
+                    height: 8), // Add spacing between the icon and text
+                const Text(
+                  'SLEEP',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 32,
+                    fontFamily: "ConcertOne",
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -47,18 +52,28 @@ class HeartCard extends StatelessWidget {
       child: Center(
         child: Card(
           color: surfaceContainerHighest,
-          child: const SizedBox(
+          child: SizedBox(
             width: 164,
             height: 154,
-            child: Center(
-              child: Text(
-                'HEART',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 32,
-                  fontFamily: "ConcertOne",
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  'assets/icons/heart-svgrepo-com (1).svg',
+                  width: 46,
+                  height: 46,
                 ),
-              ),
+                const SizedBox(
+                    height: 8), // Add spacing between the icon and text
+                const Text(
+                  'HEART',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 32,
+                    fontFamily: "ConcertOne",
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -77,18 +92,28 @@ class StepsCard extends StatelessWidget {
       child: Center(
         child: Card(
           color: surfaceContainerHighest,
-          child: const SizedBox(
+          child: SizedBox(
             width: 164,
             height: 154,
-            child: Center(
-              child: Text(
-                'STEPS',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 32,
-                  fontFamily: "ConcertOne",
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  'assets/icons/walk-svgrepo-com.svg',
+                  width: 46,
+                  height: 46,
                 ),
-              ),
+                const SizedBox(
+                    height: 8), // Add spacing between the icon and text
+                const Text(
+                  'STEPS',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 32,
+                    fontFamily: "ConcertOne",
+                  ),
+                ),
+              ],
             ),
           ),
         ),
@@ -107,18 +132,28 @@ class BreathingCard extends StatelessWidget {
       child: Center(
         child: Card(
           color: surfaceContainerHighest,
-          child: const SizedBox(
+          child: SizedBox(
             width: 164,
             height: 154,
-            child: Center(
-              child: Text(
-                'BREATHING',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 32,
-                  fontFamily: "ConcertOne",
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  'assets/icons/wind-svgrepo-com (1).svg',
+                  width: 46,
+                  height: 46,
                 ),
-              ),
+                const SizedBox(
+                    height: 8), // Add spacing between the icon and text
+                const Text(
+                  'BREATHING',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 32,
+                    fontFamily: "ConcertOne",
+                  ),
+                ),
+              ],
             ),
           ),
         ),
