@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
             Positioned.fill(
               child: SvgPicture.asset(
                 'assets/images/blob-haikei (4).svg',
-                fit: BoxFit.cover, // You can adjust the fit as needed
+                fit: BoxFit.cover,
               ),
             ),
             Align(
@@ -36,8 +36,7 @@ class HomePage extends StatelessWidget {
                     const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
                 child: SvgPicture.asset(
                   'assets/icons/robot-svgrepo-com (2).svg',
-                  // width: 100, // Adjust the width as needed
-                  height: 400, // Adjust the height as needed
+                  height: 350,
                 ),
               ),
             ),
