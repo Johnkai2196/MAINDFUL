@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:innovation_project/constants/constants.dart';
 import 'package:innovation_project/providers/chat_providers.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +30,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             TextSpan(
               text: "AI",
               style: TextStyle(
-                color: Colors.red, // Color for the "AI" letters
+                // color: blue, // Color for the "AI" letters
                 fontWeight: FontWeight.bold, // Make it bold
                 fontSize: 30.0, // Color for the "AI" letters
                 fontFamily: "ConcertOne", // Font family
