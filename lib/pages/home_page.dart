@@ -55,7 +55,6 @@ class _HomePageState extends State<HomePage> {
     await healthDataProvider.fetchV02MaxData(health);
     await healthDataProvider.fetchHearthRateData(health);
     await healthDataProvider.fetchSleepData(health);
-    await healthDataProvider.fetchWeekHealthData(health);
     setState(() {});
   }
 
