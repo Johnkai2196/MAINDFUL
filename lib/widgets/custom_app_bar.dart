@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:innovation_project/constants/constants.dart';
+// import 'package:innovation_project/constants/constants.dart';
 import 'package:innovation_project/providers/chat_providers.dart';
 import 'package:provider/provider.dart';
 
@@ -23,16 +23,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               style: TextStyle(
                 color: Colors.white, // Color for the "M" letter
                 fontWeight: FontWeight.bold, // Make it bold
-                fontSize: 30.0, // Increase font size
+                fontSize: 40, // Increase font size
                 fontFamily: "ConcertOne", // Font family
               ),
             ),
             TextSpan(
               text: "AI",
               style: TextStyle(
-                // color: blue, // Color for the "AI" letters
+                color:
+                    Color.fromRGBO(0, 80, 227, 1), // Color for the "AI" letters
                 fontWeight: FontWeight.bold, // Make it bold
-                fontSize: 30.0, // Color for the "AI" letters
+                fontSize: 40, // Color for the "AI" letters
                 fontFamily: "ConcertOne", // Font family
               ),
             ),
@@ -41,7 +42,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               style: TextStyle(
                 color: Colors.white, // Color for the "NFULL" letters
                 fontWeight: FontWeight.bold, // Make it bold
-                fontSize: 30.0, // Color for the "NFULL" letters
+                fontSize: 40, // Color for the "NFULL" letters
                 fontFamily: "ConcertOne", // Font family
               ),
             ),

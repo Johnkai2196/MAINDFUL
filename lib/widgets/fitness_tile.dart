@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:innovation_project/constants/constants.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 
 class SleepCard extends StatelessWidget {
   final String title;
@@ -12,6 +11,7 @@ class SleepCard extends StatelessWidget {
       onTap: () {},
       child: Center(
         child: Card(
+          elevation: 6, // Adjust the elevation to control the shadow depth
           color: surfaceContainerHighest,
           child: SizedBox(
             width: 164,
@@ -47,7 +47,8 @@ class SleepCard extends StatelessWidget {
 }
 
 class HeartCard extends StatelessWidget {
-  const HeartCard({super.key});
+  final String beats;
+  const HeartCard({super.key, required this.beats});
 
   @override
   Widget build(BuildContext context) {
@@ -55,6 +56,7 @@ class HeartCard extends StatelessWidget {
       onTap: () {},
       child: Center(
         child: Card(
+          elevation: 6, // Adjust the elevation to control the shadow depth
           color: surfaceContainerHighest,
           child: const SizedBox(
             width: 164,
@@ -72,7 +74,7 @@ class HeartCard extends StatelessWidget {
                 ),
                 SizedBox(height: 8), // Add spacing between the icon and text
                 Text(
-                  '86 bpm',
+                  "80 bpm",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 32,
@@ -97,26 +99,29 @@ class StepsCard extends StatelessWidget {
       onTap: () {},
       child: Center(
         child: Card(
+          elevation: 6, // Adjust the elevation to control the shadow depth
           color: surfaceContainerHighest,
-          child: SizedBox(
+          child: const SizedBox(
             width: 164,
             height: 154,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SvgPicture.asset(
-                  'assets/icons/walk-svgrepo-com.svg',
-                  width: 46,
-                  height: 46,
-                ),
-                const SizedBox(
-                    height: 8), // Add spacing between the icon and text
-                const Text(
+                Text(
                   'STEPS',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 32,
                     fontFamily: "ConcertOne",
+                  ),
+                ),
+                SizedBox(height: 8), // Add spacing between the icon and text
+                Text(
+                  "-",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 32,
+                    // fontFamily: "ConcertOne",
                   ),
                 ),
               ],
@@ -137,26 +142,36 @@ class BreathingCard extends StatelessWidget {
       onTap: () {},
       child: Center(
         child: Card(
+          elevation: 6, // Adjust the elevation to control the shadow depth
           color: surfaceContainerHighest,
-          child: SizedBox(
+          // shape: RoundedRectangleBorder(
+          //   borderRadius: BorderRadius.circular(10.0),
+          //   side: const BorderSide(
+          //     color: Colors.black, // Set the border color
+          //     width: 2.0, // Set the border width
+          //   ),
+          // ),
+          child: const SizedBox(
             width: 164,
             height: 154,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SvgPicture.asset(
-                  'assets/icons/wind-svgrepo-com (1).svg',
-                  width: 46,
-                  height: 46,
-                ),
-                const SizedBox(
-                    height: 8), // Add spacing between the icon and text
-                const Text(
+                Text(
                   'BREATHING',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 32,
                     fontFamily: "ConcertOne",
+                  ),
+                ),
+                SizedBox(height: 8), // Add spacing between the icon and text
+                Text(
+                  "-",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 32,
+                    // fontFamily: "ConcertOne",
                   ),
                 ),
               ],
@@ -177,29 +192,35 @@ class ChatCard extends StatelessWidget {
       onTap: () {},
       child: Center(
         child: Card(
+          elevation: 6, // Adjust the elevation to control the shadow depth
           color: surfaceContainerHighest,
-          child: const SizedBox(
-            width: 348,
-            height: 100,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // SvgPicture.asset(
-                //   'assets/icons/wind-svgrepo-com (1).svg',
-                //   width: 46,
-                //   height: 46,
-                // ),
-                // SizedBox(
-                //     height: 8), // Add spacing between the icon and text
-                Text(
-                  'MAICHAT',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 48,
-                    fontFamily: "ConcertOne",
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: const BorderSide(
+              color: Colors.black, // Set the border color
+              width: 4.0, // Set the border width
+            ),
+          ),
+          child: const Padding(
+            padding: EdgeInsets.only(bottom: 16), // Add padding if needed
+            child: SizedBox(
+              width: 348,
+              height: 100,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'MAICHAT',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 46,
+                      fontFamily: "ConcertOne",
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

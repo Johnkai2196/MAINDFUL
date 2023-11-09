@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:innovation_project/constants/constants.dart';
 // import 'package:innovation_project/constants/constants.dart';
 // import 'package:innovation_project/pages/healthgpt_page.dart';
 import 'package:innovation_project/widgets/custom_app_bar.dart';
@@ -16,7 +17,7 @@ class HomePage extends StatelessWidget {
         useMaterial3: true,
       ),
       home: Scaffold(
-        backgroundColor: Colors.black,
+        backgroundColor: backGroundColor,
         appBar: const CustomAppBar(
           withIcon: false,
         ),
@@ -33,10 +34,10 @@ class HomePage extends StatelessWidget {
               alignment: Alignment.topCenter, // Align to the top center
               child: Padding(
                 padding:
-                    const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
+                    const EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
                 child: SvgPicture.asset(
                   'assets/icons/robot-svgrepo-com (2).svg',
-                  height: 350,
+                  height: 330,
                 ),
               ),
             ),
@@ -55,7 +56,9 @@ class HomePage extends StatelessWidget {
                         SleepCard(
                           title: '8h',
                         ),
-                        HeartCard(),
+                        HeartCard(
+                          beats: '86 bpm',
+                        ),
                       ],
                     ),
                   ),

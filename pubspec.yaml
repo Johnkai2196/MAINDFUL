@@ -58,6 +58,9 @@ dev_dependencies:
 # The following section is specific to Flutter packages.
 flutter:
   fonts:
+    - family: Syncopate
+      fonts:
+        - asset: assets/Syncopate-Regular.ttf
     - family: ConcertOne
       fonts:
         - asset: assets/ConcertOne-Regular.ttf
