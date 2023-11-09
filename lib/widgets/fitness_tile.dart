@@ -3,7 +3,8 @@ import 'package:innovation_project/constants/constants.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class SleepCard extends StatelessWidget {
-  const SleepCard({super.key});
+  final String title;
+  const SleepCard({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
@@ -18,19 +19,22 @@ class SleepCard extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SvgPicture.asset(
-                  'assets/icons/moon-svgrepo-com (1).svg',
-                  width: 46,
-                  height: 46,
-                ),
-                const SizedBox(
-                    height: 8), // Add spacing between the icon and text
                 const Text(
                   'SLEEP',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 32,
                     fontFamily: "ConcertOne",
+                  ),
+                ),
+                const SizedBox(
+                    height: 8), // Add spacing between the icon and text
+                Text(
+                  title,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 32,
+                    // fontFamily: "ConcertOne",
                   ),
                 ),
               ],
@@ -52,25 +56,27 @@ class HeartCard extends StatelessWidget {
       child: Center(
         child: Card(
           color: surfaceContainerHighest,
-          child: SizedBox(
+          child: const SizedBox(
             width: 164,
             height: 154,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                SvgPicture.asset(
-                  'assets/icons/heart-svgrepo-com (1).svg',
-                  width: 46,
-                  height: 46,
-                ),
-                const SizedBox(
-                    height: 8), // Add spacing between the icon and text
-                const Text(
+                Text(
                   'HEART',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 32,
                     fontFamily: "ConcertOne",
+                  ),
+                ),
+                SizedBox(height: 8), // Add spacing between the icon and text
+                Text(
+                  '86 bpm',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 32,
+                    // fontFamily: "ConcertOne",
                   ),
                 ),
               ],
@@ -173,20 +179,29 @@ class ChatCard extends StatelessWidget {
         child: Card(
           color: surfaceContainerHighest,
           child: const SizedBox(
-              width: 348,
-              height: 134,
-              child: Center(
-                child: Wrap(children: <Widget>[
-                  Text(
-                    'CHAT WITH MAINDFUL',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 32,
-                      fontFamily: "ConcertOne",
-                    ),
+            width: 348,
+            height: 100,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // SvgPicture.asset(
+                //   'assets/icons/wind-svgrepo-com (1).svg',
+                //   width: 46,
+                //   height: 46,
+                // ),
+                // SizedBox(
+                //     height: 8), // Add spacing between the icon and text
+                Text(
+                  'MAICHAT',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 48,
+                    fontFamily: "ConcertOne",
                   ),
-                ]),
-              )),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );

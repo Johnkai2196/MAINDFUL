@@ -41,7 +41,9 @@ class HomePage extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        SleepCard(),
+                        SleepCard(
+                          title: '8h',
+                        ),
                         HeartCard(),
                       ],
                     ),
