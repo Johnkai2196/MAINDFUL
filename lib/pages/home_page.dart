@@ -29,8 +29,17 @@ class HomePage extends StatelessWidget {
                 fit: BoxFit.cover, // You can adjust the fit as needed
               ),
             ),
-            SvgPicture.asset(
-              'assets/icons/robot-svgrepo-com.svg',
+            Align(
+              alignment: Alignment.topCenter, // Align to the top center
+              child: Padding(
+                padding:
+                    const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
+                child: SvgPicture.asset(
+                  'assets/icons/robot-svgrepo-com (1).svg',
+                  // width: 100, // Adjust the width as needed
+                  height: 400, // Adjust the height as needed
+                ),
+              ),
             ),
             const Column(
               mainAxisAlignment:
