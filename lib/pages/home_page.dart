@@ -35,7 +35,7 @@ class HomePage extends StatelessWidget {
                 padding:
                     const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
                 child: SvgPicture.asset(
-                  'assets/icons/robot-svgrepo-com (1).svg',
+                  'assets/icons/robot-svgrepo-com (2).svg',
                   // width: 100, // Adjust the width as needed
                   height: 400, // Adjust the height as needed
                 ),
