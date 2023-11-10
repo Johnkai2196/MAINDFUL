@@ -74,7 +74,8 @@ class HeartCard extends StatelessWidget {
                 ),
                 SizedBox(height: 8), // Add spacing between the icon and text
                 Text(
-                  "80 bpm",
+                  "",
+                  // beats,
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 32,
@@ -117,7 +118,7 @@ class StepsCard extends StatelessWidget {
                 ),
                 SizedBox(height: 8), // Add spacing between the icon and text
                 Text(
-                  "-",
+                  "",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 32,
@@ -167,7 +168,7 @@ class BreathingCard extends StatelessWidget {
                 ),
                 SizedBox(height: 8), // Add spacing between the icon and text
                 Text(
-                  "-",
+                  "",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 32,

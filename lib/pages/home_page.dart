@@ -34,10 +34,10 @@ class HomePage extends StatelessWidget {
               alignment: Alignment.topCenter, // Align to the top center
               child: Padding(
                 padding:
-                    const EdgeInsets.only(top: 10.0, left: 16.0, right: 16.0),
+                    const EdgeInsets.only(top: 90.0, left: 16.0, right: 16.0),
                 child: SvgPicture.asset(
-                  'assets/icons/robot-svgrepo-com (2).svg',
-                  height: 330,
+                  'assets/icons/robot-svgrepo-com (5).svg',
+                  height: 250,
                 ),
               ),
             ),
