@@ -24,14 +24,9 @@ class ChatProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> sendMessageAndGetAnswer({required String message}) async {
+  Future<void> sendMessageAndGetAnswer(
+      {required String message, required weeklyHealthData}) async {
     // Include message history in the request
-    HealthDataProvider healthDataProvider = HealthDataProvider();
-    HealthFactory health = HealthFactory(useHealthConnectIfAvailable: true);
-    await healthDataProvider.fetchWeekHealthData(health);
-
-    // Add weekly health data to the chat
-    var weeklyHealthData = healthDataProvider.weeklyHealthData;
 
     var messages = [
       {

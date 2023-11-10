@@ -282,7 +282,7 @@ class HealthDataProvider extends ChangeNotifier {
 
       categorizedData['WeeklyAverages'] = weeklyAverages;
       _weeklyHealthData = categorizedData;
-  print("Weekly health data: $_weeklyHealthData");
+
       notifyListeners();
     } else {
       print("Authorization not granted - error in authorization");

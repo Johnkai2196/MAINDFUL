@@ -55,6 +55,7 @@ class _HomePageState extends State<HomePage> {
     await healthDataProvider.fetchV02MaxData(health);
     await healthDataProvider.fetchHearthRateData(health);
     await healthDataProvider.fetchSleepData(health);
+    await healthDataProvider.fetchWeekHealthData(health);
     setState(() {});
   }
 
@@ -73,7 +74,10 @@ class _HomePageState extends State<HomePage> {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const HealthGpt()),
+                  MaterialPageRoute(
+                    builder: (context) =>
+                        HealthGpt(healthDataProvider: healthDataProvider),
+                  ),
                 );
               },
               child: const Row(
