@@ -11,10 +11,17 @@ class SleepCard extends StatelessWidget {
       onTap: () {},
       child: Center(
         child: Card(
-          elevation: 6, // Adjust the elevation to control the shadow depth
+          elevation: 8, // Adjust the elevation to control the shadow depth
           color: surfaceContainerHighest,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: const BorderSide(
+              color: Colors.black, // Set the border color
+              width: 2.0, // Set the border width
+            ),
+          ),
           child: SizedBox(
-            width: 164,
+            width: 190,
             height: 154,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -56,15 +63,22 @@ class HeartCard extends StatelessWidget {
       onTap: () {},
       child: Center(
         child: Card(
-          elevation: 6, // Adjust the elevation to control the shadow depth
+          elevation: 8, // Adjust the elevation to control the shadow depth
           color: surfaceContainerHighest,
-          child: const SizedBox(
-            width: 164,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: const BorderSide(
+              color: Colors.black, // Set the border color
+              width: 2.0, // Set the border width
+            ),
+          ),
+          child: SizedBox(
+            width: 190,
             height: 154,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'HEART',
                   style: TextStyle(
                     color: Colors.white,
@@ -72,11 +86,12 @@ class HeartCard extends StatelessWidget {
                     fontFamily: "ConcertOne",
                   ),
                 ),
-                SizedBox(height: 8), // Add spacing between the icon and text
+                const SizedBox(
+                    height: 8), // Add spacing between the icon and text
                 Text(
-                  "",
-                  // beats,
-                  style: TextStyle(
+                  // "",
+                  beats,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 32,
                     // fontFamily: "ConcertOne",
@@ -92,7 +107,8 @@ class HeartCard extends StatelessWidget {
 }
 
 class StepsCard extends StatelessWidget {
-  const StepsCard({super.key});
+  final String steps;
+  const StepsCard({super.key, required this.steps});
 
   @override
   Widget build(BuildContext context) {
@@ -100,15 +116,22 @@ class StepsCard extends StatelessWidget {
       onTap: () {},
       child: Center(
         child: Card(
-          elevation: 6, // Adjust the elevation to control the shadow depth
+          elevation: 8, // Adjust the elevation to control the shadow depth
           color: surfaceContainerHighest,
-          child: const SizedBox(
-            width: 164,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: const BorderSide(
+              color: Colors.black, // Set the border color
+              width: 2.0, // Set the border width
+            ),
+          ),
+          child: SizedBox(
+            width: 190,
             height: 154,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'STEPS',
                   style: TextStyle(
                     color: Colors.white,
@@ -116,10 +139,11 @@ class StepsCard extends StatelessWidget {
                     fontFamily: "ConcertOne",
                   ),
                 ),
-                SizedBox(height: 8), // Add spacing between the icon and text
+                const SizedBox(
+                    height: 8), // Add spacing between the icon and text
                 Text(
-                  "",
-                  style: TextStyle(
+                  steps,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 32,
                     // fontFamily: "ConcertOne",
@@ -135,7 +159,8 @@ class StepsCard extends StatelessWidget {
 }
 
 class BreathingCard extends StatelessWidget {
-  const BreathingCard({super.key});
+  final String breath;
+  const BreathingCard({super.key, required this.breath});
 
   @override
   Widget build(BuildContext context) {
@@ -143,22 +168,22 @@ class BreathingCard extends StatelessWidget {
       onTap: () {},
       child: Center(
         child: Card(
-          elevation: 6, // Adjust the elevation to control the shadow depth
+          elevation: 8, // Adjust the elevation to control the shadow depth
           color: surfaceContainerHighest,
-          // shape: RoundedRectangleBorder(
-          //   borderRadius: BorderRadius.circular(10.0),
-          //   side: const BorderSide(
-          //     color: Colors.black, // Set the border color
-          //     width: 2.0, // Set the border width
-          //   ),
-          // ),
-          child: const SizedBox(
-            width: 164,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: const BorderSide(
+              color: Colors.black, // Set the border color
+              width: 2.0, // Set the border width
+            ),
+          ),
+          child: SizedBox(
+            width: 190,
             height: 154,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
+                const Text(
                   'BREATHING',
                   style: TextStyle(
                     color: Colors.white,
@@ -166,10 +191,11 @@ class BreathingCard extends StatelessWidget {
                     fontFamily: "ConcertOne",
                   ),
                 ),
-                SizedBox(height: 8), // Add spacing between the icon and text
+                const SizedBox(
+                    height: 8), // Add spacing between the icon and text
                 Text(
-                  "",
-                  style: TextStyle(
+                  breath,
+                  style: const TextStyle(
                     color: Colors.white,
                     fontSize: 32,
                     // fontFamily: "ConcertOne",
@@ -193,19 +219,19 @@ class ChatCard extends StatelessWidget {
       onTap: () {},
       child: Center(
         child: Card(
-          elevation: 6, // Adjust the elevation to control the shadow depth
+          elevation: 10, // Adjust the elevation to control the shadow depth
           color: surfaceContainerHighest,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
-            side: const BorderSide(
-              color: Colors.black, // Set the border color
+            side: BorderSide(
+              color: textPurple, // Set the border color
               width: 4.0, // Set the border width
             ),
           ),
           child: const Padding(
             padding: EdgeInsets.only(bottom: 16), // Add padding if needed
             child: SizedBox(
-              width: 348,
+              width: 396,
               height: 100,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -229,65 +255,3 @@ class ChatCard extends StatelessWidget {
     );
   }
 }
-
-// class FitnessTile extends StatelessWidget {
-//   const FitnessTile({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return GestureDetector(
-//       onTap: () {},
-//       child: Padding(
-//         padding: const EdgeInsets.symmetric(vertical: 7.0),
-//         child: FractionallySizedBox(
-//           widthFactor: 0.95, // 95% of the screen width
-//           child: Column(
-//             children: [
-//               Container(
-//                 width: double.infinity,
-//                 height: 104,
-//                 clipBehavior: Clip.antiAlias,
-//                 decoration: ShapeDecoration(
-//                   color: Colors.green,
-//                   shape: RoundedRectangleBorder(
-//                     borderRadius: BorderRadius.circular(12),
-//                   ),
-//                 ),
-//                 child: Align(
-//                   alignment: Alignment.center,
-//                   child: Column(
-//                     mainAxisSize: MainAxisSize.min,
-//                     mainAxisAlignment: MainAxisAlignment.center,
-//                     crossAxisAlignment: CrossAxisAlignment.center,
-//                     children: [
-//                       Padding(
-//                         padding: const EdgeInsets.symmetric(
-//                           horizontal: 12,
-//                           vertical: 10,
-//                         ),
-//                         child: Text(
-//                           "Sleep",
-//                           style: TextStyle(
-//                             color: textPurple,
-//                             fontSize: 32,
-//                           ),
-//                         ),
-//                       ),
-//                       Text(
-//                         "8h",
-//                         style: TextStyle(
-//                           color: textWhite,
-//                           fontSize: 32,
-//                         ),
-//                       ),
-//                     ],
-//                   ),
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ),
-//       ),
-//     );
-//   }
-// }

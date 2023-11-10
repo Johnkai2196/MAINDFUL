@@ -24,19 +24,19 @@ class HomePage extends StatelessWidget {
         body: Stack(
           children: <Widget>[
             // Background image (SVG)
-            Positioned.fill(
-              child: SvgPicture.asset(
-                'assets/images/blob-haikei (4).svg',
-                fit: BoxFit.cover,
-              ),
-            ),
+            // Positioned.fill(
+            //   child: SvgPicture.asset(
+            //     'assets/images/blob-haikei (4).svg',
+            //     fit: BoxFit.cover,
+            //   ),
+            // ),
             Align(
               alignment: Alignment.topCenter, // Align to the top center
               child: Padding(
                 padding:
                     const EdgeInsets.only(top: 90.0, left: 16.0, right: 16.0),
                 child: SvgPicture.asset(
-                  'assets/icons/robot-svgrepo-com (5).svg',
+                  'assets/icons/robot-svgrepo-com (6).svg',
                   height: 250,
                 ),
               ),
@@ -71,8 +71,12 @@ class HomePage extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
-                        StepsCard(),
-                        BreathingCard(),
+                        StepsCard(
+                          steps: '10 000',
+                        ),
+                        BreathingCard(
+                          breath: '35 vo2max',
+                        ),
                       ],
                     ),
                   ),
