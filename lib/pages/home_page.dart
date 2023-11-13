@@ -24,12 +24,12 @@ class HomePage extends StatelessWidget {
         body: Stack(
           children: <Widget>[
             // Background image (SVG)
-            // Positioned.fill(
-            //   child: SvgPicture.asset(
-            //     'assets/images/blob-haikei (4).svg',
-            //     fit: BoxFit.cover,
-            //   ),
-            // ),
+            Positioned.fill(
+              child: SvgPicture.asset(
+                'assets/images/blob-scene-haikei (3).svg',
+                fit: BoxFit.cover, // You can adjust the fit as needed
+              ),
+            ),
             Align(
               alignment: Alignment.topCenter, // Align to the top center
               child: Padding(
@@ -47,14 +47,13 @@ class HomePage extends StatelessWidget {
               children: <Widget>[
                 ChatCard(),
                 Padding(
-                  padding: EdgeInsets.only(
-                      top: 16.0), // Adjust the top padding as needed
+                  padding: EdgeInsets.only(top: 16.0),
                   child: Center(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         SleepCard(
-                          title: '8h',
+                          title: '8h 15min',
                         ),
                         HeartCard(
                           beats: '86 bpm',
@@ -64,9 +63,7 @@ class HomePage extends StatelessWidget {
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(
-                      top: 16.0,
-                      bottom: 16.0), // Adjust the top padding as needed
+                  padding: EdgeInsets.only(top: 16.0, bottom: 16.0),
                   child: Center(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,

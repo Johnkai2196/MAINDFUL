@@ -16,6 +16,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final chatProvider = Provider.of<ChatProvider>(context);
     return AppBar(
       centerTitle: true,
+      backgroundColor: Colors.transparent,
       title: RichText(
         text: TextSpan(
           children: [
@@ -49,7 +50,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
           ],
         ),
       ),
-      backgroundColor: Colors.transparent,
       actions: withIcon
           ? [
               IconButton(

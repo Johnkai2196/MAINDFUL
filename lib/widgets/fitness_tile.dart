@@ -7,17 +7,19 @@ class SleepCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
+    return InkWell(
+      onTap: () {
+        print("Sleep card tapped");
+      },
       child: Center(
         child: Card(
-          elevation: 8, // Adjust the elevation to control the shadow depth
+          elevation: 8,
           color: surfaceContainerHighest,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
             side: const BorderSide(
-              color: Colors.black, // Set the border color
-              width: 2.0, // Set the border width
+              color: Colors.black,
+              width: 2.0,
             ),
           ),
           child: SizedBox(
@@ -60,7 +62,9 @@ class HeartCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        print("Heart card tapped");
+      },
       child: Center(
         child: Card(
           elevation: 8, // Adjust the elevation to control the shadow depth
@@ -113,7 +117,9 @@ class StepsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        print("Steps card tapped");
+      },
       child: Center(
         child: Card(
           elevation: 8, // Adjust the elevation to control the shadow depth
@@ -165,7 +171,9 @@ class BreathingCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        print("Breathing card tapped");
+      },
       child: Center(
         child: Card(
           elevation: 8, // Adjust the elevation to control the shadow depth
@@ -216,7 +224,9 @@ class ChatCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: () {
+        print("Chat card tapped");
+      },
       child: Center(
         child: Card(
           elevation: 10, // Adjust the elevation to control the shadow depth
