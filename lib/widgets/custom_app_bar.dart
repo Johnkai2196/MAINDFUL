@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:innovation_project/constants/constants.dart';
+// import 'package:innovation_project/constants/constants.dart';
 import 'package:innovation_project/providers/chat_providers.dart';
 import 'package:provider/provider.dart';
 
@@ -20,40 +22,40 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     return AppBar(
       automaticallyImplyLeading: backArrow,
       centerTitle: true,
+      backgroundColor: Colors.transparent,
       title: RichText(
-        text: const TextSpan(
+        text: TextSpan(
           children: [
-            TextSpan(
+            const TextSpan(
               text: "M",
               style: TextStyle(
                 color: Colors.white, // Color for the "M" letter
                 fontWeight: FontWeight.bold, // Make it bold
-                fontSize: 30.0, // Increase font size
+                fontSize: 42, // Increase font size
                 fontFamily: "ConcertOne", // Font family
               ),
             ),
             TextSpan(
               text: "AI",
               style: TextStyle(
-                color: Colors.red, // Color for the "AI" letters
+                color: primaryContainer, // Color for the "AI" letters
                 fontWeight: FontWeight.bold, // Make it bold
-                fontSize: 30.0, // Color for the "AI" letters
+                fontSize: 42, // Color for the "AI" letters
                 fontFamily: "ConcertOne", // Font family
               ),
             ),
-            TextSpan(
+            const TextSpan(
               text: "NDFUL",
               style: TextStyle(
                 color: Colors.white, // Color for the "NFULL" letters
                 fontWeight: FontWeight.bold, // Make it bold
-                fontSize: 30.0, // Color for the "NFULL" letters
+                fontSize: 42, // Color for the "NFULL" letters
                 fontFamily: "ConcertOne", // Font family
               ),
             ),
           ],
         ),
       ),
-      backgroundColor: Colors.transparent,
       actions: [
         if (withIcon == 'delete')
           IconButton(

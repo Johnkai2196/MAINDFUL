@@ -2,12 +2,17 @@
 
 import 'package:flutter/material.dart';
 import 'package:innovation_project/pages/healthgpt_page.dart';
-import 'package:innovation_project/pages/term_and_condition_page.dart';
 import 'package:innovation_project/providers/health_providers.dart';
 
 import 'package:innovation_project/widgets/custom_app_bar.dart';
 import 'package:innovation_project/widgets/fitness_tile.dart';
 import 'package:health/health.dart';
+import 'package:innovation_project/constants/constants.dart';
+// import 'package:innovation_project/constants/constants.dart';
+// import 'package:innovation_project/pages/healthgpt_page.dart';
+import 'package:innovation_project/widgets/custom_app_bar.dart';
+import 'package:innovation_project/widgets/fitness_tile.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -62,64 +67,75 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      // Set the background color to black
-      backgroundColor: Colors.black,
-      // Use the custom AppBar with a logo
-      appBar: CustomAppBar(withIcon: "refresh", onIconPressed: fetchHealthData),
-      body: Column(
-        children: [
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 20.0),
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) =>
-                        HealthGpt(healthDataProvider: healthDataProvider),
-                  ),
-                );
-              },
-              child: const Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Icon(
-                    Icons.add,
-                    size: 24,
-                  ),
-                  SizedBox(width: 8),
-                  Text(
-                    "Chat with MAINDFUL",
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ],
+    return MaterialApp(
+      theme: ThemeData(
+        colorSchemeSeed: const Color(0xff6750a4),
+        useMaterial3: true,
+      ),
+      home: Scaffold(
+        backgroundColor: backGroundColor,
+        appBar: const CustomAppBar(),
+        body: Stack(
+          children: <Widget>[
+            // Background image (SVG)
+            Positioned.fill(
+              child: SvgPicture.asset(
+                'assets/images/blob-scene-haikei (3).svg',
+                fit: BoxFit.cover, // You can adjust the fit as needed
               ),
             ),
-          ),
-          Expanded(
-            child: Column(
-              children: [
-                Text(
-                  "Steps: ${healthDataProvider.steps}",
-                  style: const TextStyle(color: Colors.white),
+            Align(
+              alignment: Alignment.topCenter, // Align to the top center
+              child: Padding(
+                padding:
+                    const EdgeInsets.only(top: 90.0, left: 16.0, right: 16.0),
+                child: SvgPicture.asset(
+                  'assets/icons/robot-svgrepo-com (6).svg',
+                  height: 250,
                 ),
-                Text(
-                  "V02Max AVG: ${healthDataProvider.v02Max}",
-                  style: const TextStyle(color: Colors.white),
+              ),
+            ),
+            const Column(
+              mainAxisAlignment:
+                  MainAxisAlignment.end, // Align content to the bottom
+              children: <Widget>[
+                ChatCard(),
+                Padding(
+                  padding: EdgeInsets.only(top: 16.0),
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        SleepCard(
+                          title: '8h 15min',
+                        ),
+                        HeartCard(
+                          beats: '86 bpm',
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-                Text(
-                  "Hearth Rate: ${healthDataProvider.heartRate} BPM",
-                  style: const TextStyle(color: Colors.white),
-                ),
-                Text(
-                  "Sleep: ${healthDataProvider.sleepData}",
-                  style: const TextStyle(color: Colors.white),
-                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 16.0, bottom: 16.0),
+                  child: Center(
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        StepsCard(
+                          steps: '10 000',
+                        ),
+                        BreathingCard(
+                          breath: '35 vo2max',
+                        ),
+                      ],
+                    ),
+                  ),
+                )
               ],
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
