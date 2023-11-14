@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:innovation_project/pages/healthgpt_page.dart';
+import 'package:innovation_project/pages/term_and_condition_page.dart';
 import 'package:innovation_project/providers/health_providers.dart';
 
 import 'package:innovation_project/widgets/custom_app_bar.dart';
@@ -65,7 +66,7 @@ class _HomePageState extends State<HomePage> {
       // Set the background color to black
       backgroundColor: Colors.black,
       // Use the custom AppBar with a logo
-      appBar: CustomAppBar(withIcon: false, onIconPressed: fetchHealthData),
+      appBar: CustomAppBar(withIcon: "refresh", onIconPressed: fetchHealthData),
       body: Column(
         children: [
           Container(
