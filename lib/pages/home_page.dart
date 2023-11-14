@@ -96,38 +96,38 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            const Column(
+            Column(
               mainAxisAlignment:
                   MainAxisAlignment.end, // Align content to the bottom
               children: <Widget>[
-                ChatCard(),
+                ChatCard(healthDataProvider: healthDataProvider),
                 Padding(
-                  padding: EdgeInsets.only(top: 16.0),
+                  padding: const EdgeInsets.only(top: 16.0),
                   child: Center(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         SleepCard(
-                          title: '8h 15min',
+                          title: healthDataProvider.sleepData,
                         ),
                         HeartCard(
-                          beats: '86 bpm',
+                          beats: '${healthDataProvider.heartRate} bpm',
                         ),
                       ],
                     ),
                   ),
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 16.0, bottom: 16.0),
+                  padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),
                   child: Center(
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: <Widget>[
                         StepsCard(
-                          steps: '10 000',
+                          steps: "${healthDataProvider.steps}",
                         ),
                         BreathingCard(
-                          breath: '35 vo2max',
+                          breath: '${healthDataProvider.v02Max} vo2max',
                         ),
                       ],
                     ),
