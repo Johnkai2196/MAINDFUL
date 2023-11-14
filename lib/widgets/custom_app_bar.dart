@@ -4,18 +4,21 @@ import 'package:provider/provider.dart';
 
 // Custom appbar to display the logo and the delete icon
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final bool withIcon;
+  final String withIcon;
   final Function()? onIconPressed;
+  final bool backArrow;
   const CustomAppBar({
     super.key,
     this.onIconPressed,
-    required this.withIcon,
+    this.withIcon = "",
+    this.backArrow = false,
   });
 
   @override
   Widget build(BuildContext context) {
     final chatProvider = Provider.of<ChatProvider>(context);
     return AppBar(
+      automaticallyImplyLeading: backArrow,
       centerTitle: true,
       title: RichText(
         text: const TextSpan(
@@ -51,26 +54,26 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       backgroundColor: Colors.transparent,
-      actions: withIcon
-          ? [
-              IconButton(
-                icon: const Icon(Icons.delete),
-                onPressed: () {
-                  // TODO functionality for when the icon is pressed
-                  chatProvider.resetChat();
-                },
-              ),
-            ]
-          : [
-              IconButton(
-                icon: const Icon(Icons.refresh),
-                onPressed: () {
-                  if (onIconPressed != null) {
-                    onIconPressed!();
-                  }
-                },
-              )
-            ],
+      actions: [
+        if (withIcon == 'delete')
+          IconButton(
+            icon: const Icon(Icons.delete),
+            onPressed: () {
+              chatProvider.resetChat();
+            },
+          )
+        else if (withIcon == 'refresh')
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            onPressed: () {
+              if (onIconPressed != null) {
+                onIconPressed!();
+              }
+            },
+          )
+        else
+          Container(), // This will render nothing if iconType is neither 'delete' nor 'refresh'
+      ],
     );
   }
 
