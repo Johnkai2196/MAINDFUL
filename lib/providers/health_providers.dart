@@ -165,7 +165,7 @@ class HealthDataProvider extends ChangeNotifier {
         String formattedMinutes =
             minutes < 10 ? '0$minutes' : minutes.toString();
 
-        _sleepData = "${hours}h ${formattedMinutes}m";
+        _sleepData = "${hours}h ${formattedMinutes}min";
         notifyListeners();
       }
     } else {

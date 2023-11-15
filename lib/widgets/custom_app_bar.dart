@@ -23,6 +23,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       automaticallyImplyLeading: backArrow,
       centerTitle: true,
       backgroundColor: Colors.transparent,
+      iconTheme: const IconThemeData(color: Colors.white),
       title: RichText(
         text: TextSpan(
           children: [
@@ -60,6 +61,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         if (withIcon == 'delete')
           IconButton(
             icon: const Icon(Icons.delete),
+            color: Colors.white,
             onPressed: () {
               chatProvider.resetChat();
             },
@@ -67,6 +69,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         else if (withIcon == 'refresh')
           IconButton(
             icon: const Icon(Icons.refresh),
+            color: Colors.white,
             onPressed: () {
               if (onIconPressed != null) {
                 onIconPressed!();

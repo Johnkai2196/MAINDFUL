@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:innovation_project/constants/constants.dart';
+import 'package:innovation_project/pages/healthgpt_page.dart';
+import 'package:innovation_project/providers/health_providers.dart';
 
 class SleepCard extends StatelessWidget {
   final String title;
@@ -227,7 +229,8 @@ class BreathingCard extends StatelessWidget {
 }
 
 class ChatCard extends StatelessWidget {
-  const ChatCard({super.key});
+  final HealthDataProvider healthDataProvider;
+  const ChatCard({super.key, required this.healthDataProvider});
 
   @override
   Widget build(BuildContext context) {
@@ -235,7 +238,13 @@ class ChatCard extends StatelessWidget {
     double cardHeight = MediaQuery.of(context).size.width * 0.2;
     return GestureDetector(
       onTap: () {
-        print("Chat card tapped");
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                HealthGpt(healthDataProvider: healthDataProvider),
+          ),
+        );
       },
       child: Center(
         child: Card(
