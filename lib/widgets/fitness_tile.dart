@@ -7,6 +7,8 @@ class SleepCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double cardWidth = MediaQuery.of(context).size.width * 0.45;
+    double cardHeight = MediaQuery.of(context).size.width * 0.4;
     return GestureDetector(
       onTap: () {
         print("Sleep card tapped");
@@ -23,8 +25,8 @@ class SleepCard extends StatelessWidget {
             ),
           ),
           child: SizedBox(
-            width: 190,
-            height: 154,
+            width: cardWidth,
+            height: cardHeight,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -61,6 +63,8 @@ class HeartCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double cardWidth = MediaQuery.of(context).size.width * 0.45;
+    double cardHeight = MediaQuery.of(context).size.width * 0.4;
     return GestureDetector(
       onTap: () {
         print("Heart card tapped");
@@ -77,8 +81,8 @@ class HeartCard extends StatelessWidget {
             ),
           ),
           child: SizedBox(
-            width: 190,
-            height: 154,
+            width: cardWidth,
+            height: cardHeight,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -116,6 +120,8 @@ class StepsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double cardWidth = MediaQuery.of(context).size.width * 0.45;
+    double cardHeight = MediaQuery.of(context).size.width * 0.4;
     return GestureDetector(
       onTap: () {
         print("Steps card tapped");
@@ -132,8 +138,8 @@ class StepsCard extends StatelessWidget {
             ),
           ),
           child: SizedBox(
-            width: 190,
-            height: 154,
+            width: cardWidth,
+            height: cardHeight,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -170,6 +176,8 @@ class BreathingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double cardWidth = MediaQuery.of(context).size.width * 0.45;
+    double cardHeight = MediaQuery.of(context).size.width * 0.4;
     return GestureDetector(
       onTap: () {
         print("Breathing card tapped");
@@ -186,8 +194,8 @@ class BreathingCard extends StatelessWidget {
             ),
           ),
           child: SizedBox(
-            width: 190,
-            height: 154,
+            width: cardWidth,
+            height: cardHeight,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -223,6 +231,8 @@ class ChatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double cardWidth = MediaQuery.of(context).size.width * 0.85;
+    double cardHeight = MediaQuery.of(context).size.width * 0.2;
     return GestureDetector(
       onTap: () {
         print("Chat card tapped");
@@ -238,12 +248,12 @@ class ChatCard extends StatelessWidget {
               width: 4.0, // Set the border width
             ),
           ),
-          child: const Padding(
-            padding: EdgeInsets.only(bottom: 16), // Add padding if needed
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 16, left: 16, right: 16),
             child: SizedBox(
-              width: 396,
-              height: 100,
-              child: Column(
+              width: cardWidth,
+              height: cardHeight,
+              child: const Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(

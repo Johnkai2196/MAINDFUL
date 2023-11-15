@@ -78,7 +78,7 @@ class HomePage extends StatelessWidget {
                             steps: '10 000',
                           ),
                           BreathingCard(
-                            breath: '35 vo2max',
+                            breath: '36 VO₂max',
                           ),
                         ],
                       ),
