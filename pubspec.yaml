@@ -45,6 +45,7 @@ dependencies:
       path: packages/health
       ref: feature/add-vo2max-data-type
   flutter_svg: ^2.0.9
+  responsive_builder: ^0.4.0
 
 dev_dependencies:
   flutter_test:
