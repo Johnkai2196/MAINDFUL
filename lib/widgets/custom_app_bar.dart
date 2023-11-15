@@ -1,64 +1,84 @@
 import 'package:flutter/material.dart';
+import 'package:innovation_project/constants/constants.dart';
+// import 'package:innovation_project/constants/constants.dart';
 import 'package:innovation_project/providers/chat_providers.dart';
 import 'package:provider/provider.dart';
 
+// Custom appbar to display the logo and the delete icon
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
-  final bool withIcon;
+  final String withIcon;
+  final Function()? onIconPressed;
+  final bool backArrow;
   const CustomAppBar({
     super.key,
-    required this.withIcon,
+    this.onIconPressed,
+    this.withIcon = "",
+    this.backArrow = false,
   });
 
   @override
   Widget build(BuildContext context) {
     final chatProvider = Provider.of<ChatProvider>(context);
     return AppBar(
+      automaticallyImplyLeading: backArrow,
       centerTitle: true,
+      backgroundColor: Colors.transparent,
+      iconTheme: const IconThemeData(color: Colors.white),
       title: RichText(
-        text: const TextSpan(
+        text: TextSpan(
           children: [
-            TextSpan(
+            const TextSpan(
               text: "M",
               style: TextStyle(
                 color: Colors.white, // Color for the "M" letter
                 fontWeight: FontWeight.bold, // Make it bold
-                fontSize: 30.0, // Increase font size
+                fontSize: 42, // Increase font size
                 fontFamily: "ConcertOne", // Font family
               ),
             ),
             TextSpan(
               text: "AI",
               style: TextStyle(
-                color: Colors.red, // Color for the "AI" letters
+                color: primaryContainer, // Color for the "AI" letters
                 fontWeight: FontWeight.bold, // Make it bold
-                fontSize: 30.0, // Color for the "AI" letters
+                fontSize: 42, // Color for the "AI" letters
                 fontFamily: "ConcertOne", // Font family
               ),
             ),
-            TextSpan(
+            const TextSpan(
               text: "NDFUL",
               style: TextStyle(
                 color: Colors.white, // Color for the "NFULL" letters
                 fontWeight: FontWeight.bold, // Make it bold
-                fontSize: 30.0, // Color for the "NFULL" letters
+                fontSize: 42, // Color for the "NFULL" letters
                 fontFamily: "ConcertOne", // Font family
               ),
             ),
           ],
         ),
       ),
-      backgroundColor: Colors.transparent,
-      actions: withIcon
-          ? [
-              IconButton(
-                icon: const Icon(Icons.delete),
-                onPressed: () {
-                  // TODO functionality for when the icon is pressed
-                  chatProvider.resetChat();
-                },
-              ),
-            ]
-          : [],
+      actions: [
+        if (withIcon == 'delete')
+          IconButton(
+            icon: const Icon(Icons.delete),
+            color: Colors.white,
+            onPressed: () {
+              chatProvider.resetChat();
+            },
+          )
+        else if (withIcon == 'refresh')
+          IconButton(
+            icon: const Icon(Icons.refresh),
+            color: Colors.white,
+            onPressed: () {
+              if (onIconPressed != null) {
+                onIconPressed!();
+              }
+            },
+          )
+        else
+          Container(), // This will render nothing if iconType is neither 'delete' nor 'refresh'
+      ],
     );
   }
 

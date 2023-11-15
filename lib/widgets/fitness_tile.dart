@@ -1,61 +1,283 @@
 import 'package:flutter/material.dart';
 import 'package:innovation_project/constants/constants.dart';
+import 'package:innovation_project/pages/healthgpt_page.dart';
+import 'package:innovation_project/providers/health_providers.dart';
 
-class FitnessTile extends StatelessWidget {
-  const FitnessTile({super.key});
+class SleepCard extends StatelessWidget {
+  final String title;
+  const SleepCard({super.key, required this.title});
 
   @override
   Widget build(BuildContext context) {
+    double cardWidth = MediaQuery.of(context).size.width * 0.45;
+    double cardHeight = MediaQuery.of(context).size.width * 0.4;
     return GestureDetector(
-      onTap: () {},
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 7.0),
-        child: FractionallySizedBox(
-          widthFactor: 0.95, // 95% of the screen width
-          child: Column(
-            children: [
-              Container(
-                width: double.infinity,
-                height: 104,
-                clipBehavior: Clip.antiAlias,
-                decoration: ShapeDecoration(
-                  color: Colors.green,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+      onTap: () {
+        print("Sleep card tapped");
+      },
+      child: Center(
+        child: Card(
+          elevation: 8,
+          color: surfaceContainerHighest,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: const BorderSide(
+              color: Colors.black,
+              width: 2.0,
+            ),
+          ),
+          child: SizedBox(
+            width: cardWidth,
+            height: cardHeight,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'SLEEP',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 32,
+                    fontFamily: "ConcertOne",
                   ),
                 ),
-                child: Align(
-                  alignment: Alignment.center,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 10,
-                        ),
-                        child: Text(
-                          "Sleep",
-                          style: TextStyle(
-                            color: textPurple,
-                            fontSize: 32,
-                          ),
-                        ),
-                      ),
-                      Text(
-                        "8h",
-                        style: TextStyle(
-                          color: textWhite,
-                          fontSize: 32,
-                        ),
-                      ),
-                    ],
+                const SizedBox(
+                    height: 8), // Add spacing between the icon and text
+                Text(
+                  title,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 32,
+                    // fontFamily: "ConcertOne",
                   ),
                 ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class HeartCard extends StatelessWidget {
+  final String beats;
+  const HeartCard({super.key, required this.beats});
+
+  @override
+  Widget build(BuildContext context) {
+    double cardWidth = MediaQuery.of(context).size.width * 0.45;
+    double cardHeight = MediaQuery.of(context).size.width * 0.4;
+    return GestureDetector(
+      onTap: () {
+        print("Heart card tapped");
+      },
+      child: Center(
+        child: Card(
+          elevation: 8, // Adjust the elevation to control the shadow depth
+          color: surfaceContainerHighest,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: const BorderSide(
+              color: Colors.black, // Set the border color
+              width: 2.0, // Set the border width
+            ),
+          ),
+          child: SizedBox(
+            width: cardWidth,
+            height: cardHeight,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'HEART',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 32,
+                    fontFamily: "ConcertOne",
+                  ),
+                ),
+                const SizedBox(
+                    height: 8), // Add spacing between the icon and text
+                Text(
+                  // "",
+                  beats,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 32,
+                    // fontFamily: "ConcertOne",
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class StepsCard extends StatelessWidget {
+  final String steps;
+  const StepsCard({super.key, required this.steps});
+
+  @override
+  Widget build(BuildContext context) {
+    double cardWidth = MediaQuery.of(context).size.width * 0.45;
+    double cardHeight = MediaQuery.of(context).size.width * 0.4;
+    return GestureDetector(
+      onTap: () {
+        print("Steps card tapped");
+      },
+      child: Center(
+        child: Card(
+          elevation: 8, // Adjust the elevation to control the shadow depth
+          color: surfaceContainerHighest,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: const BorderSide(
+              color: Colors.black, // Set the border color
+              width: 2.0, // Set the border width
+            ),
+          ),
+          child: SizedBox(
+            width: cardWidth,
+            height: cardHeight,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'STEPS',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 32,
+                    fontFamily: "ConcertOne",
+                  ),
+                ),
+                const SizedBox(
+                    height: 8), // Add spacing between the icon and text
+                Text(
+                  steps,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 32,
+                    // fontFamily: "ConcertOne",
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class BreathingCard extends StatelessWidget {
+  final String breath;
+  const BreathingCard({super.key, required this.breath});
+
+  @override
+  Widget build(BuildContext context) {
+    double cardWidth = MediaQuery.of(context).size.width * 0.45;
+    double cardHeight = MediaQuery.of(context).size.width * 0.4;
+    return GestureDetector(
+      onTap: () {
+        print("Breathing card tapped");
+      },
+      child: Center(
+        child: Card(
+          elevation: 8, // Adjust the elevation to control the shadow depth
+          color: surfaceContainerHighest,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: const BorderSide(
+              color: Colors.black, // Set the border color
+              width: 2.0, // Set the border width
+            ),
+          ),
+          child: SizedBox(
+            width: cardWidth,
+            height: cardHeight,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text(
+                  'BREATHING',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 32,
+                    fontFamily: "ConcertOne",
+                  ),
+                ),
+                const SizedBox(
+                    height: 8), // Add spacing between the icon and text
+                Text(
+                  breath,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 32,
+                    // fontFamily: "ConcertOne",
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ChatCard extends StatelessWidget {
+  final HealthDataProvider healthDataProvider;
+  const ChatCard({super.key, required this.healthDataProvider});
+
+  @override
+  Widget build(BuildContext context) {
+    double cardWidth = MediaQuery.of(context).size.width * 0.85;
+    double cardHeight = MediaQuery.of(context).size.width * 0.2;
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) =>
+                HealthGpt(healthDataProvider: healthDataProvider),
+          ),
+        );
+      },
+      child: Center(
+        child: Card(
+          elevation: 10, // Adjust the elevation to control the shadow depth
+          color: surfaceContainerHighest,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            side: BorderSide(
+              color: textPurple, // Set the border color
+              width: 4.0, // Set the border width
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 16, left: 16, right: 16),
+            child: SizedBox(
+              width: cardWidth,
+              height: cardHeight,
+              child: const Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'MAICHAT',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 46,
+                      fontFamily: "ConcertOne",
+                      fontWeight: FontWeight.bold,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
         ),
       ),

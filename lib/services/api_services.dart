@@ -1,5 +1,3 @@
-// ignore_for_file: avoid_print
-
 import 'dart:convert';
 import 'dart:developer';
 
@@ -12,7 +10,7 @@ import 'package:innovation_project/models/chat_models.dart';
 
 class ApiService {
   static Future<List<ChatModel>> sendMessage({
-    required String message,
+    required List<Map<String, dynamic>> messages,
   }) async {
     try {
       var response = await http.post(
@@ -24,9 +22,7 @@ class ApiService {
         body: jsonEncode(
           {
             "model": GPT3,
-            "messages": [
-              {"role": "user", "content": message}
-            ],
+            "messages": messages, // Include the list of messages
           },
         ),
       );
@@ -42,17 +38,16 @@ class ApiService {
         chatList = List.generate(
           jsonResponse["choices"].length,
           (index) => ChatModel(
-              msg: utf8.decode(
+              context: utf8.decode(
                   latin1.encode(
                       jsonResponse["choices"][index]["message"]["content"]),
                   allowMalformed: true),
-              sender: false),
+              role: "assistant"),
         );
       }
-
       return chatList;
     } catch (error) {
-      print("error $error");
+      log("error $error");
       rethrow;
     }
   }

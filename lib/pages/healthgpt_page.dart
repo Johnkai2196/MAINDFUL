@@ -1,15 +1,25 @@
+// ignore_for_file: avoid_print
+
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
+import 'package:health/health.dart';
 import 'package:innovation_project/constants/constants.dart';
+import 'package:innovation_project/models/chat_models.dart';
 import 'package:innovation_project/providers/chat_providers.dart';
+import 'package:innovation_project/providers/health_providers.dart';
 import 'package:innovation_project/widgets/chat_widget.dart';
 import 'package:innovation_project/widgets/custom_app_bar.dart';
 import 'package:provider/provider.dart';
 
 class HealthGpt extends StatefulWidget {
-  const HealthGpt({super.key});
+  final HealthDataProvider healthDataProvider; // Add this line
+
+  const HealthGpt({
+    super.key,
+    required this.healthDataProvider, // Add this line
+  });
 
   @override
   State<HealthGpt> createState() => _HealthGptState();
@@ -20,6 +30,7 @@ class _HealthGptState extends State<HealthGpt> {
   late FocusNode focusNode;
   late ScrollController _listScrollController;
   late TextEditingController textController;
+
   @override
   void initState() {
     _listScrollController = ScrollController();
@@ -39,10 +50,13 @@ class _HealthGptState extends State<HealthGpt> {
   @override
   Widget build(BuildContext context) {
     final chatProvider = Provider.of<ChatProvider>(context);
+    final healthDataProvider = widget.healthDataProvider; // Add this line
+
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: const CustomAppBar(
-        withIcon: true,
+        withIcon: "delete",
+        backArrow: true,
       ),
       body: SafeArea(
         child: Column(
@@ -52,10 +66,10 @@ class _HealthGptState extends State<HealthGpt> {
                 controller: _listScrollController,
                 itemCount: chatProvider.getChatList.length,
                 itemBuilder: (context, index) {
-                  final dynamic sender = chatProvider.getChatList[index].sender;
-                  final bool isSender = sender as bool? ?? false;
+                  final dynamic role = chatProvider.getChatList[index].role;
+                  final isSender = role == "user";
                   return ChatWidget(
-                    message: chatProvider.getChatList[index].msg,
+                    message: chatProvider.getChatList[index].context,
                     isSender: isSender,
                     shouldAnimate: chatProvider.getChatList.length - 1 == index,
                   );
@@ -86,7 +100,9 @@ class _HealthGptState extends State<HealthGpt> {
                         style: const TextStyle(color: Colors.white),
                         controller: textController,
                         onSubmitted: (value) async {
-                          await sendMessage(chatProvider: chatProvider);
+                          await sendMessage(
+                              chatProvider: chatProvider,
+                              healthDataProvider: healthDataProvider);
                         },
                         decoration: const InputDecoration.collapsed(
                           hintText: "Type your question here",
@@ -103,7 +119,9 @@ class _HealthGptState extends State<HealthGpt> {
                       ),
                       child: IconButton(
                         onPressed: () async {
-                          await sendMessage(chatProvider: chatProvider);
+                          await sendMessage(
+                              chatProvider: chatProvider,
+                              healthDataProvider: healthDataProvider);
                         },
                         icon: Icon(
                           Icons.check,
@@ -130,7 +148,9 @@ class _HealthGptState extends State<HealthGpt> {
     );
   }
 
-  Future<void> sendMessage({required ChatProvider chatProvider}) async {
+  Future<void> sendMessage(
+      {required ChatProvider chatProvider,
+      required HealthDataProvider healthDataProvider}) async {
     if (textController.text.isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
@@ -159,8 +179,8 @@ class _HealthGptState extends State<HealthGpt> {
           focusNode.unfocus();
         },
       );
-      await chatProvider.sendMessageAndGetAnswer(message: text);
-      setState(() {});
+      await chatProvider.sendMessageAndGetAnswer(
+          message: text, weeklyHealthData: healthDataProvider.weeklyHealthData);
     } catch (e) {
       log("Error $e");
     } finally {

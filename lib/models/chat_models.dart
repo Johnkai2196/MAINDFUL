@@ -1,10 +1,10 @@
 class ChatModel {
-  final String msg;
-  final bool sender;
+  final String context;
+  final String role;
 
-  ChatModel({required this.msg, required this.sender});
+  ChatModel({required this.context, required this.role});
   factory ChatModel.fromJson(Map<String, dynamic> json) => ChatModel(
-        msg: json["msg"],
-        sender: json["sender"],
+        context: json["context"],
+        role: json["role"],
       );
 }

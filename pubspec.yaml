@@ -2,7 +2,7 @@ name: innovation_project
 description: A new Flutter project.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=3.1.3 <4.0.0'
+  sdk: ">=3.1.3 <4.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -31,7 +31,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
@@ -40,6 +39,13 @@ dependencies:
   provider: ^6.0.5
   animated_text_kit: ^4.2.1
   flutter_dotenv: ^5.0.2
+
+  health:
+    git:
+      url: https://github.com/Kaspear/flutter-plugins.git
+      path: packages/health
+      ref: feature/add-vo2max-data-type
+  flutter_svg: ^2.0.9
 
 dev_dependencies:
   flutter_test:
@@ -52,17 +58,19 @@ dev_dependencies:
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
 
-
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
 # The following section is specific to Flutter packages.
 flutter:
   fonts:
+    - family: Syncopate
+      fonts:
+        - asset: assets/Syncopate-Regular.ttf
     - family: ConcertOne
       fonts:
         - asset: assets/ConcertOne-Regular.ttf
-        
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -71,6 +79,7 @@ flutter:
   # To add assets to your application, add an assets section, like this:
   assets:
     - assets/images/
+    - assets/icons/
     - lib/.env
 
   # An image asset can refer to one or more resolution-specific "variants", see
