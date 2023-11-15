@@ -5,45 +5,51 @@ import 'package:innovation_project/constants/constants.dart';
 import 'package:innovation_project/widgets/custom_app_bar.dart';
 import 'package:innovation_project/widgets/fitness_tile.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:responsive_builder/responsive_builder.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return ResponsiveBuilder(
-      builder: (context, sizingInformation) {
-        double imageSize = sizingInformation.isMobile ? 150.0 : 250.0;
+    double cardWidth = MediaQuery.of(context).size.width * 0.95;
+    double cardHeight = MediaQuery.of(context).size.height * 0.75;
 
-        return Scaffold(
-          backgroundColor: Colors.transparent,
-          appBar: const CustomAppBar(
-            withIcon: false,
+    return Scaffold(
+      backgroundColor: Colors.transparent,
+      appBar: const CustomAppBar(
+        withIcon: false,
+      ),
+      body: Stack(
+        children: <Widget>[
+          // Background image (SVG)
+          Positioned.fill(
+            child: SvgPicture.asset(
+              'assets/images/blob-scene-haikei (3).svg',
+              fit: BoxFit.cover,
+            ),
           ),
-          body: Stack(
-            children: <Widget>[
-              // Background image (SVG)
-              Positioned.fill(
-                child: SvgPicture.asset(
-                  'assets/images/blob-scene-haikei (3).svg',
-                  fit: BoxFit.cover, // You can adjust the fit as needed
-                ),
+          Align(
+            alignment: Alignment.topCenter,
+            child: Padding(
+              padding:
+                  const EdgeInsets.only(top: 90.0, left: 16.0, right: 16.0),
+              child: SvgPicture.asset(
+                'assets/icons/robot-svgrepo-com (6).svg',
+                height: 250,
               ),
-              Align(
-                alignment: Alignment.topCenter, // Align to the top center
-                child: Padding(
-                  padding:
-                      const EdgeInsets.only(top: 90.0, left: 16.0, right: 16.0),
-                  child: SvgPicture.asset(
-                    'assets/icons/robot-svgrepo-com (6).svg',
-                    height: 250,
-                  ),
-                ),
-              ),
-              const Column(
-                mainAxisAlignment:
-                    MainAxisAlignment.end, // Align content to the bottom
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: SizedBox(
+              width: cardWidth,
+              height: cardHeight,
+              child: const Column(
+                mainAxisSize:
+                    MainAxisSize.min, // Adjust according to your needs
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   ChatCard(),
                   Padding(
@@ -77,13 +83,13 @@ class HomePage extends StatelessWidget {
                         ],
                       ),
                     ),
-                  )
+                  ),
                 ],
               ),
-            ],
+            ),
           ),
-        );
-      },
+        ],
+      ),
     );
   }
 }
