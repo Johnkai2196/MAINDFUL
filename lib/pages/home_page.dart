@@ -8,6 +8,7 @@ import 'package:innovation_project/providers/health_providers.dart';
 import 'package:innovation_project/widgets/custom_app_bar.dart';
 import 'package:innovation_project/widgets/fitness_tile.dart';
 import 'package:health/health.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -36,7 +37,7 @@ class _HomePageState extends State<HomePage> {
   final permssions = types.map((e) => HealthDataAccess.READ_WRITE).toList();
 
   HealthFactory health = HealthFactory(useHealthConnectIfAvailable: true);
-
+  String? status;
   Future authorize() async {
     bool? hasPersmission =
         await health.hasPermissions(types, permissions: permssions);
@@ -57,6 +58,8 @@ class _HomePageState extends State<HomePage> {
     await healthDataProvider.fetchHearthRateData(health);
     await healthDataProvider.fetchSleepData(health);
     await healthDataProvider.fetchWeekHealthData(health);
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    status = prefs.getString('statusKey');
     setState(() {});
   }
 
@@ -73,12 +76,26 @@ class _HomePageState extends State<HomePage> {
             margin: const EdgeInsets.symmetric(vertical: 20.0),
             child: ElevatedButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const TermsAndConditionsPage(),
-                  ),
-                );
+                print("Status: $status");
+                if (status == 'accepted') {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HealthGpt(
+                        healthDataProvider: healthDataProvider,
+                      ),
+                    ),
+                  );
+                } else {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => TermsAndConditionsPage(
+                        healthDataProvider: healthDataProvider,
+                      ),
+                    ),
+                  );
+                }
               },
               child: const Row(
                 mainAxisSize: MainAxisSize.min,

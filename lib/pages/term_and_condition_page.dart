@@ -1,16 +1,24 @@
+import 'dart:developer';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:innovation_project/pages/healthgpt_page.dart';
+import 'package:innovation_project/providers/health_providers.dart';
 import 'package:innovation_project/widgets/custom_app_bar.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TermsAndConditionsPage extends StatelessWidget {
-  const TermsAndConditionsPage({Key? key}) : super(key: key);
+  final HealthDataProvider healthDataProvider;
+  const TermsAndConditionsPage({
+    super.key,
+    required this.healthDataProvider,
+  });
 
   @override
   Widget build(BuildContext context) {
     double cardWidth = MediaQuery.of(context).size.width * 0.95;
     double cardHeight = MediaQuery.of(context).size.height * 0.75;
-
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: const CustomAppBar(),
@@ -66,14 +74,8 @@ class TermsAndConditionsPage extends StatelessWidget {
                                     color: Colors.blue,
                                   ),
                                   recognizer: TapGestureRecognizer()
-                                    ..onTap = () async {
-                                      const url = Uri.parce(
-                                          'https://openai.com/privacy-policy/');
-                                      if (await canLaunchUrl(url)) {
-                                        await launchUrl(url);
-                                      } else {
-                                        throw 'Could not launch $url';
-                                      }
+                                    ..onTap = () {
+                                      _launchUrl();
                                     },
                                 ),
                                 const TextSpan(
@@ -99,15 +101,21 @@ class TermsAndConditionsPage extends StatelessWidget {
                   ElevatedButton(
                     onPressed: () {
                       // Add functionality for the first button
+                      Navigator.pop(context);
                     },
-                    child: const Text('Button 1'),
+                    child: const Text('Decline'),
                   ),
                   const SizedBox(width: 8),
                   ElevatedButton(
-                    onPressed: () {
-                      // Add functionality for the second button
+                    onPressed: () async {
+                      {
+                        SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        prefs.setString('statusKey', 'accepted');
+                        print("Status: accepted");
+                      }
                     },
-                    child: const Text('Button 2'),
+                    child: const Text('Accept'),
                   ),
                 ],
               ),
@@ -116,5 +124,12 @@ class TermsAndConditionsPage extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+Future<void> _launchUrl() async {
+  final Uri url = Uri.parse('https://openai.com/policies/privacy-policy');
+  if (!await launchUrl(url, mode: LaunchMode.inAppBrowserView)) {
+    throw Exception('Could not launch $url');
   }
 }

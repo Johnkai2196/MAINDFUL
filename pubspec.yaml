@@ -41,6 +41,7 @@ dependencies:
   animated_text_kit: ^4.2.1
   flutter_dotenv: ^5.0.2
   url_launcher: ^6.0.12
+  shared_preferences: ^2.0.0
   health: 
     git:
       url: https://github.com/Kaspear/flutter-plugins.git
