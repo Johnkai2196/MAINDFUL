@@ -19,11 +19,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   HealthDataProvider healthDataProvider = HealthDataProvider();
-
+  late bool status = false;
   @override
   void initState() {
     super.initState();
     authorize();
+    _getStatus();
   }
 
   static final types = [
@@ -37,7 +38,7 @@ class _HomePageState extends State<HomePage> {
   final permssions = types.map((e) => HealthDataAccess.READ_WRITE).toList();
 
   HealthFactory health = HealthFactory(useHealthConnectIfAvailable: true);
-  String? status;
+
   Future authorize() async {
     bool? hasPersmission =
         await health.hasPermissions(types, permissions: permssions);
@@ -58,9 +59,15 @@ class _HomePageState extends State<HomePage> {
     await healthDataProvider.fetchHearthRateData(health);
     await healthDataProvider.fetchSleepData(health);
     await healthDataProvider.fetchWeekHealthData(health);
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    status = prefs.getString('statusKey');
     setState(() {});
+  }
+
+  void _getStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+    var status = prefs.getBool('status');
+
+    setState(() => this.status = status ?? false);
   }
 
   @override
@@ -76,26 +83,23 @@ class _HomePageState extends State<HomePage> {
             margin: const EdgeInsets.symmetric(vertical: 20.0),
             child: ElevatedButton(
               onPressed: () {
-                print("Status: $status");
-                if (status == 'accepted') {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => HealthGpt(
-                        healthDataProvider: healthDataProvider,
-                      ),
-                    ),
-                  );
-                } else {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => TermsAndConditionsPage(
-                        healthDataProvider: healthDataProvider,
-                      ),
-                    ),
-                  );
-                }
+                status
+                    ? Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HealthGpt(
+                            healthDataProvider: healthDataProvider,
+                          ),
+                        ),
+                      )
+                    : Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => TermsAndConditionsPage(
+                            healthDataProvider: healthDataProvider,
+                          ),
+                        ),
+                      );
               },
               child: const Row(
                 mainAxisSize: MainAxisSize.min,

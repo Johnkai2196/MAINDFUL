@@ -7,11 +7,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String withIcon;
   final Function()? onIconPressed;
   final bool backArrow;
+  final bool skipTermAndCondition;
   const CustomAppBar({
     super.key,
     this.onIconPressed,
     this.withIcon = "",
     this.backArrow = false,
+    this.skipTermAndCondition = false,
   });
 
   @override

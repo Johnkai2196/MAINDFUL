@@ -107,13 +107,16 @@ class TermsAndConditionsPage extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   ElevatedButton(
-                    onPressed: () async {
-                      {
-                        SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                        prefs.setString('statusKey', 'accepted');
-                        print("Status: accepted");
-                      }
+                    onPressed: () {
+                      _setPreferences();
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HealthGpt(
+                            healthDataProvider: healthDataProvider,
+                          ),
+                        ),
+                      );
                     },
                     child: const Text('Accept'),
                   ),
@@ -132,4 +135,10 @@ Future<void> _launchUrl() async {
   if (!await launchUrl(url, mode: LaunchMode.inAppBrowserView)) {
     throw Exception('Could not launch $url');
   }
+}
+
+void _setPreferences() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setBool('status', true);
+  print("Status: accepted");
 }
