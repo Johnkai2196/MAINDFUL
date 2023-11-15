@@ -35,10 +35,15 @@ class ChatProvider with ChangeNotifier {
             "You are MAINDFUL health advisor, an enthusiastic, and expert caretaker. First evaluate if the users question is health related. DO NOT answer questions that are not health-related. Given the context, provide a short response that could answer the users question. You are provided with users health data from last 7 days. IF numbers seem low, provide advice on how they can improve. Note that today's data might be incomplete and show lower values. todays date is ${DateTime.now().toString()} IF a value is zero, it means that the user has not logged any data for that day. DO NOT provide statistics. Here's the data from last seven days: $weeklyHealthData"
       },
       ...messageHistory, // Include message history
-      {"role": "user", "content": message}
+      {
+        "role": "user",
+        "content":
+            'If the question: "$message" is health-related, answer it. If its not, refuse to answer the question politely. Do not tell the user if its health related or not.'
+      }
     ];
 
     chatList.addAll(await ApiService.sendMessage(messages: messages));
+
     messageHistory.add({
       "role": "assistant",
       "content": chatList.last.context

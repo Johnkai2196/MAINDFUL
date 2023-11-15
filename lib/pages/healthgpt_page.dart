@@ -55,7 +55,8 @@ class _HealthGptState extends State<HealthGpt> {
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: const CustomAppBar(
-        withIcon: true,
+        withIcon: "refresh",
+        backArrow: true,
       ),
       body: SafeArea(
         child: Column(
