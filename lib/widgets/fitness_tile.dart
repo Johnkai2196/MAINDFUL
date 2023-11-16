@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:innovation_project/constants/constants.dart';
 import 'package:innovation_project/pages/healthgpt_page.dart';
+import 'package:innovation_project/pages/term_and_condition_page.dart';
 import 'package:innovation_project/providers/health_providers.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SleepCard extends StatelessWidget {
   final String title;
@@ -228,23 +230,55 @@ class BreathingCard extends StatelessWidget {
   }
 }
 
-class ChatCard extends StatelessWidget {
+class ChatCard extends StatefulWidget {
   final HealthDataProvider healthDataProvider;
+
   const ChatCard({super.key, required this.healthDataProvider});
+
+  @override
+  State<ChatCard> createState() => _ChatCardState();
+}
+
+class _ChatCardState extends State<ChatCard> {
+  late bool status;
+  @override
+  void initState() {
+    super.initState();
+    _getStatus();
+  }
+
+  void _getStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    var status = prefs.getBool('status');
+
+    setState(() => this.status = status ?? false);
+  }
 
   @override
   Widget build(BuildContext context) {
     double cardWidth = MediaQuery.of(context).size.width * 0.85;
     double cardHeight = MediaQuery.of(context).size.width * 0.2;
+    _getStatus();
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                HealthGpt(healthDataProvider: healthDataProvider),
-          ),
-        );
+        status
+            ? Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HealthGpt(
+                    healthDataProvider: widget.healthDataProvider,
+                  ),
+                ),
+              )
+            : Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => TermsAndConditionsPage(
+                    healthDataProvider: widget.healthDataProvider,
+                  ),
+                ),
+              );
       },
       child: Center(
         child: Card(

@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:innovation_project/pages/healthgpt_page.dart';
+import 'package:innovation_project/pages/term_and_condition_page.dart';
 import 'package:innovation_project/providers/health_providers.dart';
 
 import 'package:innovation_project/widgets/custom_app_bar.dart';
@@ -26,12 +27,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   HealthDataProvider healthDataProvider = HealthDataProvider();
-  late bool status = false;
+
   @override
   void initState() {
     super.initState();
     authorize();
-    _getStatus();
   }
 
   static final types = [
@@ -69,21 +69,12 @@ class _HomePageState extends State<HomePage> {
     setState(() {});
   }
 
-  void _getStatus() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    var status = prefs.getBool('status');
-
-    setState(() => this.status = status ?? false);
-  }
-
   @override
   Widget build(BuildContext context) {
     double cardWidth = MediaQuery.of(context).size.width * 0.95;
     double cardHeight = MediaQuery.of(context).size.height * 0.75;
 
     return Scaffold(
-
       backgroundColor: Colors.transparent,
       appBar: CustomAppBar(withIcon: "refresh", onIconPressed: fetchHealthData),
       body: Stack(
@@ -134,7 +125,6 @@ class _HomePageState extends State<HomePage> {
                         ],
                       ),
                     ),
-
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 16.0, bottom: 16.0),

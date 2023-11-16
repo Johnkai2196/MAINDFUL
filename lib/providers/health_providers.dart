@@ -167,6 +167,9 @@ class HealthDataProvider extends ChangeNotifier {
 
         _sleepData = "${hours}h ${formattedMinutes}min";
         notifyListeners();
+      } else {
+        _sleepData = "0h 0min";
+        notifyListeners();
       }
     } else {
       print("Authorization not granted - error in authorization");
