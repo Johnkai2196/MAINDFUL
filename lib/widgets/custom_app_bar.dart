@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:innovation_project/pages/home_page.dart';
 import 'package:innovation_project/providers/chat_providers.dart';
 import 'package:provider/provider.dart';
 
@@ -21,6 +22,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final chatProvider = Provider.of<ChatProvider>(context);
     return AppBar(
       automaticallyImplyLeading: backArrow,
+      leading: skipTermAndCondition
+          ? IconButton(
+              icon: const Icon(Icons.arrow_back),
+              onPressed: () {
+                Navigator.of(context).popUntil((route) => route.isFirst);
+              },
+            )
+          : null,
       centerTitle: true,
       title: RichText(
         text: const TextSpan(
