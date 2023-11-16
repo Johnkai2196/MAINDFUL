@@ -85,7 +85,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
 
       backgroundColor: Colors.transparent,
-      appBar: const CustomAppBar(withIcon: "refresh"),
+      appBar: CustomAppBar(withIcon: "refresh", onIconPressed: fetchHealthData),
       body: Stack(
         children: <Widget>[
           // Background image (SVG)

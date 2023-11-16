@@ -22,7 +22,7 @@ class TermsAndConditionsPage extends StatelessWidget {
     double cardHeight = MediaQuery.of(context).size.height * 0.75;
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: const CustomAppBar(backArrow: true),
+      appBar: const CustomAppBar(),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
