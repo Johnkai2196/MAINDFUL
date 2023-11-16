@@ -1,16 +1,25 @@
-# innovation_project
+# MAINDFUL
 
-A new Flutter project.
+*"Your health is just a chat away"*
 
-## Getting Started
+## Project Description
 
-This project is a starting point for a Flutter application.
+### Project idea
+>  A health application that utilizes AI and your Health Data to provide guidance, tips and knowledge based on your health data. A companion that understands you and is available 24/7.
 
-A few resources to get you started if this is your first Flutter project:
+## Built With
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Flutter
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Dart
+
+- OpenAI
+
+## UI
+
+<img src="https://github.com/Johnkai2196/innovation_project/assets/79135621/93df5581-5c4e-4ba7-9cf3-6c61a19d0d4c" width="300">
+
+## Authors
+
+[Johnkai Cortez](https://github.com/Johnkai2196 "Johnkai Cortez"), [Jenna Hakulinen](https://github.com/jennahakulinen "Jenna Hakulinen") and [Kata Sara-aho](https://github.com/kvtvs "Kata Sara-aho")
+
