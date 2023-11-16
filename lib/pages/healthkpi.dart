@@ -1,153 +1,182 @@
 import 'package:flutter/material.dart';
+// import 'package:innovation_project/constants/constants.dart';
+// import 'package:innovation_project/pages/healthgpt_page.dart';
+import 'package:innovation_project/widgets/custom_app_bar.dart';
+import 'package:innovation_project/widgets/fitness_tile.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class HealthKpi extends StatelessWidget {
-  const HealthKpi({Key? key});
+class HealthKPI extends StatelessWidget {
+  final String title;
+  final String value;
+  const HealthKPI({super.key, required this.title, required this.value});
 
   @override
   Widget build(BuildContext context) {
+    double screenWidth = MediaQuery.of(context).size.width;
+
     return Scaffold(
-      backgroundColor: Colors.black, // Dark background
-      body: Column(
-        children: [
-          Expanded(
-            child: Container(
-              width: MediaQuery.of(context).size.height * 1,
-              height: MediaQuery.of(context).size.height * 0.5,
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage('assets/images/aerial-1822139_1280.png'),
-                  fit: BoxFit.cover,
-                ),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Stack(
-                  alignment: Alignment.center,
-                  children: [
-                    Container(
-                      width: 300,
-                      height: 300,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: Color(0xFF0093DF),
-                          width: 3,
-                        ),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Color(0xFF0093DF).withOpacity(0.4),
-                            spreadRadius: 10,
-                            blurRadius: 5,
-                            offset: Offset(0, 0),
-                          ),
-                        ],
-                      ),
-                      child: ClipOval(
-                        child: Image.asset(
-                          'assets/images/aerial-1822139_1280.png',
-                          fit: BoxFit.cover,
-                          width: 300,
-                          height: 300,
-                        ),
-                      ),
+      body: Scaffold(
+        backgroundColor: const Color(0xff1D1B1E),
+        appBar: const CustomAppBar(backArrow: true),
+        body: Column(
+          children: <Widget>[
+            // Upper Section
+            Expanded(
+              flex: 4,
+              child: Container(
+                width: screenWidth,
+                margin: const EdgeInsets.all(16.0),
+                child: Center(
+                  child: Card(
+                    margin: const EdgeInsets.all(0),
+                    elevation: 0,
+                    color: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0),
                     ),
-                    Container(
-                      width: 280,
-                      height: 280,
+                    child: Container(
+                      width: screenWidth * 0.95,
                       decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Colors.transparent,
+                        image: const DecorationImage(
+                          image:
+                              AssetImage('assets/images/moon-1301073_1280.jpg'),
+                          fit: BoxFit.cover,
+                        ),
+                        borderRadius: BorderRadius.circular(12.0),
                       ),
-                      child: Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Container(
+                            margin: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: const Text(
                               'Sleep',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 24,
+                                fontSize: 24.0,
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            SizedBox(height: 8),
-                            SvgPicture.asset(
-                              'assets/icons/moon-svgrepo-com.svg',
-                              color: Colors.white,
-                              height: 32,
-                              width: 32,
-                            ),
-                            SizedBox(height: 8),
-                            Text(
-                              'Lorem ipsum dolor sit amet,',
-                              style: TextStyle(
+                          ),
+                          SvgPicture.asset(
+                            'assets/icons/moon-svgrepo-com.svg',
+                            height: 45.0,
+                            width: 45.0,
+                            color: Colors.white,
+                          ),
+                          Container(
+                            margin: const EdgeInsets.symmetric(vertical: 8.0),
+                            child: Text(
+                              value,
+                              style: const TextStyle(
                                 color: Colors.white,
-                                fontSize: 16,
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
                     ),
-                  ],
+                  ),
                 ),
               ),
             ),
-          ),
-          Container(
-            padding: EdgeInsets.all(16),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Center(
-                  child: Text(
-                    'You had a restful night\'s sleep',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 20,
+
+            // Lower Section
+            Expanded(
+              flex: 6, // 60% of the available space
+              child: Container(
+                width: screenWidth, // 100% of the screen width
+                margin: const EdgeInsets.all(
+                    16.0), // Add margin around the container
+                child: Center(
+                  child: Card(
+                    elevation: 0, // No shadow
+                    color: Colors.transparent,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12.0),
+                    ),
+                    child: Container(
+                      width: screenWidth * 0.95, // 95% of the screen width
+                      color: const Color(0xff1D1B1E), // Dark background color
+                      child: Column(
+                        children: <Widget>[
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(vertical: 8.0),
+                              child: const Text(
+                                'You slept good',
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              margin: const EdgeInsets.only(
+                                top: 8.0,
+                                bottom: 8.0,
+                              ),
+                              padding: const EdgeInsets.only(
+                                  bottom: 8.0), // Add padding to the bottom
+                              decoration: const BoxDecoration(
+                                border: Border(
+                                  bottom: BorderSide(
+                                    color: Colors.white, // Set the border color
+                                    width: 1.0, // Set the border thickness
+                                  ),
+                                ),
+                              ),
+                              child: const Text(
+                                'Why is sleep important?',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 24.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 3,
+                            child: Container(
+                              margin: const EdgeInsets.symmetric(vertical: 8.0),
+                              child: const Text(
+                                'Quality sleep is your body\'s natural way of rejuvenating and recharging. It provides the energy and vitality needed to embrace each new day with enthusiasm, helping you feel your best both mentally and physically.',
+                                style: TextStyle(color: Colors.white),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: ElevatedButton(
+                              onPressed: () {
+                                // Button action
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: const Color(
+                                    0xffDFB7FF), // Button background color
+                              ),
+                              child: const Text(
+                                'Tell me about sleep',
+                                style: TextStyle(
+                                  color: Color(0xff4B007E), // Button text color
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ),
                 ),
-                SizedBox(height: 8),
-                Center(
-                  child: Text(
-                    'Why you should sleep?',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-                SizedBox(height: 8),
-                Center(
-                  child: Container(
-                    height: 2,
-                    color: Colors.white,
-                  ),
-                ),
-                SizedBox(height: 8),
-                Text(
-                  'Quality sleep is your body\'s natural way of rejuvenating and recharging. It provides the energy and vitality needed to embrace each new day with enthusiasm, helping you feel your best both mentally and physically.',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                  ),
-                ),
-                Spacer(),
-                Center(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      // Button action
-                    },
-                    child: Text('Lorem Ipsum'),
-                  ),
-                ),
-              ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

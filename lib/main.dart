@@ -2,11 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:innovation_project/pages/home_page.dart';
-
-import 'package:innovation_project/pages/term_and_condition_page.dart';
-
-import 'package:innovation_project/pages/healthkpi.dart';
-
 import 'package:innovation_project/providers/chat_providers.dart';
 import 'package:innovation_project/providers/health_providers.dart';
 import 'package:provider/provider.dart';

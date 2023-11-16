@@ -25,16 +25,29 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     final chatProvider = Provider.of<ChatProvider>(context);
+    Widget back;
+    if (backArrow) {
+      back = IconButton(
+        icon: const Icon(Icons.arrow_back_ios_outlined),
+        onPressed: () {
+          Navigator.of(context).pop();
+          print("back");
+        },
+      );
+      if (skipTermAndCondition) {
+        back = IconButton(
+          icon: const Icon(Icons.arrow_back_ios_outlined),
+          onPressed: () {
+            Navigator.of(context).popUntil((route) => route.isFirst);
+          },
+        );
+        print("skip");
+      }
+    } else {
+      back = Container();
+    }
     return AppBar(
-      automaticallyImplyLeading: backArrow,
-      leading: skipTermAndCondition
-          ? IconButton(
-              icon: const Icon(Icons.arrow_back_ios_outlined),
-              onPressed: () {
-                Navigator.of(context).popUntil((route) => route.isFirst);
-              },
-            )
-          : null,
+      leading: back,
       centerTitle: true,
       backgroundColor: Colors.transparent,
       iconTheme: const IconThemeData(color: Colors.white),

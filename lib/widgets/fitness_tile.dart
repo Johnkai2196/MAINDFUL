@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:innovation_project/constants/constants.dart';
 import 'package:innovation_project/pages/healthgpt_page.dart';
+import 'package:innovation_project/pages/healthkpi.dart';
 import 'package:innovation_project/pages/term_and_condition_page.dart';
 import 'package:innovation_project/providers/health_providers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,7 +16,11 @@ class SleepCard extends StatelessWidget {
     double cardHeight = MediaQuery.of(context).size.width * 0.4;
     return GestureDetector(
       onTap: () {
-        print("Sleep card tapped");
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => HealthKPI(title: "Sleep", value: title)),
+        );
       },
       child: Center(
         child: Card(
