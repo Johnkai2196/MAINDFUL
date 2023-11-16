@@ -57,6 +57,7 @@ class _HealthGptState extends State<HealthGpt> {
       appBar: const CustomAppBar(
         withIcon: "delete",
         backArrow: true,
+        skipTermAndCondition: true,
       ),
       body: SafeArea(
         child: Column(

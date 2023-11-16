@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+
+import 'package:innovation_project/pages/home_page.dart';
+
 import 'package:innovation_project/constants/constants.dart';
 // import 'package:innovation_project/constants/constants.dart';
+
 import 'package:innovation_project/providers/chat_providers.dart';
 import 'package:provider/provider.dart';
 
@@ -9,11 +13,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final String withIcon;
   final Function()? onIconPressed;
   final bool backArrow;
+  final bool skipTermAndCondition;
   const CustomAppBar({
     super.key,
     this.onIconPressed,
     this.withIcon = "",
     this.backArrow = false,
+    this.skipTermAndCondition = false,
   });
 
   @override
@@ -21,6 +27,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final chatProvider = Provider.of<ChatProvider>(context);
     return AppBar(
       automaticallyImplyLeading: backArrow,
+      leading: skipTermAndCondition
+          ? IconButton(
+              icon: const Icon(Icons.arrow_back_ios_outlined),
+              onPressed: () {
+                Navigator.of(context).popUntil((route) => route.isFirst);
+              },
+            )
+          : null,
       centerTitle: true,
       backgroundColor: Colors.transparent,
       iconTheme: const IconThemeData(color: Colors.white),
