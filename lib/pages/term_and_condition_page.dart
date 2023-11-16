@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:innovation_project/constants/constants.dart';
 import 'package:innovation_project/pages/healthgpt_page.dart';
 import 'package:innovation_project/providers/health_providers.dart';
 import 'package:innovation_project/widgets/custom_app_bar.dart';
@@ -21,7 +22,7 @@ class TermsAndConditionsPage extends StatelessWidget {
     double cardHeight = MediaQuery.of(context).size.height * 0.75;
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: const CustomAppBar(),
+      appBar: const CustomAppBar(backArrow: true),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -98,15 +99,30 @@ class TermsAndConditionsPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  ElevatedButton(
+                  OutlinedButton(
                     onPressed: () {
-                      // Add functionality for the first button
+                      // Add functionality for the button
                       Navigator.pop(context);
                     },
-                    child: const Text('Decline'),
+                    style: OutlinedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            100.0), // Adjust the radius as needed
+                      ),
+                      side: BorderSide(
+                        color: textWhite, // Set the color of the border
+                        width: 0.5, // Set the width of the border
+                      ),
+                    ),
+                    child: const Text(
+                      'Decline',
+                      style: TextStyle(
+                          // You can customize the text style if needed
+                          ),
+                    ),
                   ),
                   const SizedBox(width: 8),
-                  ElevatedButton(
+                  OutlinedButton(
                     onPressed: () {
                       _setPreferences();
                       Navigator.push(
@@ -118,7 +134,23 @@ class TermsAndConditionsPage extends StatelessWidget {
                         ),
                       );
                     },
-                    child: const Text('Accept'),
+                    style: OutlinedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(
+                            100.0), // Adjust the radius as needed
+                      ),
+                      side: BorderSide(
+                        color: textWhite, // Set the color of the border
+                        width: 0.5, // Set the width of the border
+                      ),
+                    ),
+                    child: Text(
+                      'Accept',
+                      style: TextStyle(
+                        // You can customize the text style if needed
+                        color: darkerPurple,
+                      ),
+                    ),
                   ),
                 ],
               ),
