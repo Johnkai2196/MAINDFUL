@@ -5,7 +5,7 @@ import 'package:health/health.dart';
 
 class HealthDataProvider extends ChangeNotifier {
   int _steps = 0;
-  double _v02Max = 0.0;
+  int _v02Max = 0;
   int _heartRate = 0;
   String _sleepData = '';
   Map<String, Map<String, dynamic>> _weeklyHealthData = {};
@@ -22,7 +22,7 @@ class HealthDataProvider extends ChangeNotifier {
   }
 
   int get steps => _steps;
-  double get v02Max => _v02Max;
+  int get v02Max => _v02Max;
   int get heartRate => _heartRate;
   String get sleepData => _sleepData;
 
@@ -50,7 +50,7 @@ class HealthDataProvider extends ChangeNotifier {
   Future fetchV02MaxData(HealthFactory health) async {
     List<HealthDataPoint> v02max = [];
     bool requested = await health.requestAuthorization([HealthDataType.VO2MAX]);
-    double v02MaxAvg = 0;
+    int v02MaxAvg = 0;
     if (requested) {
       try {
         v02max = await health.getHealthDataFromTypes(midnight, now, [
@@ -61,11 +61,11 @@ class HealthDataProvider extends ChangeNotifier {
       }
       for (var element in v02max) {
         var elementValueString = element.value.toJson();
-        v02MaxAvg += num.parse(elementValueString["numericValue"]);
+        v02MaxAvg += int.parse(elementValueString["numericValue"]);
       }
 
       if (v02max.isNotEmpty) {
-        v02MaxAvg = v02MaxAvg / v02max.length;
+        v02MaxAvg = (v02MaxAvg / v02max.length).round();
 
         _v02Max = v02MaxAvg;
         notifyListeners();
@@ -165,7 +165,7 @@ class HealthDataProvider extends ChangeNotifier {
         String formattedMinutes =
             minutes < 10 ? '0$minutes' : minutes.toString();
 
-        _sleepData = "${hours}h ${formattedMinutes}m";
+        _sleepData = "${hours}h ${formattedMinutes}min";
         notifyListeners();
       }
     } else {
