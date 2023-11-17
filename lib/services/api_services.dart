@@ -21,7 +21,7 @@ class ApiService {
         },
         body: jsonEncode(
           {
-            "model": GPT3,
+            "model": GPT4T,
             "messages": messages, // Include the list of messages
           },
         ),

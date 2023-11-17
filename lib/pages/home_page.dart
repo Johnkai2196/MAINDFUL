@@ -120,7 +120,9 @@ class _HomePageState extends State<HomePage> {
                             title: healthDataProvider.sleepData,
                           ),
                           HeartCard(
-                            beats: '${healthDataProvider.heartRate} bpm',
+                            beats: healthDataProvider.heartRate == 0
+                                ? 'No Data'
+                                : '${healthDataProvider.heartRate} bpm',
                           ),
                         ],
                       ),
@@ -136,7 +138,9 @@ class _HomePageState extends State<HomePage> {
                             steps: '${healthDataProvider.steps}',
                           ),
                           BreathingCard(
-                            breath: '${healthDataProvider.v02Max} VO₂max',
+                            breath: healthDataProvider.v02Max == 0
+                                ? 'No Data'
+                                : '${healthDataProvider.v02Max} VO₂max',
                           ),
                         ],
                       ),
