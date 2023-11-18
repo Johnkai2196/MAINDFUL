@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:innovation_project/pages/home_page.dart';
-
 import 'package:innovation_project/constants/constants.dart';
 // import 'package:innovation_project/constants/constants.dart';
 
@@ -14,12 +12,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final Function()? onIconPressed;
   final bool backArrow;
   final bool skipTermAndCondition;
+  final bool typing;
   const CustomAppBar({
     super.key,
     this.onIconPressed,
     this.withIcon = "",
     this.backArrow = false,
     this.skipTermAndCondition = false,
+    this.typing = false,
   });
 
   @override
@@ -31,7 +31,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         icon: const Icon(Icons.arrow_back_ios_outlined),
         onPressed: () {
           Navigator.of(context).pop();
-          print("back");
         },
       );
       if (skipTermAndCondition) {
@@ -41,7 +40,6 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             Navigator.of(context).popUntil((route) => route.isFirst);
           },
         );
-        print("skip");
       }
     } else {
       back = Container();
@@ -90,7 +88,18 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             icon: const Icon(Icons.delete),
             color: Colors.white,
             onPressed: () {
-              chatProvider.resetChat();
+              if (!typing) {
+                chatProvider.resetChat();
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text(
+                        "You cannot reset a message while it's being sent."),
+                    backgroundColor: Colors.red,
+                  ),
+                );
+                return;
+              }
             },
           )
         else if (withIcon == 'refresh')

@@ -1,16 +1,22 @@
 import 'package:flutter/widgets.dart';
-import 'package:health/health.dart';
+import 'package:innovation_project/constants/constants.dart';
 import 'package:innovation_project/models/chat_models.dart';
-import 'package:innovation_project/providers/health_providers.dart';
 import 'package:innovation_project/services/api_services.dart';
 
 class ChatProvider with ChangeNotifier {
   List<ChatModel> chatList = [
-    ChatModel(
-        context:
-            "MAINDFUL is powered by the OpenAI API. Data submitted here is not used for training OpenAI's models according to their terms and conditions. Currently, MAINDFUL is accessing your step count, sleep analysis, VO2MAX and heart rate all from data stored in the Health app. Remember to log your data and wear your Apple Watch throughout the day for the most accurate result",
-        role: "assistant")
+    ChatModel(context: beginChat, role: "assistant"),
   ];
+  List<ChatModel> promptlist = [
+    ChatModel(context: "Daily summary", role: "prompt"),
+    ChatModel(context: "Weekly summary", role: "prompt"),
+    ChatModel(context: "On which aspect should I improve on?", role: "prompt"),
+    ChatModel(
+        context: "What’s my health situation compared to an average human?",
+        role: "prompt"),
+  ];
+
+  List<ChatModel> get getPromptList => promptlist;
   List<ChatModel> get getChatList => chatList;
   List<Map<String, dynamic>> messageHistory = [];
 
@@ -23,11 +29,18 @@ class ChatProvider with ChangeNotifier {
 
   void resetChat() {
     chatList = [
-      ChatModel(
-          context:
-              "MAINDFUL is powered by the OpenAI API. Data submitted here is not used for training OpenAI's models according to their terms and conditions. Currently, MAINDFUL is accessing your step count, sleep analysis, VO2MAX and heart rate all from data stored in the Health app. Remember to log your data and wear your Apple Watch throughout the day for the most accurate result",
-          role: "assistant")
+      ChatModel(context: beginChat, role: "assistant"),
     ];
+    promptlist = [
+      ChatModel(context: "Daily summary", role: "prompt"),
+      ChatModel(context: "Weekly summary", role: "prompt"),
+      ChatModel(
+          context: "On which aspect should I improve on?", role: "prompt"),
+      ChatModel(
+          context: "What’s my health situation compared to an average human?",
+          role: "prompt"),
+    ];
+
     messageHistory = [];
     notifyListeners();
   }

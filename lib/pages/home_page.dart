@@ -1,21 +1,14 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
-import 'package:innovation_project/pages/healthgpt_page.dart';
-import 'package:innovation_project/pages/term_and_condition_page.dart';
 import 'package:innovation_project/providers/health_providers.dart';
-
 import 'package:innovation_project/widgets/custom_app_bar.dart';
 import 'package:innovation_project/widgets/fitness_tile.dart';
 import 'package:health/health.dart';
 
-import 'package:shared_preferences/shared_preferences.dart';
-
-import 'package:innovation_project/constants/constants.dart';
 // import 'package:innovation_project/constants/constants.dart';
 // import 'package:innovation_project/pages/healthgpt_page.dart';
-import 'package:innovation_project/widgets/custom_app_bar.dart';
-import 'package:innovation_project/widgets/fitness_tile.dart';
+
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomePage extends StatefulWidget {
@@ -135,7 +128,9 @@ class _HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           StepsCard(
-                            steps: '${healthDataProvider.steps}',
+                            steps: healthDataProvider.steps == 0
+                                ? 'No Data'
+                                : '${healthDataProvider.steps}',
                           ),
                           BreathingCard(
                             breath: healthDataProvider.v02Max == 0

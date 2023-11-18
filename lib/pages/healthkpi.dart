@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 // import 'package:innovation_project/constants/constants.dart';
 // import 'package:innovation_project/pages/healthgpt_page.dart';
 import 'package:innovation_project/widgets/custom_app_bar.dart';
-import 'package:innovation_project/widgets/fitness_tile.dart';
+
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HealthKPI extends StatelessWidget {

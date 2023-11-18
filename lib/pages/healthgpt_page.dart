@@ -4,7 +4,6 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:health/health.dart';
 import 'package:innovation_project/constants/constants.dart';
 import 'package:innovation_project/models/chat_models.dart';
 import 'package:innovation_project/providers/chat_providers.dart';
@@ -51,13 +50,15 @@ class _HealthGptState extends State<HealthGpt> {
   Widget build(BuildContext context) {
     final chatProvider = Provider.of<ChatProvider>(context);
     final healthDataProvider = widget.healthDataProvider; // Add this line
-
+    List<ChatModel> combinedList =
+        chatProvider.chatList + chatProvider.promptlist;
     return Scaffold(
       backgroundColor: Colors.black,
-      appBar: const CustomAppBar(
+      appBar: CustomAppBar(
         withIcon: "delete",
         backArrow: true,
         skipTermAndCondition: true,
+        typing: _isTyping,
       ),
       body: SafeArea(
         child: Column(
@@ -65,14 +66,38 @@ class _HealthGptState extends State<HealthGpt> {
             Flexible(
               child: ListView.builder(
                 controller: _listScrollController,
-                itemCount: chatProvider.getChatList.length,
+                itemCount: combinedList.length,
                 itemBuilder: (context, index) {
-                  final dynamic role = chatProvider.getChatList[index].role;
+                  final dynamic role = combinedList[index].role;
                   final isSender = role == "user";
+                  final isPrompt = role == "prompt";
+                  if (isPrompt || isSender) {
+                    if (isSender) {
+                      return ChatWidget(
+                        message: combinedList[index].context,
+                        isSender: isSender,
+                      );
+                    } else {
+                      return GestureDetector(
+                        onTap: () {
+                          // Handle the click event
+                          textController.text = combinedList[index].context;
+                          chatProvider.promptlist.clear();
+                          sendMessage(
+                              chatProvider: chatProvider,
+                              healthDataProvider: healthDataProvider);
+                        },
+                        child: ChatWidget(
+                          message: combinedList[index].context,
+                          isSender: isPrompt,
+                        ),
+                      );
+                    }
+                  }
                   return ChatWidget(
-                    message: chatProvider.getChatList[index].context,
+                    message: combinedList[index].context,
                     isSender: isSender,
-                    shouldAnimate: chatProvider.getChatList.length - 1 == index,
+                    shouldAnimate: combinedList.length - 1 == index,
                   );
                 },
               ),
@@ -120,6 +145,7 @@ class _HealthGptState extends State<HealthGpt> {
                       ),
                       child: IconButton(
                         onPressed: () async {
+                          chatProvider.promptlist.clear();
                           await sendMessage(
                               chatProvider: chatProvider,
                               healthDataProvider: healthDataProvider);
