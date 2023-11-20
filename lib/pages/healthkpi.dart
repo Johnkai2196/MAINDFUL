@@ -54,7 +54,6 @@ class HealthKPI extends StatelessWidget {
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 24.0,
-                                fontWeight: FontWeight.bold,
                                 fontFamily: "ConcertOne",
                               ),
                             ),
@@ -135,7 +134,6 @@ class HealthKPI extends StatelessWidget {
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 24.0,
-                                  fontWeight: FontWeight.bold,
                                   fontFamily: "ConcertOne",
                                 ),
                               ),

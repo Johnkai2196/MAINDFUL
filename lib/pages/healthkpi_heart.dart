@@ -5,10 +5,10 @@ import 'package:innovation_project/widgets/custom_app_bar.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 
-class HealthKPIBreath extends StatelessWidget {
+class HealthKPIHeart extends StatelessWidget {
   final String title;
   final String value;
-  const HealthKPIBreath({super.key, required this.title, required this.value});
+  const HealthKPIHeart({super.key, required this.title, required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -50,7 +50,7 @@ class HealthKPIBreath extends StatelessWidget {
                           Container(
                             margin: const EdgeInsets.symmetric(vertical: 8.0),
                             child: const Text(
-                              'Breath',
+                              'Heart',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 24.0,
@@ -59,7 +59,7 @@ class HealthKPIBreath extends StatelessWidget {
                             ),
                           ),
                           SvgPicture.asset(
-                            'assets/icons/wind-svgrepo-com.svg',
+                            'assets/icons/heart-svgrepo-com.svg',
                             height: 45.0,
                             width: 45.0,
                             color: Colors.white,
@@ -107,7 +107,7 @@ class HealthKPIBreath extends StatelessWidget {
                             child: Container(
                               margin: const EdgeInsets.symmetric(vertical: 8.0),
                               child: const Text(
-                                'You have impressive endurance capacity.',
+                                'Your heart is doing great!',
                                 style: TextStyle(color: Colors.white),
                               ),
                             ),
@@ -130,7 +130,7 @@ class HealthKPIBreath extends StatelessWidget {
                                 ),
                               ),
                               child: const Text(
-                                'What VO2max tells you?',
+                                'Why monitor your heart?',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 24.0,
@@ -144,7 +144,7 @@ class HealthKPIBreath extends StatelessWidget {
                             child: Container(
                               margin: const EdgeInsets.symmetric(vertical: 8.0),
                               child: const Text(
-                                'A good VO2max indicates efficient oxygen use, enhancing endurance, cardiovascular health, and overall fitness. It reflects the body\'s ability to sustain physical activity, improve performance, and reduce the risk of cardiovascular diseases.',
+                                'Keeping an eye on your heart helps catch potential problems early and ensures you\'re on top of your overall health. It also guides you in tailoring your exercise routine for better fitness and well-being.',
                                 style: TextStyle(color: Colors.white),
                                 textAlign: TextAlign.center,
                               ),
@@ -161,7 +161,7 @@ class HealthKPIBreath extends StatelessWidget {
                                     0xffDFB7FF), // Button background color
                               ),
                               child: const Text(
-                                'Physical activity tips',
+                                'Healthy tips for heart',
                                 style: TextStyle(
                                   color: Color(0xff4B007E), // Button text color
                                 ),

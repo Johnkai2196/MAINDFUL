@@ -54,13 +54,12 @@ class HealthKPISteps extends StatelessWidget {
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 24.0,
-                                fontWeight: FontWeight.bold,
                                 fontFamily: "ConcertOne",
                               ),
                             ),
                           ),
                           SvgPicture.asset(
-                            'assets/icons/moon-svgrepo-com.svg',
+                            'assets/icons/walk-svgrepo-com.svg',
                             height: 45.0,
                             width: 45.0,
                             color: Colors.white,
@@ -135,7 +134,6 @@ class HealthKPISteps extends StatelessWidget {
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 24.0,
-                                  fontWeight: FontWeight.bold,
                                   fontFamily: "ConcertOne",
                                 ),
                               ),
