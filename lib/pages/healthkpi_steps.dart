@@ -5,10 +5,10 @@ import 'package:innovation_project/widgets/custom_app_bar.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 
-class HealthKPIBreath extends StatelessWidget {
+class HealthKPISteps extends StatelessWidget {
   final String title;
   final String value;
-  const HealthKPIBreath({super.key, required this.title, required this.value});
+  const HealthKPISteps({super.key, required this.title, required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +39,7 @@ class HealthKPIBreath extends StatelessWidget {
                       decoration: BoxDecoration(
                         image: const DecorationImage(
                           image: AssetImage(
-                              'assets/images/aerial-1822139_1280.png'),
+                              'assets/images/jad-limcaco-fRggLY1DQTM-unplash.jpg'),
                           fit: BoxFit.cover,
                         ),
                         borderRadius: BorderRadius.circular(12.0),
@@ -50,7 +50,7 @@ class HealthKPIBreath extends StatelessWidget {
                           Container(
                             margin: const EdgeInsets.symmetric(vertical: 8.0),
                             child: const Text(
-                              'Breath',
+                              'Steps',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 24.0,
@@ -108,7 +108,7 @@ class HealthKPIBreath extends StatelessWidget {
                             child: Container(
                               margin: const EdgeInsets.symmetric(vertical: 8.0),
                               child: const Text(
-                                'You have impressive endurance capacity.',
+                                'Keep it going!',
                                 style: TextStyle(color: Colors.white),
                               ),
                             ),
@@ -131,7 +131,7 @@ class HealthKPIBreath extends StatelessWidget {
                                 ),
                               ),
                               child: const Text(
-                                'What VO2max tells you?',
+                                'Why you should stay active?',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 24.0,
@@ -146,7 +146,7 @@ class HealthKPIBreath extends StatelessWidget {
                             child: Container(
                               margin: const EdgeInsets.symmetric(vertical: 8.0),
                               child: const Text(
-                                'A good VO2max indicates efficient oxygen use, enhancing endurance, cardiovascular health, and overall fitness. It reflects the body\'s ability to sustain physical activity, improve performance, and reduce the risk of cardiovascular diseases.',
+                                'Staying active is essential for overall health, offering benefits such as improved cardiovascular function, mental well-being, and disease prevention. Regular physical activity, even in simple forms like walking, contributes to longevity, weight management, and a higher quality of life.',
                                 style: TextStyle(color: Colors.white),
                                 textAlign: TextAlign.center,
                               ),
@@ -163,7 +163,7 @@ class HealthKPIBreath extends StatelessWidget {
                                     0xffDFB7FF), // Button background color
                               ),
                               child: const Text(
-                                'Physical activity tips',
+                                'How to improve daily activity',
                                 style: TextStyle(
                                   color: Color(0xff4B007E), // Button text color
                                 ),

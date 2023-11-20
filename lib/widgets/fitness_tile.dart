@@ -3,6 +3,7 @@ import 'package:innovation_project/constants/constants.dart';
 import 'package:innovation_project/pages/healthgpt_page.dart';
 import 'package:innovation_project/pages/healthkpi.dart';
 import 'package:innovation_project/pages/healthkpi_breath.dart';
+import 'package:innovation_project/pages/healthkpi_steps.dart';
 import 'package:innovation_project/pages/term_and_condition_page.dart';
 import 'package:innovation_project/providers/health_providers.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -134,7 +135,12 @@ class StepsCard extends StatelessWidget {
     double cardHeight = MediaQuery.of(context).size.width * 0.4;
     return GestureDetector(
       onTap: () {
-        print("Steps card tapped");
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) =>
+                  HealthKPISteps(title: "Steps", value: steps)),
+        );
       },
       child: Center(
         child: Card(
@@ -194,7 +200,7 @@ class BreathingCard extends StatelessWidget {
           context,
           MaterialPageRoute(
               builder: (context) =>
-                  HealthKPIBreath(title: "Sleep", value: breath)),
+                  HealthKPIBreath(title: "Breath", value: breath)),
         );
       },
       child: Center(
