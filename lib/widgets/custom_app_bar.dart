@@ -92,7 +92,60 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             color: Colors.white,
             onPressed: () {
               if (!typing) {
-                chatProvider.resetChat();
+                showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return AlertDialog(
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20.0)),
+                      ),
+                      backgroundColor: lightGrey,
+                      title: Text('Do you want to clear chat?',
+                          style: TextStyle(
+                            color: textWhite,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 24.0,
+                          )),
+                      content: Text(
+                          'Clearing the chat will permanently erase all conversation history, and it cannot be restored. Are you sure you want to proceed?',
+                          style: TextStyle(color: textWhite)),
+                      actions: [
+                        TextButton(
+                          child: Text(
+                            'No',
+                            style: TextStyle(color: textPurple),
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).pop(); // Closes the dialog
+                          },
+                        ),
+                        ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(textPurple),
+                            shape: MaterialStateProperty.all<
+                                RoundedRectangleBorder>(
+                              RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(16),
+                              ),
+                            ),
+                          ),
+                          child: Text(
+                            'Yes',
+                            style: TextStyle(
+                              color: lightGrey,
+                            ),
+                          ),
+                          onPressed: () {
+                            // Place your deletion logic here
+                            chatProvider.resetChat();
+                            Navigator.of(context).pop(); // Closes the dialog
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
               } else {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(

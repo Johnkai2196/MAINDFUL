@@ -6,11 +6,12 @@ class ChatWidget extends StatelessWidget {
   final bool isSender;
   final String message;
   final bool shouldAnimate;
-  const ChatWidget(
-      {super.key,
-      required this.isSender,
-      required this.message,
-      this.shouldAnimate = false});
+  const ChatWidget({
+    super.key,
+    required this.isSender,
+    required this.message,
+    this.shouldAnimate = false,
+  });
 
   @override
   Widget build(BuildContext context) {
