@@ -13,6 +13,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final bool backArrow;
   final bool skipTermAndCondition;
   final bool typing;
+  final bool walkThrough;
   const CustomAppBar({
     super.key,
     this.onIconPressed,
@@ -20,30 +21,32 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.backArrow = false,
     this.skipTermAndCondition = false,
     this.typing = false,
+    this.walkThrough = false,
   });
 
   @override
   Widget build(BuildContext context) {
     final chatProvider = Provider.of<ChatProvider>(context);
     Widget back;
-    if (backArrow) {
-      back = IconButton(
-        icon: const Icon(Icons.arrow_back_ios_outlined),
-        onPressed: () {
-          Navigator.of(context).pop();
-        },
-      );
-      if (skipTermAndCondition) {
-        back = IconButton(
-          icon: const Icon(Icons.arrow_back_ios_outlined),
-          onPressed: () {
-            Navigator.of(context).popUntil((route) => route.isFirst);
-          },
-        );
-      }
-    } else {
-      back = Container();
-    }
+
+    back = backArrow
+        ? IconButton(
+            icon: const Icon(Icons.arrow_back_ios_outlined),
+            onPressed: () {
+              skipTermAndCondition
+                  ? Navigator.of(context).popUntil((route) => route.isFirst)
+                  : Navigator.of(context).pop();
+            },
+          )
+        : walkThrough
+            ? IconButton(
+                icon: const Icon(Icons.info_outline_rounded),
+                onPressed: () {
+                  print("info");
+                },
+              )
+            : Container();
+
     return AppBar(
       leading: back,
       centerTitle: true,
