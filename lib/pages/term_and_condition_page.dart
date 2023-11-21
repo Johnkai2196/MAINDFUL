@@ -17,7 +17,7 @@ class TermsAndConditionsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double cardWidth = MediaQuery.of(context).size.width * 0.95;
-    double cardHeight = MediaQuery.of(context).size.height * 0.75;
+    double cardHeight = MediaQuery.of(context).size.height * 0.70;
     return Scaffold(
       backgroundColor: Colors.black,
       appBar: const CustomAppBar(),

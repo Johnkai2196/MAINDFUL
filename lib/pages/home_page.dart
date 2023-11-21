@@ -113,7 +113,9 @@ class _HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           SleepCard(
-                            title: healthDataProvider.sleepData,
+                            title: healthDataProvider.sleepData == ''
+                                ? 'No Data'
+                                : healthDataProvider.sleepData,
                           ),
                           HeartCard(
                             beats: healthDataProvider.heartRate == 0

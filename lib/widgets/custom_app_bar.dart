@@ -26,6 +26,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData(
+      colorSchemeSeed: const Color(0xff6750a4),
+      useMaterial3: true,
+    );
+
     final chatProvider = Provider.of<ChatProvider>(context);
     Widget back;
 
@@ -42,7 +47,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             ? IconButton(
                 icon: const Icon(Icons.info_outline_rounded),
                 onPressed: () {
-                  print("info");
+                  _showWelcomeDialog(context);
                 },
               )
             : Container();
@@ -118,6 +123,84 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         else
           Container(), // This will render nothing if iconType is neither 'delete' nor 'refresh'
       ],
+    );
+  }
+
+  void _showWelcomeDialog(BuildContext context) {
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Welcome to use MAINDFUL!'),
+          content: const Text(
+              'Here is a short introduction on how to get started with MAINDFUL.'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, 'Cancel');
+              },
+              child: const Text('Cancel'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, 'OK');
+                _showNextDialog(context, 2); // Start the sequence with Dialog 2
+              },
+              child: const Text('Next'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showNextDialog(BuildContext context, int dialogNumber) {
+    String dialogTitle = 'Dialog $dialogNumber';
+    String dialogContent = 'This is the content of Dialog $dialogNumber.';
+
+    if (dialogNumber == 2) {
+      dialogTitle = 'Home';
+      dialogContent =
+          'Here you will find easy access to MAICHAT where you can discuss all things health! Just click MAICHAT and ask away.\n \nIn your home page you will also see overall view on your personal health data from Apple Health.';
+    } else if (dialogNumber == 3) {
+      dialogTitle = 'MAICHAT';
+      dialogContent =
+          'Do you have a specific wellness question about your health or do you need just an overall analysis on your latest Apple Health data? Great!\n \nJust  a reminder, please note that this is not to be viewed or interpreted as medical advice!';
+    } else if (dialogNumber == 4) {
+      dialogTitle = 'Health KPI (?)';
+      dialogContent =
+          'Tap on you desired kpi and here you can take a closer look on specific health kpi data.';
+    } else if (dialogNumber == 5) {
+      dialogTitle = 'That’s it!';
+      dialogContent =
+          'Hopefully MAINDFUL will help you to achieve your goals, whatever they may be!\n \nAnd remember better health is just a chat away!';
+    }
+
+    showDialog<String>(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(dialogTitle),
+          content: Text(dialogContent),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, 'Back');
+              },
+              child: const Text('Back'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context, 'OK');
+                if (dialogNumber < 5) {
+                  _showNextDialog(context, dialogNumber + 1);
+                }
+              },
+              child: const Text('Next'),
+            ),
+          ],
+        );
+      },
     );
   }
 
