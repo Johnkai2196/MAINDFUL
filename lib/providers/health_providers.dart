@@ -162,14 +162,16 @@ class HealthDataProvider extends ChangeNotifier {
 
         int hours = totalMinutes ~/ 60;
         int minutes = totalMinutes % 60;
+        print(hours < 0);
         String formattedMinutes =
             minutes < 10 ? '0$minutes' : minutes.toString();
         if (hours > 0 || minutes > 0) {
           _sleepData = "${hours}h ${formattedMinutes}min";
           notifyListeners();
+        } else {
+          _sleepData = "No Data";
+          notifyListeners();
         }
-        _sleepData = "No Data";
-        notifyListeners();
       } else {
         _sleepData = "No Data";
         notifyListeners();

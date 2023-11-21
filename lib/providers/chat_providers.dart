@@ -11,9 +11,7 @@ class ChatProvider with ChangeNotifier {
     ChatModel(context: "Daily summary", role: "prompt"),
     ChatModel(context: "Weekly summary", role: "prompt"),
     ChatModel(context: "On which aspect should I improve on?", role: "prompt"),
-    ChatModel(
-        context: "What’s my health situation compared to an average human?",
-        role: "prompt"),
+    ChatModel(context: "How do I compare to an average human", role: "prompt"),
   ];
 
   List<ChatModel> get getPromptList => promptlist;
@@ -37,8 +35,7 @@ class ChatProvider with ChangeNotifier {
       ChatModel(
           context: "On which aspect should I improve on?", role: "prompt"),
       ChatModel(
-          context: "What’s my health situation compared to an average human?",
-          role: "prompt"),
+          context: "How do I compare to an average human", role: "prompt"),
     ];
 
     messageHistory = [];
@@ -48,12 +45,23 @@ class ChatProvider with ChangeNotifier {
   Future<void> sendMessageAndGetAnswer(
       {required String message, required weeklyHealthData}) async {
     // Include message history in the request
+    Map<String, String> messageMap = {
+      "Daily summary":
+          "Provide me with a short summary of my health based on my health data from yesterday.",
+      "Weekly summary":
+          "Provide me with a short summary of my health based on my health data from the last 7 days.",
+      "On which aspect should I improve on?":
+          "Based on my health data, what would you suggest me to improve on and why? Pick only one aspect and keep your answer short. Include comparison of my health data and the suggested values for the chosen aspect.",
+      "How do I compare to an average human":
+          "Compare my health data with an average human. Keep your answer short and simple."
+    };
 
+    message = messageMap[message] ?? message;
     var messages = [
       {
         "role": "system",
         "content":
-            "You are MAINDFUL health advisor, an enthusiastic, and expert caretaker.\n\nFollow these steps in order to provide as useful help to the user as possible:\n\nStep 1:\nHere's the health data from the last seven days that you need to analyze:\n $weeklyHealthData.\n\nStep 2: \nGiven the context, provide a short response that could answer the user's question. If the question is related to users' steps, sleep, VO2MAX or heartbeat, utilize the data given in “Step 1” in your answer.\n\nStep 3:\nIF numbers in the health data seem low, provide advice on how they can improve. Note that today's data might be incomplete and show lower values. Today's date is ${DateTime.now().toString()} . IF a value is zero, it means that the user has not logged any data for that day. DO NOT provide statistics."
+            "You are MAINDFUL health advisor, an enthusiastic, and expert caretaker.\n\nFollow these steps in order to provide as useful help to the user as possible:\n\nStep 1:\nHere's the health data from the last seven days that you need to analyze:\n $weeklyHealthData.\n\nStep 2: \nGiven the context, provide a short response that could answer the user's question. If the question is related to users' steps, sleep, VO2MAX or heartbeat, utilize the data given in “Step 1” in your answer.\n\nStep 3:\nIF numbers in the health data seem low, provide advice on how they can improve. Note that today's data might be incomplete and show lower values.\n\n Step 4: \n Always  format your answer in markdown-format and leave space between paragraphs and list contents. Today's date is ${DateTime.now().toString()} . IF a value is zero, it means that the user has not logged any data for that day. DO NOT provide statistics."
       },
       ...messageHistory, // Include message history
 

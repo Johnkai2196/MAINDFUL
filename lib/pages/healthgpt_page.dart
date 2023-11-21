@@ -3,6 +3,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:innovation_project/constants/constants.dart';
 import 'package:innovation_project/models/chat_models.dart';
@@ -126,6 +127,7 @@ class _HealthGptState extends State<HealthGpt> {
                         style: const TextStyle(color: Colors.white),
                         controller: textController,
                         onSubmitted: (value) async {
+                          chatProvider.promptlist.clear();
                           await sendMessage(
                               chatProvider: chatProvider,
                               healthDataProvider: healthDataProvider);
@@ -213,7 +215,9 @@ class _HealthGptState extends State<HealthGpt> {
     } finally {
       setState(
         () {
-          scrollListToBottom();
+          SchedulerBinding.instance.addPostFrameCallback((_) {
+            scrollListToBottom();
+          });
           _isTyping = false;
         },
       );

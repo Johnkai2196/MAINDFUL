@@ -1,6 +1,8 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:innovation_project/constants/constants.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ChatWidget extends StatelessWidget {
   final bool isSender;
@@ -45,7 +47,6 @@ class ChatWidget extends StatelessWidget {
 
   Widget buildContainer() {
     return Container(
-      padding: const EdgeInsets.all(16),
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
         color: isSender ? textPurple : lightGrey,
@@ -54,35 +55,53 @@ class ChatWidget extends StatelessWidget {
         ),
       ),
       child: isSender
-          ? Text(
-              message,
-              style: TextStyle(
-                color: darkerPurple,
-                fontSize: 14,
+          ? Padding(
+              padding: const EdgeInsets.all(16.0), // Add padding here
+              child: Text(
+                message,
+                style: TextStyle(
+                  color: darkerPurple,
+                  fontSize: 14,
+                ),
               ),
             )
-          : shouldAnimate
-              ? DefaultTextStyle(
-                  style: TextStyle(color: textWhite, fontSize: 14),
-                  child: AnimatedTextKit(
-                    isRepeatingAnimation: false,
-                    repeatForever: false,
-                    displayFullTextOnTap: true,
-                    totalRepeatCount: 1,
-                    animatedTexts: [
-                      TypewriterAnimatedText(
-                        message.trim(),
-                      ),
-                    ],
-                  ),
-                )
-              : Text(
-                  message,
-                  style: TextStyle(
-                    color: textWhite,
-                    fontSize: 14,
-                  ),
-                ),
+          : Markdown(
+              shrinkWrap: true,
+              data: message,
+              onTapLink: (text, url, title) {
+                launchUrl(Uri.parse(url!));
+              },
+              styleSheet: MarkdownStyleSheet(
+                p: TextStyle(color: textWhite, fontSize: 14),
+                h1: TextStyle(color: textWhite, fontSize: 24),
+                h2: TextStyle(color: textWhite, fontSize: 22),
+                h3: TextStyle(color: textWhite, fontSize: 20),
+                h4: TextStyle(color: textWhite, fontSize: 18),
+                h5: TextStyle(color: textWhite, fontSize: 16),
+                h6: TextStyle(color: textWhite, fontSize: 14),
+                strong:
+                    TextStyle(color: textWhite, fontWeight: FontWeight.bold),
+                em: TextStyle(color: textWhite, fontStyle: FontStyle.italic),
+                listBullet: TextStyle(color: textWhite),
+              ),
+            ),
     );
   }
+}
+
+String parseMarkdownToPlainText(String markdown) {
+  return markdown
+      .replaceAll(RegExp(r'\*\*(.*?)\*\*'), '\$1') // Bold
+      .replaceAll(RegExp(r'\*(.*?)\*'), '\$1') // Italic
+      .replaceAll(RegExp(r'```(.*?)```'), '\$1') // Code
+      .replaceAll(RegExp(r'!\[(.*?)\]\((.*?)\)'), '\$1') // Image
+      .replaceAll(RegExp(r'\[(.*?)\]\((.*?)\)'), '\$1') // Link
+      .replaceAll(RegExp(r'>(.*?)<'), '\$1') // Blockquote
+      .replaceAll(RegExp(r'~~(.*?)~~'), '\$1') // Strikethrough
+      .replaceAll(RegExp(r'---\n'), '') // Horizontal rule
+      .replaceAll(RegExp(r'# (.*?)\n'), '\$1\n') // Headings
+      .replaceAll(RegExp(r'\n\n'), '\n') // Double newlines
+      .replaceAll(RegExp(r'\n'), ' ') // Newlines
+      .replaceAll(RegExp(r'\s+'), ' ') // Multiple spaces
+      .trim(); // Trim spaces
 }
