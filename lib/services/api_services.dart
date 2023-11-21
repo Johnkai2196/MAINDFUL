@@ -23,6 +23,10 @@ class ApiService {
           {
             "model": GPT4T,
             "messages": messages, // Include the list of messages
+            "temperature": 1.3,
+            "top_p": 0.8,
+            "frequency_penalty": 0.55,
+            "presence_penalty": 0.4
           },
         ),
       );
