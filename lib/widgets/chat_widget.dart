@@ -47,6 +47,7 @@ class ChatWidget extends StatelessWidget {
 
   Widget buildContainer() {
     return Container(
+      padding: const EdgeInsets.all(16.0),
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       decoration: BoxDecoration(
         color: isSender ? textPurple : lightGrey,
@@ -55,18 +56,14 @@ class ChatWidget extends StatelessWidget {
         ),
       ),
       child: isSender
-          ? Padding(
-              padding: const EdgeInsets.all(16.0), // Add padding here
-              child: Text(
-                message,
-                style: TextStyle(
-                  color: darkerPurple,
-                  fontSize: 14,
-                ),
+          ? Text(
+              message,
+              style: TextStyle(
+                color: darkerPurple,
+                fontSize: 14,
               ),
             )
-          : Markdown(
-              shrinkWrap: true,
+          : MarkdownBody(
               data: message,
               onTapLink: (text, url, title) {
                 launchUrl(Uri.parse(url!));
