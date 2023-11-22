@@ -135,9 +135,9 @@ class HeartCard extends StatelessWidget {
 
 class StepsCard extends StatelessWidget {
   final String steps;
-  final ChatProvider contexts; // Add this line
+  final ChatProvider chatProvider; // Add this line
 
-  const StepsCard({super.key, required this.steps, required this.contexts});
+  const StepsCard({super.key, required this.steps, required this.chatProvider});
 
   @override
   Widget build(BuildContext context) {
@@ -150,7 +150,7 @@ class StepsCard extends StatelessWidget {
           context,
           MaterialPageRoute(
               builder: (context) => HealthKPISteps(
-                  title: "Steps", value: steps, contexts: contexts)),
+                  title: "Steps", value: steps, chatProfiders: chatProvider)),
         );
       },
       child: Center(

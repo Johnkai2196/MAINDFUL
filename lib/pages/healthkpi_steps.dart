@@ -12,12 +12,12 @@ import 'package:provider/provider.dart';
 class HealthKPISteps extends StatefulWidget {
   final String title;
   final String value;
-  final ChatProvider contexts; // Add this line
+  final ChatProvider chatProfiders; // Add this line
   const HealthKPISteps({
     super.key,
     required this.title,
     required this.value,
-    required this.contexts, // Add this linex
+    required this.chatProfiders, // Add this linex
   });
 
   @override
@@ -35,7 +35,7 @@ class _HealthKPIStepsState extends State<HealthKPISteps> {
     // Start the timer when the widget is created
     Timer.periodic(const Duration(seconds: 1), (Timer timer) {
       // Update the state text every second
-      Map<String, String> sleepData = widget.contexts.getQuoteList
+      Map<String, String> sleepData = widget.chatProfiders.getQuoteList
           .firstWhere((map) => map.containsKey('Sleep'), orElse: () => {});
       _controller.add(sleepData);
 
@@ -207,8 +207,9 @@ class _HealthKPIStepsState extends State<HealthKPISteps> {
                             child: ElevatedButton(
                               onPressed: () {
                                 // Button action
-                                Map<String, String> sleepData =
-                                    widget.contexts.getQuoteList.firstWhere(
+                                Map<String, String> sleepData = widget
+                                    .chatProfiders.getQuoteList
+                                    .firstWhere(
                                         (map) => map.containsKey('Sleep'),
                                         orElse: () => {});
                                 print(sleepData["Sleep"]);

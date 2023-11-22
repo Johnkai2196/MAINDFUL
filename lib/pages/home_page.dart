@@ -133,7 +133,7 @@ class _HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           StepsCard(
-                            contexts: chatProvider,
+                            chatProvider: chatProvider,
                             steps: healthDataProvider.steps == 0
                                 ? 'No Data'
                                 : '${healthDataProvider.steps}',
