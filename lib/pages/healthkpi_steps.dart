@@ -5,10 +5,10 @@ import 'package:innovation_project/widgets/custom_app_bar.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 
-class HealthKPI extends StatelessWidget {
+class HealthKPISteps extends StatelessWidget {
   final String title;
   final String value;
-  const HealthKPI({super.key, required this.title, required this.value});
+  const HealthKPISteps({super.key, required this.title, required this.value});
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +38,8 @@ class HealthKPI extends StatelessWidget {
                       width: screenWidth * 0.95,
                       decoration: BoxDecoration(
                         image: const DecorationImage(
-                          image:
-                              AssetImage('assets/images/moon-1301073_1280.jpg'),
+                          image: AssetImage(
+                              'assets/images/jad-limcaco-fRggLY1DQTM-unplash.jpg'),
                           fit: BoxFit.cover,
                         ),
                         borderRadius: BorderRadius.circular(12.0),
@@ -50,7 +50,7 @@ class HealthKPI extends StatelessWidget {
                           Container(
                             margin: const EdgeInsets.symmetric(vertical: 8.0),
                             child: const Text(
-                              'Sleep',
+                              'Steps',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 24.0,
@@ -59,7 +59,7 @@ class HealthKPI extends StatelessWidget {
                             ),
                           ),
                           SvgPicture.asset(
-                            'assets/icons/moon-svgrepo-com.svg',
+                            'assets/icons/walk-svgrepo-com.svg',
                             height: 45.0,
                             width: 45.0,
                             color: Colors.white,
@@ -107,7 +107,7 @@ class HealthKPI extends StatelessWidget {
                             child: Container(
                               margin: const EdgeInsets.symmetric(vertical: 8.0),
                               child: const Text(
-                                'You slept good',
+                                'Keep it going!',
                                 style: TextStyle(color: Colors.white),
                               ),
                             ),
@@ -130,7 +130,7 @@ class HealthKPI extends StatelessWidget {
                                 ),
                               ),
                               child: const Text(
-                                'Why is sleep important?',
+                                'Why you should stay active?',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 24.0,
@@ -144,7 +144,7 @@ class HealthKPI extends StatelessWidget {
                             child: Container(
                               margin: const EdgeInsets.symmetric(vertical: 8.0),
                               child: const Text(
-                                'Quality sleep is your body\'s natural way of rejuvenating and recharging. It provides the energy and vitality needed to embrace each new day with enthusiasm, helping you feel your best both mentally and physically.',
+                                'Staying active is essential for overall health, offering benefits such as improved cardiovascular function, mental well-being, and disease prevention. Regular physical activity, even in simple forms like walking, contributes to longevity, weight management, and a higher quality of life.',
                                 style: TextStyle(color: Colors.white),
                                 textAlign: TextAlign.center,
                               ),
@@ -161,7 +161,7 @@ class HealthKPI extends StatelessWidget {
                                     0xffDFB7FF), // Button background color
                               ),
                               child: const Text(
-                                'Tell me about sleep',
+                                'How to improve daily activity',
                                 style: TextStyle(
                                   color: Color(0xff4B007E), // Button text color
                                 ),
