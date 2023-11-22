@@ -1,14 +1,49 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import 'package:innovation_project/providers/chat_providers.dart';
 // import 'package:innovation_project/constants/constants.dart';
 // import 'package:innovation_project/pages/healthgpt_page.dart';
 import 'package:innovation_project/widgets/custom_app_bar.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
-class HealthKPISteps extends StatelessWidget {
+class HealthKPISteps extends StatefulWidget {
   final String title;
   final String value;
-  const HealthKPISteps({super.key, required this.title, required this.value});
+  final ChatProvider contexts; // Add this line
+  const HealthKPISteps({
+    super.key,
+    required this.title,
+    required this.value,
+    required this.contexts, // Add this linex
+  });
+
+  @override
+  State<HealthKPISteps> createState() => _HealthKPIStepsState();
+}
+
+class _HealthKPIStepsState extends State<HealthKPISteps> {
+  final StreamController<Map<String, String>> _controller =
+      StreamController<Map<String, String>>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    // Start the timer when the widget is created
+    Timer.periodic(const Duration(seconds: 1), (Timer timer) {
+      // Update the state text every second
+      Map<String, String> sleepData = widget.contexts.getQuoteList
+          .firstWhere((map) => map.containsKey('Sleep'), orElse: () => {});
+      _controller.add(sleepData);
+
+      if (sleepData["Sleep"] != null) {
+        timer.cancel();
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +74,7 @@ class HealthKPISteps extends StatelessWidget {
                       decoration: BoxDecoration(
                         image: const DecorationImage(
                           image: AssetImage(
-                              'assets/images/jad-limcaco-fRggLY1DQTM-unplash.jpg'),
+                              'assets/images/jad-limcaco-fRggLY1DQTM-unsplash.jpg'),
                           fit: BoxFit.cover,
                         ),
                         borderRadius: BorderRadius.circular(12.0),
@@ -67,7 +102,7 @@ class HealthKPISteps extends StatelessWidget {
                           Container(
                             margin: const EdgeInsets.symmetric(vertical: 8.0),
                             child: Text(
-                              value,
+                              widget.value,
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 16.0,
@@ -142,19 +177,41 @@ class HealthKPISteps extends StatelessWidget {
                           Expanded(
                             flex: 3,
                             child: Container(
-                              margin: const EdgeInsets.symmetric(vertical: 8.0),
-                              child: const Text(
-                                'Staying active is essential for overall health, offering benefits such as improved cardiovascular function, mental well-being, and disease prevention. Regular physical activity, even in simple forms like walking, contributes to longevity, weight management, and a higher quality of life.',
-                                style: TextStyle(color: Colors.white),
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
+                                margin:
+                                    const EdgeInsets.symmetric(vertical: 8.0),
+                                child: StreamBuilder<Map<String, String>>(
+                                  stream: _controller.stream,
+                                  builder: (context, snapshot) {
+                                    if (snapshot.hasData) {
+                                      String sleepText =
+                                          snapshot.data?["Sleep"] ??
+                                              'Loading...';
+                                      return Text(
+                                        sleepText,
+                                        style: const TextStyle(
+                                            color: Colors.white),
+                                        textAlign: TextAlign.center,
+                                      );
+                                    } else {
+                                      return const Text(
+                                        'Loading...',
+                                        style: TextStyle(color: Colors.white),
+                                        textAlign: TextAlign.center,
+                                      );
+                                    }
+                                  },
+                                )),
                           ),
                           Expanded(
                             flex: 1,
                             child: ElevatedButton(
                               onPressed: () {
                                 // Button action
+                                Map<String, String> sleepData =
+                                    widget.contexts.getQuoteList.firstWhere(
+                                        (map) => map.containsKey('Sleep'),
+                                        orElse: () => {});
+                                print(sleepData["Sleep"]);
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(

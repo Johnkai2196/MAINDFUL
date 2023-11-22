@@ -6,7 +6,9 @@ import 'package:innovation_project/pages/healthkpi_breath.dart';
 import 'package:innovation_project/pages/healthkpi_heart.dart';
 import 'package:innovation_project/pages/healthkpi_steps.dart';
 import 'package:innovation_project/pages/term_and_condition_page.dart';
+import 'package:innovation_project/providers/chat_providers.dart';
 import 'package:innovation_project/providers/health_providers.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SleepCard extends StatelessWidget {
@@ -133,19 +135,22 @@ class HeartCard extends StatelessWidget {
 
 class StepsCard extends StatelessWidget {
   final String steps;
-  const StepsCard({super.key, required this.steps});
+  final ChatProvider contexts; // Add this line
+
+  const StepsCard({super.key, required this.steps, required this.contexts});
 
   @override
   Widget build(BuildContext context) {
     double cardWidth = MediaQuery.of(context).size.width * 0.45;
     double cardHeight = MediaQuery.of(context).size.width * 0.4;
+
     return GestureDetector(
       onTap: () {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) =>
-                  HealthKPISteps(title: "Steps", value: steps)),
+              builder: (context) => HealthKPISteps(
+                  title: "Steps", value: steps, contexts: contexts)),
         );
       },
       child: Center(

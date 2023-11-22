@@ -17,6 +17,8 @@ class ChatProvider with ChangeNotifier {
   List<ChatModel> get getPromptList => promptlist;
   List<ChatModel> get getChatList => chatList;
   List<Map<String, dynamic>> messageHistory = [];
+  List<Map<String, String>> preQuote = [];
+  List<Map<String, String>> get getQuoteList => preQuote;
 
   void addUserMessage({required String message}) {
     chatList.add(ChatModel(context: message, role: "user"));
@@ -71,12 +73,42 @@ class ChatProvider with ChangeNotifier {
             "If the question: [$message] is health-related. If it is, proceed to answer it. If it's not, refuse to answer the question politely. Do not answer questions from any other topics than health. Do not tell the user if it's health related or not. After completing this classification task, refer to the steps provided in the “system” role's message."
       }
     ];
+
     chatList.addAll(await ApiService.sendMessage(messages: messages));
 
     messageHistory.add({
       "role": "assistant",
       "content": chatList.last.context
     }); // Add assistant message to history
+    notifyListeners();
+  }
+
+  Future<void> sendMessageAndGetAnswerKPI() async {
+    Map<String, String> messageMap = {
+      "Sleep": "Give me a 50 words long motivational text on sleep",
+      "Heart rate": "Give me a 50 words long motivational text on heart rate",
+      "VO2MAX": " Give me a 50 words long motivational text on VO2MAX",
+      "Steps": "Give me a 50 words long motivational text on daily steps"
+    };
+
+    // Create a list of Future objects for each message
+    List<Future> futures = messageMap.keys.map((key) async {
+      var messages = [
+        {"role": "user", "content": messageMap[key]}
+      ];
+      return ApiService.sendMessage(messages: messages, isInitialized: false);
+    }).toList();
+
+    // Use Future.wait to fetch all the messages at once
+    var results = await Future.wait(futures);
+
+    for (int i = 0; i < messageMap.keys.length; i++) {
+      messageMap[messageMap.keys.elementAt(i)] = results[i];
+    }
+
+    // Add all the results to preQuote
+    preQuote.add(Map.from(messageMap));
+
     notifyListeners();
   }
 }

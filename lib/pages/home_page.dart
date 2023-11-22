@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:flutter/material.dart';
+import 'package:innovation_project/providers/chat_providers.dart';
 import 'package:innovation_project/providers/health_providers.dart';
 import 'package:innovation_project/widgets/custom_app_bar.dart';
 import 'package:innovation_project/widgets/fitness_tile.dart';
@@ -20,10 +21,11 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   HealthDataProvider healthDataProvider = HealthDataProvider();
-
+  ChatProvider chatProvider = ChatProvider();
   @override
   void initState() {
     super.initState();
+    chatProvider.sendMessageAndGetAnswerKPI();
     authorize();
   }
 
@@ -131,6 +133,7 @@ class _HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           StepsCard(
+                            contexts: chatProvider,
                             steps: healthDataProvider.steps == 0
                                 ? 'No Data'
                                 : '${healthDataProvider.steps}',
