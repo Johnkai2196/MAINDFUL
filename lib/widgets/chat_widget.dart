@@ -1,4 +1,3 @@
-import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:innovation_project/constants/constants.dart';
@@ -84,21 +83,4 @@ class ChatWidget extends StatelessWidget {
             ),
     );
   }
-}
-
-String parseMarkdownToPlainText(String markdown) {
-  return markdown
-      .replaceAll(RegExp(r'\*\*(.*?)\*\*'), '\$1') // Bold
-      .replaceAll(RegExp(r'\*(.*?)\*'), '\$1') // Italic
-      .replaceAll(RegExp(r'```(.*?)```'), '\$1') // Code
-      .replaceAll(RegExp(r'!\[(.*?)\]\((.*?)\)'), '\$1') // Image
-      .replaceAll(RegExp(r'\[(.*?)\]\((.*?)\)'), '\$1') // Link
-      .replaceAll(RegExp(r'>(.*?)<'), '\$1') // Blockquote
-      .replaceAll(RegExp(r'~~(.*?)~~'), '\$1') // Strikethrough
-      .replaceAll(RegExp(r'---\n'), '') // Horizontal rule
-      .replaceAll(RegExp(r'# (.*?)\n'), '\$1\n') // Headings
-      .replaceAll(RegExp(r'\n\n'), '\n') // Double newlines
-      .replaceAll(RegExp(r'\n'), ' ') // Newlines
-      .replaceAll(RegExp(r'\s+'), ' ') // Multiple spaces
-      .trim(); // Trim spaces
 }
