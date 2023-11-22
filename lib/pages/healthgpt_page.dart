@@ -15,11 +15,11 @@ import 'package:innovation_project/widgets/custom_app_bar.dart';
 import 'package:provider/provider.dart';
 
 class HealthGpt extends StatefulWidget {
-  final HealthDataProvider healthDataProvider; // Add this line
+  final HealthDataProvider healthDataProvider;
 
   const HealthGpt({
     super.key,
-    required this.healthDataProvider, // Add this line
+    required this.healthDataProvider,
   });
 
   @override
@@ -32,6 +32,7 @@ class _HealthGptState extends State<HealthGpt> {
   late ScrollController _listScrollController;
   late TextEditingController textController;
   bool _isScrollingUp = false;
+
   @override
   void initState() {
     _listScrollController = ScrollController();
@@ -64,7 +65,7 @@ class _HealthGptState extends State<HealthGpt> {
   @override
   Widget build(BuildContext context) {
     final chatProvider = Provider.of<ChatProvider>(context);
-    final healthDataProvider = widget.healthDataProvider; // Add this line
+    final healthDataProvider = widget.healthDataProvider;
     List<ChatModel> combinedList =
         chatProvider.chatList + chatProvider.promptlist;
     return Scaffold(
@@ -97,7 +98,6 @@ class _HealthGptState extends State<HealthGpt> {
                         } else {
                           return GestureDetector(
                             onTap: () {
-                              // Handle the click event
                               textController.text = combinedList[index].context;
                               chatProvider.promptlist.clear();
                               sendMessage(
@@ -182,15 +182,14 @@ class _HealthGptState extends State<HealthGpt> {
             ),
             if (_isScrollingUp)
               Positioned(
-                top: null, // Center the button vertically
-                bottom: 80, // Adjust the position as needed
+                top: null,
+                bottom: 80,
                 left: 0,
                 right: 0,
                 child: FloatingActionButton(
                   backgroundColor: textPurple,
                   mini: true,
                   onPressed: () {
-                    // Add your logic for the floating button here
                     scrollListToBottom();
                   },
                   child: Icon(
@@ -208,9 +207,12 @@ class _HealthGptState extends State<HealthGpt> {
   void scrollListToBottom() {
     _listScrollController.animateTo(
       _listScrollController.position.maxScrollExtent,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 700),
       curve: Curves.fastOutSlowIn,
     );
+    setState(() {
+      _isScrollingUp = false;
+    });
   }
 
   Future<void> sendMessage(
