@@ -131,22 +131,42 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: const Text('Welcome to use MAINDFUL!'),
+          backgroundColor: surfaceContainerHigh,
+          title: const Text(
+            'WELCOME TO USE MAINDFUL!',
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: "ConcertOne",
+              fontSize: 32,
+            ),
+          ),
           content: const Text(
-              'Here is a short introduction on how to get started with MAINDFUL.'),
+            'Here is a short introduction on how to get started with MAINDFUL.',
+            style: TextStyle(
+              color: Colors.white,
+              fontFamily: "Roboto",
+              fontSize: 14,
+            ),
+          ),
           actions: <Widget>[
             TextButton(
               onPressed: () {
-                Navigator.pop(context, 'Cancel');
+                Navigator.of(context).pop();
+                _showPreviousDialog(context, 0); // Go to the previous dialog
               },
-              child: const Text('Cancel'),
+              child: const Text(''),
             ),
             TextButton(
               onPressed: () {
-                Navigator.pop(context, 'OK');
+                Navigator.of(context).pop('OK');
                 _showNextDialog(context, 2); // Start the sequence with Dialog 2
               },
-              child: const Text('Next'),
+              child: const Text(
+                'Next',
+                style: TextStyle(
+                  color: Color.fromRGBO(223, 183, 255, 1),
+                ),
+              ),
             ),
           ],
         );
@@ -154,40 +174,58 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     );
   }
 
+  void _showPreviousDialog(BuildContext context, int dialogNumber) {
+    if (dialogNumber > 2) {
+      _showNextDialog(context, dialogNumber - 1);
+    }
+  }
+
   void _showNextDialog(BuildContext context, int dialogNumber) {
     String dialogTitle = 'Dialog $dialogNumber';
     String dialogContent = 'This is the content of Dialog $dialogNumber.';
+    bool isLastDialog = dialogNumber == 5;
 
     if (dialogNumber == 2) {
       dialogTitle = 'Home';
       dialogContent =
-          'Here you will find easy access to MAICHAT where you can discuss all things health! Just click MAICHAT and ask away.\n \nIn your home page you will also see overall view on your personal health data from Apple Health.';
+          'Here you will find easy access to MAICHAT where you can discuss all things health! Just click MAICHAT and ask away.\n \nIn your home page, you will also see the overall view of your personal health data from Apple Health.';
     } else if (dialogNumber == 3) {
       dialogTitle = 'MAICHAT';
       dialogContent =
-          'Do you have a specific wellness question about your health or do you need just an overall analysis on your latest Apple Health data? Great!\n \nJust  a reminder, please note that this is not to be viewed or interpreted as medical advice!';
+          'Do you have a specific wellness question about your health or do you need just an overall analysis of your latest Apple Health data? Great!\n \nJust a reminder, please note that this is not to be viewed or interpreted as medical advice!';
     } else if (dialogNumber == 4) {
       dialogTitle = 'Health KPI (?)';
       dialogContent =
-          'Tap on you desired kpi and here you can take a closer look on specific health kpi data.';
+          'Tap on your desired KPI, and here you can take a closer look at specific health KPI data.';
     } else if (dialogNumber == 5) {
       dialogTitle = 'That’s it!';
       dialogContent =
-          'Hopefully MAINDFUL will help you to achieve your goals, whatever they may be!\n \nAnd remember better health is just a chat away!';
+          'Hopefully MAINDFUL will help you achieve your goals, whatever they may be!\n \nAnd remember, better health is just a chat away!';
     }
 
     showDialog<String>(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(dialogTitle),
-          content: Text(dialogContent),
+          backgroundColor: surfaceContainerHigh,
+          title: Text(dialogTitle,
+              style: const TextStyle(
+                  color: Colors.white, fontFamily: "ConcertOne", fontSize: 32)),
+          content: Text(dialogContent,
+              style: const TextStyle(
+                  color: Colors.white, fontFamily: "Roboto", fontSize: 14)),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.pop(context, 'Back');
+                _showPreviousDialog(context, dialogNumber);
               },
-              child: const Text('Back'),
+              child: const Text(
+                'Back',
+                style: TextStyle(
+                  color: Color.fromRGBO(223, 183, 255, 1),
+                ),
+              ),
             ),
             TextButton(
               onPressed: () {
@@ -196,7 +234,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   _showNextDialog(context, dialogNumber + 1);
                 }
               },
-              child: const Text('Next'),
+              child: Text(
+                isLastDialog ? 'Done' : 'Next',
+                style: const TextStyle(
+                  color: Color.fromRGBO(223, 183, 255, 1),
+                ),
+              ),
             ),
           ],
         );
