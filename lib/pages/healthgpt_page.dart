@@ -41,13 +41,11 @@ class _HealthGptState extends State<HealthGpt> {
     _listScrollController.addListener(() {
       if (_listScrollController.position.userScrollDirection ==
           ScrollDirection.forward) {
-        print('Reached  of list');
         setState(() {
           _isScrollingUp = true;
         });
       } else if (_listScrollController.position.pixels ==
           _listScrollController.position.maxScrollExtent) {
-        print('Reached end of list');
         setState(() {
           _isScrollingUp = false;
         });
