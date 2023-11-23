@@ -170,5 +170,4 @@ Future<void> _launchUrl() async {
 void _setPreferences() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setBool('status', true);
-  print("Status: accepted");
 }
