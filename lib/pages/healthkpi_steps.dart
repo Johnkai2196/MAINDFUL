@@ -2,8 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
+import 'package:innovation_project/constants/constants.dart';
+
+
 import 'package:innovation_project/providers/quote_providers.dart';
-// import 'package:innovation_project/constants/constants.dart';
+
 // import 'package:innovation_project/pages/healthgpt_page.dart';
 import 'package:innovation_project/widgets/custom_app_bar.dart';
 
@@ -59,7 +62,7 @@ class _HealthKPIStepsState extends State<HealthKPISteps> {
 
     return Scaffold(
       body: Scaffold(
-        backgroundColor: const Color(0xff1D1B1E),
+        backgroundColor: backGroundColor,
         appBar: const CustomAppBar(backArrow: true),
         body: Column(
           children: <Widget>[
@@ -81,8 +84,9 @@ class _HealthKPIStepsState extends State<HealthKPISteps> {
                       width: screenWidth * 0.95,
                       decoration: BoxDecoration(
                         image: const DecorationImage(
-                          image: AssetImage(
-                              'assets/images/jad-limcaco-fRggLY1DQTM-unsplash.jpg'),
+
+                          image: AssetImage('assets/images/blob-haikei.png'),
+
                           fit: BoxFit.cover,
                         ),
                         borderRadius: BorderRadius.circular(12.0),
@@ -91,7 +95,7 @@ class _HealthKPIStepsState extends State<HealthKPISteps> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Container(
-                            margin: const EdgeInsets.symmetric(vertical: 8.0),
+                            padding: const EdgeInsets.only(bottom: 13.0),
                             child: const Text(
                               'Steps',
                               style: TextStyle(
@@ -107,7 +111,7 @@ class _HealthKPIStepsState extends State<HealthKPISteps> {
                             width: 45.0,
                           ),
                           Container(
-                            margin: const EdgeInsets.symmetric(vertical: 8.0),
+                            padding: const EdgeInsets.only(top: 13.0),
                             child: Text(
                               widget.value,
                               style: const TextStyle(
@@ -166,8 +170,9 @@ class _HealthKPIStepsState extends State<HealthKPISteps> {
                               decoration: const BoxDecoration(
                                 border: Border(
                                   bottom: BorderSide(
-                                    color: Colors.white, // Set the border color
-                                    width: 1.0, // Set the border thickness
+                                    color: const Color.fromRGBO(223, 183, 255,
+                                        1), // Set the border color
+                                    width: 2.0, // Set the border thickness
                                   ),
                                 ),
                               ),
@@ -220,18 +225,20 @@ class _HealthKPIStepsState extends State<HealthKPISteps> {
                           ),
                           Expanded(
                             flex: 1,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                // Button action
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(
-                                    0xffDFB7FF), // Button background color
-                              ),
-                              child: const Text(
-                                'How to improve daily activity',
-                                style: TextStyle(
-                                  color: Color(0xff4B007E), // Button text color
+                            child: Container(
+                              margin: const EdgeInsets.only(bottom: 20.0),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  // Button action
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: textPurple,
+                                ),
+                                child: const Text(
+                                  'Healthy tips for heart',
+                                  style: TextStyle(
+                                    color: Color(0xff4B007E),
+                                  ),
                                 ),
                               ),
                             ),

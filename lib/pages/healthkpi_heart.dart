@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:innovation_project/constants/constants.dart';
+import 'package:innovation_project/constants/constants.dart';
 // import 'package:innovation_project/pages/healthgpt_page.dart';
 import 'package:innovation_project/widgets/custom_app_bar.dart';
 
@@ -16,7 +16,7 @@ class HealthKPIHeart extends StatelessWidget {
 
     return Scaffold(
       body: Scaffold(
-        backgroundColor: const Color(0xff1D1B1E),
+        backgroundColor: backGroundColor,
         appBar: const CustomAppBar(backArrow: true),
         body: Column(
           children: <Widget>[
@@ -38,8 +38,8 @@ class HealthKPIHeart extends StatelessWidget {
                       width: screenWidth * 0.95,
                       decoration: BoxDecoration(
                         image: const DecorationImage(
-                          image: AssetImage(
-                              'assets/images/aerial-1822139_1280.png'),
+                          image:
+                              AssetImage('assets/images/blob-scene-haikei.png'),
                           fit: BoxFit.cover,
                         ),
                         borderRadius: BorderRadius.circular(12.0),
@@ -48,7 +48,7 @@ class HealthKPIHeart extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Container(
-                            margin: const EdgeInsets.symmetric(vertical: 8.0),
+                            padding: const EdgeInsets.only(bottom: 13.0),
                             child: const Text(
                               'Heart',
                               style: TextStyle(
@@ -62,10 +62,9 @@ class HealthKPIHeart extends StatelessWidget {
                             'assets/icons/heart-svgrepo-com.svg',
                             height: 45.0,
                             width: 45.0,
-                            color: Colors.white,
                           ),
                           Container(
-                            margin: const EdgeInsets.symmetric(vertical: 8.0),
+                            padding: const EdgeInsets.only(top: 13.0),
                             child: Text(
                               value,
                               style: const TextStyle(
@@ -124,8 +123,9 @@ class HealthKPIHeart extends StatelessWidget {
                               decoration: const BoxDecoration(
                                 border: Border(
                                   bottom: BorderSide(
-                                    color: Colors.white, // Set the border color
-                                    width: 1.0, // Set the border thickness
+                                    color: const Color.fromRGBO(223, 183, 255,
+                                        1), // Set the border color
+                                    width: 2.0, // Set the border thickness
                                   ),
                                 ),
                               ),
@@ -152,18 +152,20 @@ class HealthKPIHeart extends StatelessWidget {
                           ),
                           Expanded(
                             flex: 1,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                // Button action
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(
-                                    0xffDFB7FF), // Button background color
-                              ),
-                              child: const Text(
-                                'Healthy tips for heart',
-                                style: TextStyle(
-                                  color: Color(0xff4B007E), // Button text color
+                            child: Container(
+                              margin: const EdgeInsets.only(bottom: 20.0),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  // Button action
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: textPurple,
+                                ),
+                                child: const Text(
+                                  'Healthy tips for heart',
+                                  style: TextStyle(
+                                    color: Color(0xff4B007E),
+                                  ),
                                 ),
                               ),
                             ),
