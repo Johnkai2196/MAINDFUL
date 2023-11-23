@@ -1,14 +1,60 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+
 import 'package:innovation_project/constants/constants.dart';
+
+
+import 'package:innovation_project/providers/quote_providers.dart';
+
 // import 'package:innovation_project/pages/healthgpt_page.dart';
 import 'package:innovation_project/widgets/custom_app_bar.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 
-class HealthKPISteps extends StatelessWidget {
+class HealthKPISteps extends StatefulWidget {
   final String title;
   final String value;
-  const HealthKPISteps({super.key, required this.title, required this.value});
+  final QuoteProvider quoteProfider; // Add this line
+  const HealthKPISteps({
+    super.key,
+    required this.title,
+    required this.value,
+    required this.quoteProfider, // Add this linex
+  });
+
+  @override
+  State<HealthKPISteps> createState() => _HealthKPIStepsState();
+}
+
+class _HealthKPIStepsState extends State<HealthKPISteps> {
+  final StreamController<Map<String, String>> _controller =
+      StreamController<Map<String, String>>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.quoteProfider.getQuoteList
+        .firstWhere((map) => map.containsKey('Sleep'), orElse: () => {})
+        .isEmpty) {
+      // Start the timer when the widget is created
+      Timer.periodic(const Duration(seconds: 1), (Timer timer) {
+        // Update the state text every second
+        Map<String, String> sleepData = widget.quoteProfider.getQuoteList
+            .firstWhere((map) => map.containsKey('Sleep'), orElse: () => {});
+        _controller.add(sleepData);
+
+        if (sleepData["Sleep"] != null) {
+          timer.cancel();
+        }
+      });
+    } else {
+      Map<String, String> sleepData = widget.quoteProfider.getQuoteList
+          .firstWhere((map) => map.containsKey('Sleep'), orElse: () => {});
+      _controller.add(sleepData);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +84,9 @@ class HealthKPISteps extends StatelessWidget {
                       width: screenWidth * 0.95,
                       decoration: BoxDecoration(
                         image: const DecorationImage(
+
                           image: AssetImage('assets/images/blob-haikei.png'),
+
                           fit: BoxFit.cover,
                         ),
                         borderRadius: BorderRadius.circular(12.0),
@@ -65,7 +113,7 @@ class HealthKPISteps extends StatelessWidget {
                           Container(
                             padding: const EdgeInsets.only(top: 13.0),
                             child: Text(
-                              value,
+                              widget.value,
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 16.0,
@@ -142,10 +190,36 @@ class HealthKPISteps extends StatelessWidget {
                             flex: 3,
                             child: Container(
                               margin: const EdgeInsets.symmetric(vertical: 8.0),
-                              child: const Text(
-                                'Staying active is essential for overall health, offering benefits such as improved cardiovascular function, mental well-being, and disease prevention. Regular physical activity, even in simple forms like walking, contributes to longevity, weight management, and a higher quality of life.',
-                                style: TextStyle(color: Colors.white),
-                                textAlign: TextAlign.center,
+                              child: StreamBuilder<Map<String, String>>(
+                                stream: _controller.stream,
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    String sleepText =
+                                        snapshot.data?["Sleep"] ?? "";
+                                    if (sleepText == "") {
+                                      return const SizedBox(
+                                        height: 50.0,
+                                        width: 50.0,
+                                        child: Center(
+                                            child: CircularProgressIndicator()),
+                                      );
+                                    } else {
+                                      return Text(
+                                        sleepText,
+                                        style: const TextStyle(
+                                            color: Colors.white),
+                                        textAlign: TextAlign.center,
+                                      );
+                                    }
+                                  } else {
+                                    return const SizedBox(
+                                      height: 50.0,
+                                      width: 50.0,
+                                      child: Center(
+                                          child: CircularProgressIndicator()),
+                                    );
+                                  }
+                                },
                               ),
                             ),
                           ),

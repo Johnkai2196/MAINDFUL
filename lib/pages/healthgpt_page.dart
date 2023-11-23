@@ -3,6 +3,8 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:innovation_project/constants/constants.dart';
 import 'package:innovation_project/models/chat_models.dart';
@@ -13,11 +15,11 @@ import 'package:innovation_project/widgets/custom_app_bar.dart';
 import 'package:provider/provider.dart';
 
 class HealthGpt extends StatefulWidget {
-  final HealthDataProvider healthDataProvider; // Add this line
+  final HealthDataProvider healthDataProvider;
 
   const HealthGpt({
     super.key,
-    required this.healthDataProvider, // Add this line
+    required this.healthDataProvider,
   });
 
   @override
@@ -29,6 +31,7 @@ class _HealthGptState extends State<HealthGpt> {
   late FocusNode focusNode;
   late ScrollController _listScrollController;
   late TextEditingController textController;
+  bool _isScrollingUp = false;
 
   @override
   void initState() {
@@ -36,6 +39,19 @@ class _HealthGptState extends State<HealthGpt> {
     textController = TextEditingController();
     focusNode = FocusNode();
     super.initState();
+    _listScrollController.addListener(() {
+      if (_listScrollController.position.userScrollDirection ==
+          ScrollDirection.forward) {
+        setState(() {
+          _isScrollingUp = true;
+        });
+      } else if (_listScrollController.position.pixels ==
+          _listScrollController.position.maxScrollExtent) {
+        setState(() {
+          _isScrollingUp = false;
+        });
+      }
+    });
   }
 
   @override
@@ -49,7 +65,7 @@ class _HealthGptState extends State<HealthGpt> {
   @override
   Widget build(BuildContext context) {
     final chatProvider = Provider.of<ChatProvider>(context);
-    final healthDataProvider = widget.healthDataProvider; // Add this line
+    final healthDataProvider = widget.healthDataProvider;
     List<ChatModel> combinedList =
         chatProvider.chatList + chatProvider.promptlist;
     return Scaffold(
@@ -61,118 +77,142 @@ class _HealthGptState extends State<HealthGpt> {
         typing: _isTyping,
       ),
       body: SafeArea(
-        child: Column(
+        child: Stack(
           children: [
-            Flexible(
-              child: ListView.builder(
-                controller: _listScrollController,
-                itemCount: combinedList.length,
-                itemBuilder: (context, index) {
-                  final dynamic role = combinedList[index].role;
-                  final isSender = role == "user";
-                  final isPrompt = role == "prompt";
-                  if (isPrompt || isSender) {
-                    if (isSender) {
+            Column(
+              children: [
+                Flexible(
+                  child: ListView.builder(
+                    controller: _listScrollController,
+                    itemCount: combinedList.length,
+                    itemBuilder: (context, index) {
+                      final dynamic role = combinedList[index].role;
+                      final isSender = role == "user";
+                      final isPrompt = role == "prompt";
+                      if (isPrompt || isSender) {
+                        if (isSender) {
+                          return ChatWidget(
+                            message: combinedList[index].context,
+                            isSender: isSender,
+                          );
+                        } else {
+                          return GestureDetector(
+                            onTap: () {
+                              textController.text = combinedList[index].context;
+                              chatProvider.promptlist.clear();
+                              sendMessage(
+                                  chatProvider: chatProvider,
+                                  healthDataProvider: healthDataProvider);
+                            },
+                            child: ChatWidget(
+                              message: combinedList[index].context,
+                              isSender: isPrompt,
+                            ),
+                          );
+                        }
+                      }
                       return ChatWidget(
                         message: combinedList[index].context,
                         isSender: isSender,
+                        shouldAnimate: combinedList.length - 1 == index,
                       );
-                    } else {
-                      return GestureDetector(
-                        onTap: () {
-                          // Handle the click event
-                          textController.text = combinedList[index].context;
-                          chatProvider.promptlist.clear();
-                          sendMessage(
-                              chatProvider: chatProvider,
-                              healthDataProvider: healthDataProvider);
-                        },
-                        child: ChatWidget(
-                          message: combinedList[index].context,
-                          isSender: isPrompt,
+                    },
+                  ),
+                ),
+                if (_isTyping) ...[
+                  const SpinKitThreeBounce(
+                    color: Colors.white,
+                    size: 24,
+                  ),
+                ],
+                const SizedBox(
+                  height: 15,
+                ),
+                Material(
+                  color: lightGrey,
+                  borderRadius: const BorderRadius.all(
+                    Radius.circular(20),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            focusNode: focusNode,
+                            style: const TextStyle(color: Colors.white),
+                            controller: textController,
+                            onSubmitted: (value) async {
+                              chatProvider.promptlist.clear();
+                              await sendMessage(
+                                  chatProvider: chatProvider,
+                                  healthDataProvider: healthDataProvider);
+                            },
+                            decoration: const InputDecoration.collapsed(
+                              hintText: "Type your question here",
+                              hintStyle: TextStyle(color: Colors.white),
+                            ),
+                          ),
                         ),
-                      );
-                    }
-                  }
-                  return ChatWidget(
-                    message: combinedList[index].context,
-                    isSender: isSender,
-                    shouldAnimate: combinedList.length - 1 == index,
-                  );
-                },
-              ),
-            ),
-            if (_isTyping) ...[
-              const SpinKitThreeBounce(
-                color: Colors.white,
-                size: 24,
-              ),
-            ],
-            const SizedBox(
-              height: 15,
-            ),
-            Material(
-              color: lightGrey,
-              borderRadius: const BorderRadius.all(
-                Radius.circular(20),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: TextField(
-                        focusNode: focusNode,
-                        style: const TextStyle(color: Colors.white),
-                        controller: textController,
-                        onSubmitted: (value) async {
-                          await sendMessage(
-                              chatProvider: chatProvider,
-                              healthDataProvider: healthDataProvider);
-                        },
-                        decoration: const InputDecoration.collapsed(
-                          hintText: "Type your question here",
-                          hintStyle: TextStyle(color: Colors.white),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: textPurple,
+                            borderRadius: const BorderRadius.all(
+                              Radius.circular(20),
+                            ),
+                          ),
+                          child: IconButton(
+                            onPressed: () async {
+                              chatProvider.promptlist.clear();
+                              await sendMessage(
+                                  chatProvider: chatProvider,
+                                  healthDataProvider: healthDataProvider);
+                            },
+                            icon: Icon(
+                              Icons.check,
+                              color: darkerPurple,
+                            ),
+                          ),
                         ),
-                      ),
+                      ],
                     ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: textPurple,
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(20),
-                        ),
-                      ),
-                      child: IconButton(
-                        onPressed: () async {
-                          chatProvider.promptlist.clear();
-                          await sendMessage(
-                              chatProvider: chatProvider,
-                              healthDataProvider: healthDataProvider);
-                        },
-                        icon: Icon(
-                          Icons.check,
-                          color: darkerPurple,
-                        ),
-                      ),
-                    ),
-                  ],
+                  ),
+                ),
+              ],
+            ),
+            if (_isScrollingUp)
+              Positioned(
+                top: null,
+                bottom: 80,
+                left: 0,
+                right: 0,
+                child: FloatingActionButton(
+                  backgroundColor: textPurple,
+                  mini: true,
+                  onPressed: () {
+                    scrollListToBottom();
+                  },
+                  child: Icon(
+                    Icons.arrow_downward,
+                    color: darkerPurple,
+                  ),
                 ),
               ),
-            ),
           ],
         ),
       ),
     );
   }
 
-  //TODO fix the scroll to bottom function to better work with the chat widget
   void scrollListToBottom() {
     _listScrollController.animateTo(
       _listScrollController.position.maxScrollExtent,
-      duration: const Duration(milliseconds: 500),
+      duration: const Duration(milliseconds: 700),
       curve: Curves.fastOutSlowIn,
     );
+    setState(() {
+      _isScrollingUp = false;
+    });
   }
 
   Future<void> sendMessage(
@@ -198,6 +238,7 @@ class _HealthGptState extends State<HealthGpt> {
     }
     try {
       String text = textController.text;
+      scrollListToBottom();
       setState(
         () {
           _isTyping = true;
@@ -213,7 +254,9 @@ class _HealthGptState extends State<HealthGpt> {
     } finally {
       setState(
         () {
-          scrollListToBottom();
+          SchedulerBinding.instance.addPostFrameCallback((_) {
+            scrollListToBottom();
+          });
           _isTyping = false;
         },
       );
