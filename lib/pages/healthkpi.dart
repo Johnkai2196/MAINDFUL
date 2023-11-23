@@ -1,14 +1,55 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:innovation_project/constants/constants.dart';
+import 'package:innovation_project/providers/quote_providers.dart';
 // import 'package:innovation_project/pages/healthgpt_page.dart';
 import 'package:innovation_project/widgets/custom_app_bar.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 
-class HealthKPI extends StatelessWidget {
+class HealthKPI extends StatefulWidget {
   final String title;
   final String value;
-  const HealthKPI({super.key, required this.title, required this.value});
+  final QuoteProvider quoteProfider;
+  const HealthKPI(
+      {super.key,
+      required this.title,
+      required this.value,
+      required this.quoteProfider});
+
+  @override
+  State<HealthKPI> createState() => _HealthKPIState();
+}
+
+class _HealthKPIState extends State<HealthKPI> {
+  final StreamController<Map<String, String>> _controller =
+      StreamController<Map<String, String>>();
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.quoteProfider.getQuoteList
+        .firstWhere((map) => map.containsKey('Sleep'), orElse: () => {})
+        .isEmpty) {
+      // Start the timer when the widget is created
+      Timer.periodic(const Duration(seconds: 1), (Timer timer) {
+        // Update the state text every second
+        Map<String, String> sleepData = widget.quoteProfider.getQuoteList
+            .firstWhere((map) => map.containsKey('Sleep'), orElse: () => {});
+        _controller.add(sleepData);
+
+        if (sleepData["Sleep"] != null) {
+          timer.cancel();
+        }
+      });
+    } else {
+      Map<String, String> sleepData = widget.quoteProfider.getQuoteList
+          .firstWhere((map) => map.containsKey('Sleep'), orElse: () => {});
+      _controller.add(sleepData);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -65,10 +106,10 @@ class HealthKPI extends StatelessWidget {
                           ),
                           Container(
                             padding: const EdgeInsets.only(top: 13.0),
-                            child: Text(
+                            child: const Text(
                               'No data',
                               //value,
-                              style: const TextStyle(
+                              style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 16.0,
                                 fontWeight: FontWeight.bold,
@@ -124,7 +165,7 @@ class HealthKPI extends StatelessWidget {
                               decoration: const BoxDecoration(
                                 border: Border(
                                   bottom: BorderSide(
-                                    color: const Color.fromRGBO(223, 183, 255,
+                                    color: Color.fromRGBO(223, 183, 255,
                                         1), // Set the border color
                                     width: 2.0, // Set the border thickness
                                   ),
@@ -144,10 +185,36 @@ class HealthKPI extends StatelessWidget {
                             flex: 3,
                             child: Container(
                               margin: const EdgeInsets.symmetric(vertical: 8.0),
-                              child: const Text(
-                                'Quality sleep is your body\'s natural way of rejuvenating and recharging. It provides the energy and vitality needed to embrace each new day with enthusiasm, helping you feel your best both mentally and physically.',
-                                style: TextStyle(color: Colors.white),
-                                textAlign: TextAlign.center,
+                              child: StreamBuilder<Map<String, String>>(
+                                stream: _controller.stream,
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    String sleepText =
+                                        snapshot.data?["Sleep"] ?? "";
+                                    if (sleepText == "") {
+                                      return const SizedBox(
+                                        height: 50.0,
+                                        width: 50.0,
+                                        child: Center(
+                                            child: CircularProgressIndicator()),
+                                      );
+                                    } else {
+                                      return Text(
+                                        sleepText,
+                                        style: const TextStyle(
+                                            color: Colors.white),
+                                        textAlign: TextAlign.center,
+                                      );
+                                    }
+                                  } else {
+                                    return const SizedBox(
+                                      height: 50.0,
+                                      width: 50.0,
+                                      child: Center(
+                                          child: CircularProgressIndicator()),
+                                    );
+                                  }
+                                },
                               ),
                             ),
                           ),

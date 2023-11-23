@@ -14,7 +14,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class SleepCard extends StatelessWidget {
   final String title;
-  const SleepCard({super.key, required this.title});
+  final QuoteProvider quoteProvider;
+  const SleepCard(
+      {super.key, required this.title, required this.quoteProvider});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +27,11 @@ class SleepCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => HealthKPI(title: "Sleep", value: title)),
+              builder: (context) => HealthKPI(
+                    title: "Sleep",
+                    value: title,
+                    quoteProfider: quoteProvider,
+                  )),
         );
       },
       child: Center(
@@ -74,7 +80,9 @@ class SleepCard extends StatelessWidget {
 
 class HeartCard extends StatelessWidget {
   final String beats;
-  const HeartCard({super.key, required this.beats});
+  final QuoteProvider quoteProvider;
+  const HeartCard(
+      {super.key, required this.beats, required this.quoteProvider});
 
   @override
   Widget build(BuildContext context) {
@@ -85,8 +93,8 @@ class HeartCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) =>
-                  HealthKPIHeart(title: "Heart", value: beats)),
+              builder: (context) => HealthKPIHeart(
+                  title: "Heart", value: beats, quoteProfider: quoteProvider)),
         );
       },
       child: Center(
@@ -136,7 +144,7 @@ class HeartCard extends StatelessWidget {
 
 class StepsCard extends StatelessWidget {
   final String steps;
-  final QuoteProvider quoteProvider; // Add this line
+  final QuoteProvider quoteProvider;
 
   const StepsCard(
       {super.key, required this.steps, required this.quoteProvider});
@@ -201,7 +209,9 @@ class StepsCard extends StatelessWidget {
 
 class BreathingCard extends StatelessWidget {
   final String breath;
-  const BreathingCard({super.key, required this.breath});
+  final QuoteProvider quoteProvider;
+  const BreathingCard(
+      {super.key, required this.breath, required this.quoteProvider});
 
   @override
   Widget build(BuildContext context) {
@@ -212,8 +222,11 @@ class BreathingCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) =>
-                  HealthKPIBreath(title: "Breath", value: breath)),
+              builder: (context) => HealthKPIBreath(
+                    title: "Breath",
+                    value: breath,
+                    quoteProfider: quoteProvider,
+                  )),
         );
       },
       child: Center(

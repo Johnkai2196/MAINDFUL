@@ -115,11 +115,13 @@ class _HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           SleepCard(
+                            quoteProvider: quoteProvider,
                             title: healthDataProvider.sleepData == ''
                                 ? 'No Data'
                                 : healthDataProvider.sleepData,
                           ),
                           HeartCard(
+                            quoteProvider: quoteProvider,
                             beats: healthDataProvider.heartRate == 0
                                 ? 'No Data'
                                 : '${healthDataProvider.heartRate} bpm',
@@ -141,6 +143,7 @@ class _HomePageState extends State<HomePage> {
                                 : '${healthDataProvider.steps}',
                           ),
                           BreathingCard(
+                            quoteProvider: quoteProvider,
                             breath: healthDataProvider.v02Max == 0
                                 ? 'No Data'
                                 : '${healthDataProvider.v02Max} VO₂max',

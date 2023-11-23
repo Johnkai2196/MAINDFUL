@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import 'package:innovation_project/constants/constants.dart';
 
-
 import 'package:innovation_project/providers/quote_providers.dart';
 
 // import 'package:innovation_project/pages/healthgpt_page.dart';
@@ -15,12 +14,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 class HealthKPISteps extends StatefulWidget {
   final String title;
   final String value;
-  final QuoteProvider quoteProfider; // Add this line
+  final QuoteProvider quoteProfider;
   const HealthKPISteps({
     super.key,
     required this.title,
     required this.value,
-    required this.quoteProfider, // Add this linex
+    required this.quoteProfider,
   });
 
   @override
@@ -36,22 +35,22 @@ class _HealthKPIStepsState extends State<HealthKPISteps> {
     super.initState();
 
     if (widget.quoteProfider.getQuoteList
-        .firstWhere((map) => map.containsKey('Sleep'), orElse: () => {})
+        .firstWhere((map) => map.containsKey("Steps"), orElse: () => {})
         .isEmpty) {
       // Start the timer when the widget is created
       Timer.periodic(const Duration(seconds: 1), (Timer timer) {
         // Update the state text every second
         Map<String, String> sleepData = widget.quoteProfider.getQuoteList
-            .firstWhere((map) => map.containsKey('Sleep'), orElse: () => {});
+            .firstWhere((map) => map.containsKey("Steps"), orElse: () => {});
         _controller.add(sleepData);
 
-        if (sleepData["Sleep"] != null) {
+        if (sleepData["Steps"] != null) {
           timer.cancel();
         }
       });
     } else {
       Map<String, String> sleepData = widget.quoteProfider.getQuoteList
-          .firstWhere((map) => map.containsKey('Sleep'), orElse: () => {});
+          .firstWhere((map) => map.containsKey("Steps"), orElse: () => {});
       _controller.add(sleepData);
     }
   }
@@ -84,9 +83,7 @@ class _HealthKPIStepsState extends State<HealthKPISteps> {
                       width: screenWidth * 0.95,
                       decoration: BoxDecoration(
                         image: const DecorationImage(
-
                           image: AssetImage('assets/images/blob-haikei.png'),
-
                           fit: BoxFit.cover,
                         ),
                         borderRadius: BorderRadius.circular(12.0),
@@ -170,7 +167,7 @@ class _HealthKPIStepsState extends State<HealthKPISteps> {
                               decoration: const BoxDecoration(
                                 border: Border(
                                   bottom: BorderSide(
-                                    color: const Color.fromRGBO(223, 183, 255,
+                                    color: Color.fromRGBO(223, 183, 255,
                                         1), // Set the border color
                                     width: 2.0, // Set the border thickness
                                   ),
@@ -195,7 +192,7 @@ class _HealthKPIStepsState extends State<HealthKPISteps> {
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {
                                     String sleepText =
-                                        snapshot.data?["Sleep"] ?? "";
+                                        snapshot.data?["Steps"] ?? "";
                                     if (sleepText == "") {
                                       return const SizedBox(
                                         height: 50.0,
