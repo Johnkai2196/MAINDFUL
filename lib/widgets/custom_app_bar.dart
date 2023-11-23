@@ -33,9 +33,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         ? IconButton(
             icon: const Icon(Icons.arrow_back_ios_outlined),
             onPressed: () {
-              skipTermAndCondition
-                  ? Navigator.of(context).popUntil((route) => route.isFirst)
-                  : Navigator.of(context).pop();
+              typing
+                  ? ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                            "You cannot navigate backward while a message is being sent."),
+                        backgroundColor: Colors.red,
+                      ),
+                    )
+                  : skipTermAndCondition
+                      ? Navigator.of(context).popUntil((route) => route.isFirst)
+                      : Navigator.of(context).pop();
             },
           )
         : walkThrough
@@ -150,7 +158,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text(
-                        "You cannot reset a message while it's being sent."),
+                        "You cannot delete a message while it is in the process of being sent."),
                     backgroundColor: Colors.red,
                   ),
                 );
@@ -169,7 +177,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
             },
           )
         else
-          Container(), // This will render nothing if iconType is neither 'delete' nor 'refresh'
+          Container(),
       ],
     );
   }
