@@ -185,30 +185,39 @@ class _HealthKPIStepsState extends State<HealthKPISteps> {
                           Expanded(
                             flex: 3,
                             child: Container(
-                                margin:
-                                    const EdgeInsets.symmetric(vertical: 8.0),
-                                child: StreamBuilder<Map<String, String>>(
-                                  stream: _controller.stream,
-                                  builder: (context, snapshot) {
-                                    if (snapshot.hasData) {
-                                      String sleepText =
-                                          snapshot.data?["Sleep"] ??
-                                              'Loading...';
+                              margin: const EdgeInsets.symmetric(vertical: 8.0),
+                              child: StreamBuilder<Map<String, String>>(
+                                stream: _controller.stream,
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    String sleepText =
+                                        snapshot.data?["Sleep"] ?? "";
+                                    if (sleepText == "") {
+                                      return const SizedBox(
+                                        height: 50.0,
+                                        width: 50.0,
+                                        child: Center(
+                                            child: CircularProgressIndicator()),
+                                      );
+                                    } else {
                                       return Text(
                                         sleepText,
                                         style: const TextStyle(
                                             color: Colors.white),
                                         textAlign: TextAlign.center,
                                       );
-                                    } else {
-                                      return const Text(
-                                        'Loading...',
-                                        style: TextStyle(color: Colors.white),
-                                        textAlign: TextAlign.center,
-                                      );
                                     }
-                                  },
-                                )),
+                                  } else {
+                                    return const SizedBox(
+                                      height: 50.0,
+                                      width: 50.0,
+                                      child: Center(
+                                          child: CircularProgressIndicator()),
+                                    );
+                                  }
+                                },
+                              ),
+                            ),
                           ),
                           Expanded(
                             flex: 1,
