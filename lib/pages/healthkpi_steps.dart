@@ -38,8 +38,7 @@ class HealthKPISteps extends StatelessWidget {
                       width: screenWidth * 0.95,
                       decoration: BoxDecoration(
                         image: const DecorationImage(
-                          image: AssetImage(
-                              'assets/images/jad-limcaco-fRggLY1DQTM-unplash.jpg'),
+                          image: AssetImage('assets/images/blob-haikei.png'),
                           fit: BoxFit.cover,
                         ),
                         borderRadius: BorderRadius.circular(12.0),
@@ -48,7 +47,7 @@ class HealthKPISteps extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Container(
-                            margin: const EdgeInsets.symmetric(vertical: 8.0),
+                            padding: const EdgeInsets.only(bottom: 13.0),
                             child: const Text(
                               'Steps',
                               style: TextStyle(
@@ -65,7 +64,7 @@ class HealthKPISteps extends StatelessWidget {
                             color: Colors.white,
                           ),
                           Container(
-                            margin: const EdgeInsets.symmetric(vertical: 8.0),
+                            padding: const EdgeInsets.only(top: 13.0),
                             child: Text(
                               value,
                               style: const TextStyle(

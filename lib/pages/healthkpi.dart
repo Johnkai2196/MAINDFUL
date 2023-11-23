@@ -38,8 +38,8 @@ class HealthKPI extends StatelessWidget {
                       width: screenWidth * 0.95,
                       decoration: BoxDecoration(
                         image: const DecorationImage(
-                          image:
-                              AssetImage('assets/images/moon-1301073_1280.jpg'),
+                          image: AssetImage(
+                              'assets/images/blob-scatter-haikei.png'),
                           fit: BoxFit.cover,
                         ),
                         borderRadius: BorderRadius.circular(12.0),
@@ -48,7 +48,7 @@ class HealthKPI extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Container(
-                            margin: const EdgeInsets.symmetric(vertical: 8.0),
+                            padding: const EdgeInsets.only(bottom: 13.0),
                             child: const Text(
                               'Sleep',
                               style: TextStyle(
@@ -65,9 +65,10 @@ class HealthKPI extends StatelessWidget {
                             color: Colors.white,
                           ),
                           Container(
-                            margin: const EdgeInsets.symmetric(vertical: 8.0),
+                            padding: const EdgeInsets.only(top: 13.0),
                             child: Text(
-                              value,
+                              'No data',
+                              //value,
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 16.0,

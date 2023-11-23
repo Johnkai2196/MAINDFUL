@@ -38,8 +38,8 @@ class HealthKPIHeart extends StatelessWidget {
                       width: screenWidth * 0.95,
                       decoration: BoxDecoration(
                         image: const DecorationImage(
-                          image: AssetImage(
-                              'assets/images/aerial-1822139_1280.png'),
+                          image:
+                              AssetImage('assets/images/blob-scene-haikei.png'),
                           fit: BoxFit.cover,
                         ),
                         borderRadius: BorderRadius.circular(12.0),
@@ -48,7 +48,7 @@ class HealthKPIHeart extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: <Widget>[
                           Container(
-                            margin: const EdgeInsets.symmetric(vertical: 8.0),
+                            padding: const EdgeInsets.only(bottom: 13.0),
                             child: const Text(
                               'Heart',
                               style: TextStyle(
@@ -65,7 +65,7 @@ class HealthKPIHeart extends StatelessWidget {
                             color: Colors.white,
                           ),
                           Container(
-                            margin: const EdgeInsets.symmetric(vertical: 8.0),
+                            padding: const EdgeInsets.only(top: 13.0),
                             child: Text(
                               value,
                               style: const TextStyle(
