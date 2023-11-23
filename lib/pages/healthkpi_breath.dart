@@ -152,18 +152,20 @@ class HealthKPIBreath extends StatelessWidget {
                           ),
                           Expanded(
                             flex: 1,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                // Button action
-                              },
-                              style: ElevatedButton.styleFrom(
-                                backgroundColor: const Color(
-                                    0xffDFB7FF), // Button background color
-                              ),
-                              child: const Text(
-                                'Physical activity tips',
-                                style: TextStyle(
-                                  color: Color(0xff4B007E), // Button text color
+                            child: Container(
+                              margin: const EdgeInsets.only(bottom: 20.0),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  // Button action
+                                },
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: const Color(0xffDFB7FF),
+                                ),
+                                child: const Text(
+                                  'Healthy tips for heart',
+                                  style: TextStyle(
+                                    color: Color(0xff4B007E),
+                                  ),
                                 ),
                               ),
                             ),
