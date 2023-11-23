@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:innovation_project/providers/chat_providers.dart';
+import 'package:innovation_project/providers/quote_providers.dart';
 // import 'package:innovation_project/constants/constants.dart';
 // import 'package:innovation_project/pages/healthgpt_page.dart';
 import 'package:innovation_project/widgets/custom_app_bar.dart';
@@ -12,12 +13,12 @@ import 'package:provider/provider.dart';
 class HealthKPISteps extends StatefulWidget {
   final String title;
   final String value;
-  final ChatProvider chatProfiders; // Add this line
+  final QuoteProvider quoteProfider; // Add this line
   const HealthKPISteps({
     super.key,
     required this.title,
     required this.value,
-    required this.chatProfiders, // Add this linex
+    required this.quoteProfider, // Add this linex
   });
 
   @override
@@ -32,17 +33,25 @@ class _HealthKPIStepsState extends State<HealthKPISteps> {
   void initState() {
     super.initState();
 
-    // Start the timer when the widget is created
-    Timer.periodic(const Duration(seconds: 1), (Timer timer) {
-      // Update the state text every second
-      Map<String, String> sleepData = widget.chatProfiders.getQuoteList
+    if (widget.quoteProfider.getQuoteList
+        .firstWhere((map) => map.containsKey('Sleep'), orElse: () => {})
+        .isEmpty) {
+      // Start the timer when the widget is created
+      Timer.periodic(const Duration(seconds: 1), (Timer timer) {
+        // Update the state text every second
+        Map<String, String> sleepData = widget.quoteProfider.getQuoteList
+            .firstWhere((map) => map.containsKey('Sleep'), orElse: () => {});
+        _controller.add(sleepData);
+
+        if (sleepData["Sleep"] != null) {
+          timer.cancel();
+        }
+      });
+    } else {
+      Map<String, String> sleepData = widget.quoteProfider.getQuoteList
           .firstWhere((map) => map.containsKey('Sleep'), orElse: () => {});
       _controller.add(sleepData);
-
-      if (sleepData["Sleep"] != null) {
-        timer.cancel();
-      }
-    });
+    }
   }
 
   @override
@@ -97,7 +106,6 @@ class _HealthKPIStepsState extends State<HealthKPISteps> {
                             'assets/icons/walk-svgrepo-com.svg',
                             height: 45.0,
                             width: 45.0,
-                            color: Colors.white,
                           ),
                           Container(
                             margin: const EdgeInsets.symmetric(vertical: 8.0),
@@ -207,12 +215,6 @@ class _HealthKPIStepsState extends State<HealthKPISteps> {
                             child: ElevatedButton(
                               onPressed: () {
                                 // Button action
-                                Map<String, String> sleepData = widget
-                                    .chatProfiders.getQuoteList
-                                    .firstWhere(
-                                        (map) => map.containsKey('Sleep'),
-                                        orElse: () => {});
-                                print(sleepData["Sleep"]);
                               },
                               style: ElevatedButton.styleFrom(
                                 backgroundColor: const Color(

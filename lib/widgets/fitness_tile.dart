@@ -8,6 +8,7 @@ import 'package:innovation_project/pages/healthkpi_steps.dart';
 import 'package:innovation_project/pages/term_and_condition_page.dart';
 import 'package:innovation_project/providers/chat_providers.dart';
 import 'package:innovation_project/providers/health_providers.dart';
+import 'package:innovation_project/providers/quote_providers.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -135,9 +136,10 @@ class HeartCard extends StatelessWidget {
 
 class StepsCard extends StatelessWidget {
   final String steps;
-  final ChatProvider chatProvider; // Add this line
+  final QuoteProvider quoteProvider; // Add this line
 
-  const StepsCard({super.key, required this.steps, required this.chatProvider});
+  const StepsCard(
+      {super.key, required this.steps, required this.quoteProvider});
 
   @override
   Widget build(BuildContext context) {
@@ -150,7 +152,7 @@ class StepsCard extends StatelessWidget {
           context,
           MaterialPageRoute(
               builder: (context) => HealthKPISteps(
-                  title: "Steps", value: steps, chatProfiders: chatProvider)),
+                  title: "Steps", value: steps, quoteProfider: quoteProvider)),
         );
       },
       child: Center(

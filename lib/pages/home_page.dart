@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:innovation_project/providers/chat_providers.dart';
 import 'package:innovation_project/providers/health_providers.dart';
+import 'package:innovation_project/providers/quote_providers.dart';
 import 'package:innovation_project/widgets/custom_app_bar.dart';
 import 'package:innovation_project/widgets/fitness_tile.dart';
 import 'package:health/health.dart';
@@ -11,6 +12,7 @@ import 'package:health/health.dart';
 // import 'package:innovation_project/pages/healthgpt_page.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -21,11 +23,12 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   HealthDataProvider healthDataProvider = HealthDataProvider();
-  ChatProvider chatProvider = ChatProvider();
+  QuoteProvider quoteProvider = QuoteProvider();
+
   @override
   void initState() {
     super.initState();
-    chatProvider.sendMessageAndGetAnswerKPI();
+
     authorize();
   }
 
@@ -49,6 +52,7 @@ class _HomePageState extends State<HomePage> {
       try {
         await health.requestAuthorization(types);
         fetchHealthData();
+        quoteProvider.sendMessageAndGetAnswerKPI();
       } catch (e) {
         print("Exception in authorize: $e");
       }
@@ -133,7 +137,7 @@ class _HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           StepsCard(
-                            chatProvider: chatProvider,
+                            quoteProvider: quoteProvider,
                             steps: healthDataProvider.steps == 0
                                 ? 'No Data'
                                 : '${healthDataProvider.steps}',
