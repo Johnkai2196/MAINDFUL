@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-// import 'package:innovation_project/constants/constants.dart';
+import 'package:innovation_project/constants/constants.dart';
 // import 'package:innovation_project/pages/healthgpt_page.dart';
 import 'package:innovation_project/widgets/custom_app_bar.dart';
 
@@ -16,7 +16,7 @@ class HealthKPI extends StatelessWidget {
 
     return Scaffold(
       body: Scaffold(
-        backgroundColor: const Color(0xff1D1B1E),
+        backgroundColor: backGroundColor,
         appBar: const CustomAppBar(backArrow: true),
         body: Column(
           children: <Widget>[
@@ -62,7 +62,6 @@ class HealthKPI extends StatelessWidget {
                             'assets/icons/moon-svgrepo-com.svg',
                             height: 45.0,
                             width: 45.0,
-                            color: Colors.white,
                           ),
                           Container(
                             padding: const EdgeInsets.only(top: 13.0),
@@ -125,8 +124,9 @@ class HealthKPI extends StatelessWidget {
                               decoration: const BoxDecoration(
                                 border: Border(
                                   bottom: BorderSide(
-                                    color: Colors.white, // Set the border color
-                                    width: 1.0, // Set the border thickness
+                                    color: const Color.fromRGBO(223, 183, 255,
+                                        1), // Set the border color
+                                    width: 2.0, // Set the border thickness
                                   ),
                                 ),
                               ),
@@ -160,7 +160,7 @@ class HealthKPI extends StatelessWidget {
                                   // Button action
                                 },
                                 style: ElevatedButton.styleFrom(
-                                  backgroundColor: const Color(0xffDFB7FF),
+                                  backgroundColor: textPurple,
                                 ),
                                 child: const Text(
                                   'Healthy tips for heart',
