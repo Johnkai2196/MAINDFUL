@@ -24,13 +24,13 @@ class SleepCard extends StatelessWidget {
       },
       child: Center(
         child: Card(
-          elevation: 8,
+          elevation: 10,
           color: surfaceContainerHighest,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
             side: const BorderSide(
               color: Colors.black,
-              width: 2.0,
+              width: 2.5,
             ),
           ),
           child: SizedBox(
@@ -80,13 +80,13 @@ class HeartCard extends StatelessWidget {
       },
       child: Center(
         child: Card(
-          elevation: 8, // Adjust the elevation to control the shadow depth
+          elevation: 10, // Adjust the elevation to control the shadow depth
           color: surfaceContainerHighest,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
             side: const BorderSide(
               color: Colors.black, // Set the border color
-              width: 2.0, // Set the border width
+              width: 2.5, // Set the border width
             ),
           ),
           child: SizedBox(
@@ -137,13 +137,13 @@ class StepsCard extends StatelessWidget {
       },
       child: Center(
         child: Card(
-          elevation: 8, // Adjust the elevation to control the shadow depth
+          elevation: 10, // Adjust the elevation to control the shadow depth
           color: surfaceContainerHighest,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
             side: const BorderSide(
               color: Colors.black, // Set the border color
-              width: 2.0, // Set the border width
+              width: 2.5, // Set the border width
             ),
           ),
           child: SizedBox(
@@ -193,13 +193,13 @@ class BreathingCard extends StatelessWidget {
       },
       child: Center(
         child: Card(
-          elevation: 8, // Adjust the elevation to control the shadow depth
+          elevation: 10, // Adjust the elevation to control the shadow depth
           color: surfaceContainerHighest,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
             side: const BorderSide(
               color: Colors.black, // Set the border color
-              width: 2.0, // Set the border width
+              width: 2.5, // Set the border width
             ),
           ),
           child: SizedBox(
