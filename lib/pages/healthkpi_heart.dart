@@ -8,21 +8,21 @@ import 'package:innovation_project/widgets/custom_app_bar.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 
-class HealthKPI extends StatefulWidget {
+class HealthKPIHeart extends StatefulWidget {
   final String title;
   final String value;
   final QuoteProvider quoteProfider;
-  const HealthKPI(
+  const HealthKPIHeart(
       {super.key,
       required this.title,
       required this.value,
       required this.quoteProfider});
 
   @override
-  State<HealthKPI> createState() => _HealthKPIState();
+  State<HealthKPIHeart> createState() => _HealthKPIHeartState();
 }
 
-class _HealthKPIState extends State<HealthKPI> {
+class _HealthKPIHeartState extends State<HealthKPIHeart> {
   final StreamController<Map<String, String>> _controller =
       StreamController<Map<String, String>>();
 
@@ -31,22 +31,23 @@ class _HealthKPIState extends State<HealthKPI> {
     super.initState();
 
     if (widget.quoteProfider.getQuoteList
-        .firstWhere((map) => map.containsKey('Sleep'), orElse: () => {})
+        .firstWhere((map) => map.containsKey("Heart rate"), orElse: () => {})
         .isEmpty) {
       // Start the timer when the widget is created
       Timer.periodic(const Duration(seconds: 1), (Timer timer) {
         // Update the state text every second
         Map<String, String> sleepData = widget.quoteProfider.getQuoteList
-            .firstWhere((map) => map.containsKey('Sleep'), orElse: () => {});
+            .firstWhere((map) => map.containsKey("Heart rate"),
+                orElse: () => {});
         _controller.add(sleepData);
 
-        if (sleepData["Sleep"] != null) {
+        if (sleepData["Heart rate"] != null) {
           timer.cancel();
         }
       });
     } else {
       Map<String, String> sleepData = widget.quoteProfider.getQuoteList
-          .firstWhere((map) => map.containsKey('Sleep'), orElse: () => {});
+          .firstWhere((map) => map.containsKey("Heart rate"), orElse: () => {});
       _controller.add(sleepData);
     }
   }
@@ -79,8 +80,8 @@ class _HealthKPIState extends State<HealthKPI> {
                       width: screenWidth * 0.95,
                       decoration: BoxDecoration(
                         image: const DecorationImage(
-                          image: AssetImage(
-                              'assets/images/blob-scatter-haikei.png'),
+                          image:
+                              AssetImage('assets/images/blob-scene-haikei.png'),
                           fit: BoxFit.cover,
                         ),
                         borderRadius: BorderRadius.circular(12.0),
@@ -91,7 +92,7 @@ class _HealthKPIState extends State<HealthKPI> {
                           Container(
                             padding: const EdgeInsets.only(bottom: 13.0),
                             child: const Text(
-                              'Sleep',
+                              'Heart',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 24.0,
@@ -100,16 +101,15 @@ class _HealthKPIState extends State<HealthKPI> {
                             ),
                           ),
                           SvgPicture.asset(
-                            'assets/icons/moon-svgrepo-com.svg',
+                            'assets/icons/heart-svgrepo-com.svg',
                             height: 45.0,
                             width: 45.0,
                           ),
                           Container(
                             padding: const EdgeInsets.only(top: 13.0),
-                            child: const Text(
-                              'No data',
-                              //value,
-                              style: TextStyle(
+                            child: Text(
+                              widget.value,
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 16.0,
                                 fontWeight: FontWeight.bold,
@@ -148,7 +148,7 @@ class _HealthKPIState extends State<HealthKPI> {
                             child: Container(
                               margin: const EdgeInsets.symmetric(vertical: 8.0),
                               child: const Text(
-                                'You slept good',
+                                'Your heart is doing great!',
                                 style: TextStyle(color: Colors.white),
                               ),
                             ),
@@ -172,7 +172,7 @@ class _HealthKPIState extends State<HealthKPI> {
                                 ),
                               ),
                               child: const Text(
-                                'Why is sleep important?',
+                                'Why monitor your heart?',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 24.0,
@@ -190,7 +190,7 @@ class _HealthKPIState extends State<HealthKPI> {
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {
                                     String sleepText =
-                                        snapshot.data?["Sleep"] ?? "";
+                                        snapshot.data?["Heart rate"] ?? "";
                                     if (sleepText == "") {
                                       return const SizedBox(
                                         height: 50.0,

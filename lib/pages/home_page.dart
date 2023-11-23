@@ -1,21 +1,13 @@
-// ignore_for_file: avoid_print
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:innovation_project/pages/healthgpt_page.dart';
-import 'package:innovation_project/pages/term_and_condition_page.dart';
-import 'package:innovation_project/providers/health_providers.dart';
 
+import 'package:innovation_project/providers/health_providers.dart';
+import 'package:innovation_project/providers/quote_providers.dart';
 import 'package:innovation_project/widgets/custom_app_bar.dart';
 import 'package:innovation_project/widgets/fitness_tile.dart';
 import 'package:health/health.dart';
 
-import 'package:shared_preferences/shared_preferences.dart';
-
-import 'package:innovation_project/constants/constants.dart';
-// import 'package:innovation_project/constants/constants.dart';
-// import 'package:innovation_project/pages/healthgpt_page.dart';
-import 'package:innovation_project/widgets/custom_app_bar.dart';
-import 'package:innovation_project/widgets/fitness_tile.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomePage extends StatefulWidget {
@@ -27,6 +19,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   HealthDataProvider healthDataProvider = HealthDataProvider();
+  QuoteProvider quoteProvider = QuoteProvider();
 
   @override
   void initState() {
@@ -54,8 +47,9 @@ class _HomePageState extends State<HomePage> {
       try {
         await health.requestAuthorization(types);
         fetchHealthData();
+        quoteProvider.sendMessageAndGetAnswerKPI();
       } catch (e) {
-        print("Exception in authorize: $e");
+        log("Exception in authorize: $e");
       }
     }
   }
@@ -66,6 +60,7 @@ class _HomePageState extends State<HomePage> {
     await healthDataProvider.fetchHearthRateData(health);
     await healthDataProvider.fetchSleepData(health);
     await healthDataProvider.fetchWeekHealthData(health);
+    quoteProvider.sendMessageAndGetAnswerHealth(healthDataProvider);
     setState(() {});
   }
 
@@ -76,7 +71,10 @@ class _HomePageState extends State<HomePage> {
 
     return Scaffold(
       backgroundColor: Colors.transparent,
-      appBar: CustomAppBar(withIcon: "refresh", onIconPressed: fetchHealthData),
+      appBar: CustomAppBar(
+          withIcon: "refresh",
+          onIconPressed: fetchHealthData,
+          walkThrough: true),
       body: Stack(
         children: <Widget>[
           // Background image (SVG)
@@ -117,10 +115,16 @@ class _HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           SleepCard(
-                            title: healthDataProvider.sleepData,
+                            quoteProvider: quoteProvider,
+                            title: healthDataProvider.sleepData == ''
+                                ? 'No Data'
+                                : healthDataProvider.sleepData,
                           ),
                           HeartCard(
-                            beats: '${healthDataProvider.heartRate} bpm',
+                            quoteProvider: quoteProvider,
+                            beats: healthDataProvider.heartRate == 0
+                                ? 'No Data'
+                                : '${healthDataProvider.heartRate} bpm',
                           ),
                         ],
                       ),
@@ -133,10 +137,16 @@ class _HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
                           StepsCard(
-                            steps: '${healthDataProvider.steps}',
+                            quoteProvider: quoteProvider,
+                            steps: healthDataProvider.steps == 0
+                                ? 'No Data'
+                                : '${healthDataProvider.steps}',
                           ),
                           BreathingCard(
-                            breath: '${healthDataProvider.v02Max} VO₂max',
+                            quoteProvider: quoteProvider,
+                            breath: healthDataProvider.v02Max == 0
+                                ? 'No Data'
+                                : '${healthDataProvider.v02Max} VO₂max',
                           ),
                         ],
                       ),

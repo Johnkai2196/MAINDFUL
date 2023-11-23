@@ -8,21 +8,22 @@ import 'package:innovation_project/widgets/custom_app_bar.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 
-class HealthKPI extends StatefulWidget {
+class HealthKPIBreath extends StatefulWidget {
   final String title;
   final String value;
   final QuoteProvider quoteProfider;
-  const HealthKPI(
-      {super.key,
-      required this.title,
-      required this.value,
-      required this.quoteProfider});
+  const HealthKPIBreath({
+    super.key,
+    required this.title,
+    required this.value,
+    required this.quoteProfider,
+  });
 
   @override
-  State<HealthKPI> createState() => _HealthKPIState();
+  State<HealthKPIBreath> createState() => _HealthKPIBreathState();
 }
 
-class _HealthKPIState extends State<HealthKPI> {
+class _HealthKPIBreathState extends State<HealthKPIBreath> {
   final StreamController<Map<String, String>> _controller =
       StreamController<Map<String, String>>();
 
@@ -31,22 +32,22 @@ class _HealthKPIState extends State<HealthKPI> {
     super.initState();
 
     if (widget.quoteProfider.getQuoteList
-        .firstWhere((map) => map.containsKey('Sleep'), orElse: () => {})
+        .firstWhere((map) => map.containsKey('VO2MAX'), orElse: () => {})
         .isEmpty) {
       // Start the timer when the widget is created
       Timer.periodic(const Duration(seconds: 1), (Timer timer) {
         // Update the state text every second
         Map<String, String> sleepData = widget.quoteProfider.getQuoteList
-            .firstWhere((map) => map.containsKey('Sleep'), orElse: () => {});
+            .firstWhere((map) => map.containsKey('VO2MAX'), orElse: () => {});
         _controller.add(sleepData);
 
-        if (sleepData["Sleep"] != null) {
+        if (sleepData["VO2MAX"] != null) {
           timer.cancel();
         }
       });
     } else {
       Map<String, String> sleepData = widget.quoteProfider.getQuoteList
-          .firstWhere((map) => map.containsKey('Sleep'), orElse: () => {});
+          .firstWhere((map) => map.containsKey('VO2MAX'), orElse: () => {});
       _controller.add(sleepData);
     }
   }
@@ -80,7 +81,7 @@ class _HealthKPIState extends State<HealthKPI> {
                       decoration: BoxDecoration(
                         image: const DecorationImage(
                           image: AssetImage(
-                              'assets/images/blob-scatter-haikei.png'),
+                              'assets/images/stacked-waves-haikei.png'),
                           fit: BoxFit.cover,
                         ),
                         borderRadius: BorderRadius.circular(12.0),
@@ -91,7 +92,7 @@ class _HealthKPIState extends State<HealthKPI> {
                           Container(
                             padding: const EdgeInsets.only(bottom: 13.0),
                             child: const Text(
-                              'Sleep',
+                              'Breath',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 24.0,
@@ -100,16 +101,15 @@ class _HealthKPIState extends State<HealthKPI> {
                             ),
                           ),
                           SvgPicture.asset(
-                            'assets/icons/moon-svgrepo-com.svg',
+                            'assets/icons/wind-svgrepo-com.svg',
                             height: 45.0,
                             width: 45.0,
                           ),
                           Container(
-                            padding: const EdgeInsets.only(top: 13.0),
-                            child: const Text(
-                              'No data',
-                              //value,
-                              style: TextStyle(
+                            margin: const EdgeInsets.symmetric(vertical: 13.0),
+                            child: Text(
+                              widget.value,
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 16.0,
                                 fontWeight: FontWeight.bold,
@@ -148,7 +148,7 @@ class _HealthKPIState extends State<HealthKPI> {
                             child: Container(
                               margin: const EdgeInsets.symmetric(vertical: 8.0),
                               child: const Text(
-                                'You slept good',
+                                'You have impressive endurance capacity.',
                                 style: TextStyle(color: Colors.white),
                               ),
                             ),
@@ -172,7 +172,7 @@ class _HealthKPIState extends State<HealthKPI> {
                                 ),
                               ),
                               child: const Text(
-                                'Why is sleep important?',
+                                'What VO2max tells you?',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 24.0,
@@ -190,7 +190,7 @@ class _HealthKPIState extends State<HealthKPI> {
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {
                                     String sleepText =
-                                        snapshot.data?["Sleep"] ?? "";
+                                        snapshot.data?["VO2MAX"] ?? "";
                                     if (sleepText == "") {
                                       return const SizedBox(
                                         height: 50.0,
@@ -230,7 +230,7 @@ class _HealthKPIState extends State<HealthKPI> {
                                   backgroundColor: textPurple,
                                 ),
                                 child: const Text(
-                                  'Healthy tips for heart',
+                                  'How to breath',
                                   style: TextStyle(
                                     color: Color(0xff4B007E),
                                   ),
