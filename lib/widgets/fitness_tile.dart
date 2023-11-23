@@ -6,10 +6,10 @@ import 'package:innovation_project/pages/healthkpi_breath.dart';
 import 'package:innovation_project/pages/healthkpi_heart.dart';
 import 'package:innovation_project/pages/healthkpi_steps.dart';
 import 'package:innovation_project/pages/term_and_condition_page.dart';
-import 'package:innovation_project/providers/chat_providers.dart';
+
 import 'package:innovation_project/providers/health_providers.dart';
 import 'package:innovation_project/providers/quote_providers.dart';
-import 'package:provider/provider.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SleepCard extends StatelessWidget {

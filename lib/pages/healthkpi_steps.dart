@@ -1,14 +1,13 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:innovation_project/providers/chat_providers.dart';
+
 import 'package:innovation_project/providers/quote_providers.dart';
 // import 'package:innovation_project/constants/constants.dart';
 // import 'package:innovation_project/pages/healthgpt_page.dart';
 import 'package:innovation_project/widgets/custom_app_bar.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
 
 class HealthKPISteps extends StatefulWidget {
   final String title;

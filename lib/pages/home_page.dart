@@ -1,18 +1,14 @@
-// ignore_for_file: avoid_print
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:innovation_project/providers/chat_providers.dart';
+
 import 'package:innovation_project/providers/health_providers.dart';
 import 'package:innovation_project/providers/quote_providers.dart';
 import 'package:innovation_project/widgets/custom_app_bar.dart';
 import 'package:innovation_project/widgets/fitness_tile.dart';
 import 'package:health/health.dart';
 
-// import 'package:innovation_project/constants/constants.dart';
-// import 'package:innovation_project/pages/healthgpt_page.dart';
-
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -28,7 +24,6 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-
     authorize();
   }
 
@@ -54,7 +49,7 @@ class _HomePageState extends State<HomePage> {
         fetchHealthData();
         quoteProvider.sendMessageAndGetAnswerKPI();
       } catch (e) {
-        print("Exception in authorize: $e");
+        log("Exception in authorize: $e");
       }
     }
   }
@@ -65,6 +60,7 @@ class _HomePageState extends State<HomePage> {
     await healthDataProvider.fetchHearthRateData(health);
     await healthDataProvider.fetchSleepData(health);
     await healthDataProvider.fetchWeekHealthData(health);
+    quoteProvider.sendMessageAndGetAnswerHealth(healthDataProvider);
     setState(() {});
   }
 
