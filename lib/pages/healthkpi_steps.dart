@@ -3,6 +3,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'package:innovation_project/constants/constants.dart';
+import 'package:innovation_project/pages/healthgpt_page.dart';
+import 'package:innovation_project/pages/term_and_condition_page.dart';
+import 'package:innovation_project/providers/health_providers.dart';
 
 import 'package:innovation_project/providers/quote_providers.dart';
 
@@ -10,15 +13,14 @@ import 'package:innovation_project/providers/quote_providers.dart';
 import 'package:innovation_project/widgets/custom_app_bar.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HealthKPISteps extends StatefulWidget {
-  final String title;
-  final String value;
   final QuoteProvider quoteProfider;
+  final HealthDataProvider healthDataProvider;
   const HealthKPISteps({
     super.key,
-    required this.title,
-    required this.value,
+    required this.healthDataProvider,
     required this.quoteProfider,
   });
 
@@ -29,36 +31,45 @@ class HealthKPISteps extends StatefulWidget {
 class _HealthKPIStepsState extends State<HealthKPISteps> {
   final StreamController<Map<String, String>> _controller =
       StreamController<Map<String, String>>();
-
+  late bool status;
   @override
   void initState() {
     super.initState();
-
+    _getStatus();
     if (widget.quoteProfider.getQuoteList
         .firstWhere((map) => map.containsKey("Steps"), orElse: () => {})
         .isEmpty) {
       // Start the timer when the widget is created
       Timer.periodic(const Duration(seconds: 1), (Timer timer) {
         // Update the state text every second
-        Map<String, String> sleepData = widget.quoteProfider.getQuoteList
+        Map<String, String> stepData = widget.quoteProfider.getQuoteList
             .firstWhere((map) => map.containsKey("Steps"), orElse: () => {});
-        _controller.add(sleepData);
+        _controller.add(stepData);
 
-        if (sleepData["Steps"] != null) {
+        if (stepData["Steps"] != null) {
           timer.cancel();
         }
       });
     } else {
-      Map<String, String> sleepData = widget.quoteProfider.getQuoteList
+      Map<String, String> stepData = widget.quoteProfider.getQuoteList
           .firstWhere((map) => map.containsKey("Steps"), orElse: () => {});
-      _controller.add(sleepData);
+      _controller.add(stepData);
     }
+  }
+
+  void _getStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    var status = prefs.getBool('status');
+
+    setState(() => this.status = status ?? false);
   }
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-
+    String text = "Tips to increase activity";
+    _getStatus();
     return Scaffold(
       body: Scaffold(
         backgroundColor: backGroundColor,
@@ -110,7 +121,9 @@ class _HealthKPIStepsState extends State<HealthKPISteps> {
                           Container(
                             padding: const EdgeInsets.only(top: 13.0),
                             child: Text(
-                              widget.value,
+                              widget.healthDataProvider.steps == 0
+                                  ? 'No Data'
+                                  : '${widget.healthDataProvider.steps}',
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 16.0,
@@ -191,9 +204,9 @@ class _HealthKPIStepsState extends State<HealthKPISteps> {
                                 stream: _controller.stream,
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {
-                                    String sleepText =
+                                    String stepText =
                                         snapshot.data?["Steps"] ?? "";
-                                    if (sleepText == "") {
+                                    if (stepText == "") {
                                       return const SizedBox(
                                         height: 50.0,
                                         width: 50.0,
@@ -202,7 +215,7 @@ class _HealthKPIStepsState extends State<HealthKPISteps> {
                                       );
                                     } else {
                                       return Text(
-                                        sleepText,
+                                        stepText,
                                         style: const TextStyle(
                                             color: Colors.white),
                                         textAlign: TextAlign.center,
@@ -227,13 +240,35 @@ class _HealthKPIStepsState extends State<HealthKPISteps> {
                               child: ElevatedButton(
                                 onPressed: () {
                                   // Button action
+                                  status
+                                      ? Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => HealthGpt(
+                                                healthDataProvider:
+                                                    widget.healthDataProvider,
+                                                question: text,
+                                                route: "step"),
+                                          ),
+                                        )
+                                      : Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                TermsAndConditionsPage(
+                                                    healthDataProvider: widget
+                                                        .healthDataProvider,
+                                                    question: text,
+                                                    route: "step"),
+                                          ),
+                                        );
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: textPurple,
                                 ),
-                                child: const Text(
-                                  'Healthy tips for heart',
-                                  style: TextStyle(
+                                child: Text(
+                                  text,
+                                  style: const TextStyle(
                                     color: Color(0xff4B007E),
                                   ),
                                 ),

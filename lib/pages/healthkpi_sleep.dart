@@ -2,34 +2,36 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:innovation_project/constants/constants.dart';
+import 'package:innovation_project/pages/healthgpt_page.dart';
+import 'package:innovation_project/pages/term_and_condition_page.dart';
+import 'package:innovation_project/providers/health_providers.dart';
 import 'package:innovation_project/providers/quote_providers.dart';
 // import 'package:innovation_project/pages/healthgpt_page.dart';
 import 'package:innovation_project/widgets/custom_app_bar.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class HealthKPI extends StatefulWidget {
-  final String title;
-  final String value;
+class HealthKPISleep extends StatefulWidget {
+  final HealthDataProvider healthDataProvider;
   final QuoteProvider quoteProfider;
-  const HealthKPI(
+  const HealthKPISleep(
       {super.key,
-      required this.title,
-      required this.value,
+      required this.healthDataProvider,
       required this.quoteProfider});
 
   @override
-  State<HealthKPI> createState() => _HealthKPIState();
+  State<HealthKPISleep> createState() => _HealthKPISleepState();
 }
 
-class _HealthKPIState extends State<HealthKPI> {
+class _HealthKPISleepState extends State<HealthKPISleep> {
   final StreamController<Map<String, String>> _controller =
       StreamController<Map<String, String>>();
-
+  late bool status;
   @override
   void initState() {
     super.initState();
-
+    _getStatus();
     if (widget.quoteProfider.getQuoteList
         .firstWhere((map) => map.containsKey('Sleep'), orElse: () => {})
         .isEmpty) {
@@ -51,10 +53,19 @@ class _HealthKPIState extends State<HealthKPI> {
     }
   }
 
+  void _getStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    var status = prefs.getBool('status');
+
+    setState(() => this.status = status ?? false);
+  }
+
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-
+    String text = "Tips for a better night's sleep";
+    _getStatus();
     return Scaffold(
       body: Scaffold(
         backgroundColor: backGroundColor,
@@ -106,10 +117,11 @@ class _HealthKPIState extends State<HealthKPI> {
                           ),
                           Container(
                             padding: const EdgeInsets.only(top: 13.0),
-                            child: const Text(
-                              'No data',
-                              //value,
-                              style: TextStyle(
+                            child: Text(
+                              widget.healthDataProvider.sleepData == ''
+                                  ? 'No Data'
+                                  : widget.healthDataProvider.sleepData,
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 16.0,
                                 fontWeight: FontWeight.bold,
@@ -225,13 +237,35 @@ class _HealthKPIState extends State<HealthKPI> {
                               child: ElevatedButton(
                                 onPressed: () {
                                   // Button action
+                                  status
+                                      ? Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => HealthGpt(
+                                                healthDataProvider:
+                                                    widget.healthDataProvider,
+                                                question: text,
+                                                route: "sleep"),
+                                          ),
+                                        )
+                                      : Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                TermsAndConditionsPage(
+                                                    healthDataProvider: widget
+                                                        .healthDataProvider,
+                                                    question: text,
+                                                    route: "sleep"),
+                                          ),
+                                        );
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: textPurple,
                                 ),
-                                child: const Text(
-                                  'Healthy tips for heart',
-                                  style: TextStyle(
+                                child: Text(
+                                  text,
+                                  style: const TextStyle(
                                     color: Color(0xff4B007E),
                                   ),
                                 ),

@@ -1,28 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 
 import 'package:innovation_project/constants/constants.dart';
 // import 'package:innovation_project/constants/constants.dart';
 
 import 'package:innovation_project/providers/chat_providers.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // Custom appbar to display the logo and the delete icon
-class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
+class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String withIcon;
   final Function()? onIconPressed;
   final bool backArrow;
-  final bool skipTermAndCondition;
+
   final bool typing;
   final bool walkThrough;
-  const CustomAppBar({
-    super.key,
-    this.onIconPressed,
-    this.withIcon = "",
-    this.backArrow = false,
-    this.skipTermAndCondition = false,
-    this.typing = false,
-    this.walkThrough = false,
-  });
+  final String route;
+  const CustomAppBar(
+      {super.key,
+      this.onIconPressed,
+      this.withIcon = "",
+      this.backArrow = false,
+      this.typing = false,
+      this.walkThrough = false,
+      this.route = ""});
+
+  @override
+  State<CustomAppBar> createState() => _CustomAppBarState();
+  @override
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+}
+
+class _CustomAppBarState extends State<CustomAppBar> {
+  late bool status;
+  @override
+  void initState() {
+    super.initState();
+    _getStatus();
+  }
+
+  void _getStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    var status = prefs.getBool('first');
+
+    setState(() => this.status = status ?? false);
+    if (this.status == false) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        _showWelcomeDialog(context);
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +63,11 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     final chatProvider = Provider.of<ChatProvider>(context);
     Widget back;
 
-    back = backArrow
+    back = widget.backArrow
         ? IconButton(
             icon: const Icon(Icons.arrow_back_ios_outlined),
             onPressed: () {
-              typing
+              widget.typing
                   ? ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content: Text(
@@ -46,15 +75,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                         backgroundColor: Colors.red,
                       ),
                     )
-                  : skipTermAndCondition
+                  : widget.route == ""
                       ? Navigator.of(context).popUntil((route) => route.isFirst)
-                      : Navigator.of(context).pop();
+                      : Navigator.of(context).popUntil(
+                          (route) => route.settings.name == '/${widget.route}');
             },
           )
-        : walkThrough
+        : widget.walkThrough
             ? IconButton(
                 icon: const Icon(Icons.info_outline_rounded),
                 onPressed: () {
+                  _getStatus();
                   _showWelcomeDialog(context);
                 },
               )
@@ -99,12 +130,12 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
         ),
       ),
       actions: [
-        if (withIcon == 'delete')
+        if (widget.withIcon == 'delete')
           IconButton(
             icon: const Icon(Icons.delete),
             color: Colors.white,
             onPressed: () {
-              if (!typing) {
+              if (!widget.typing) {
                 showDialog(
                   context: context,
                   builder: (BuildContext context) {
@@ -171,13 +202,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               }
             },
           )
-        else if (withIcon == 'refresh')
+        else if (widget.withIcon == 'refresh')
           IconButton(
             icon: const Icon(Icons.refresh),
             color: Colors.white,
             onPressed: () {
-              if (onIconPressed != null) {
-                onIconPressed!();
+              if (widget.onIconPressed != null) {
+                widget.onIconPressed!();
               }
             },
           )
@@ -226,12 +257,14 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 Positioned(
                   top: 0,
                   right: 0,
-                  child: IconButton(
-                    icon: const Icon(Icons.close, color: Colors.white),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
+                  child: status
+                      ? IconButton(
+                          icon: const Icon(Icons.close, color: Colors.white),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        )
+                      : Container(),
                 ),
               ],
             ),
@@ -329,36 +362,42 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                 Positioned(
                   top: 0,
                   right: 0,
-                  child: IconButton(
-                    icon: const Icon(Icons.close, color: Colors.white),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      _showPreviousDialog(
-                          context, 0); // Go to the previous dialog
-                    },
-                  ),
+                  child: status
+                      ? IconButton(
+                          icon: const Icon(Icons.close, color: Colors.white),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                            _showPreviousDialog(
+                                context, 0); // Go to the previous dialog
+                          },
+                        )
+                      : Container(),
                 ),
               ],
             ),
           ),
           actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.pop(context, 'Back');
-                _showPreviousDialog(context, dialogNumber);
-              },
-              child: const Text(
-                'Back',
-                style: TextStyle(
-                  color: Color.fromRGBO(223, 183, 255, 1),
-                ),
-              ),
-            ),
+            dialogNumber > 2
+                ? TextButton(
+                    onPressed: () {
+                      Navigator.pop(context, 'Back');
+                      _showPreviousDialog(context, dialogNumber);
+                    },
+                    child: const Text(
+                      'Back',
+                      style: TextStyle(
+                        color: Color.fromRGBO(223, 183, 255, 1),
+                      ),
+                    ),
+                  )
+                : Container(),
             TextButton(
               onPressed: () {
                 Navigator.pop(context, 'OK');
                 if (dialogNumber < 5) {
                   _showNextDialog(context, dialogNumber + 1);
+                } else {
+                  saveData();
                 }
               },
               child: Text(
@@ -373,7 +412,10 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       },
     );
   }
+}
 
-  @override
-  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
+Future<void> saveData() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  prefs.setBool('first', true);
+  print('saved');
 }

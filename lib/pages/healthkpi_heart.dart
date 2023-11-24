@@ -2,21 +2,24 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:innovation_project/constants/constants.dart';
+import 'package:innovation_project/pages/healthgpt_page.dart';
+import 'package:innovation_project/pages/term_and_condition_page.dart';
+import 'package:innovation_project/providers/health_providers.dart';
 import 'package:innovation_project/providers/quote_providers.dart';
 // import 'package:innovation_project/pages/healthgpt_page.dart';
 import 'package:innovation_project/widgets/custom_app_bar.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HealthKPIHeart extends StatefulWidget {
-  final String title;
-  final String value;
+  final HealthDataProvider healthDataProvider;
   final QuoteProvider quoteProfider;
-  const HealthKPIHeart(
-      {super.key,
-      required this.title,
-      required this.value,
-      required this.quoteProfider});
+  const HealthKPIHeart({
+    super.key,
+    required this.healthDataProvider,
+    required this.quoteProfider,
+  });
 
   @override
   State<HealthKPIHeart> createState() => _HealthKPIHeartState();
@@ -25,37 +28,46 @@ class HealthKPIHeart extends StatefulWidget {
 class _HealthKPIHeartState extends State<HealthKPIHeart> {
   final StreamController<Map<String, String>> _controller =
       StreamController<Map<String, String>>();
-
+  late bool status;
   @override
   void initState() {
     super.initState();
-
+    _getStatus();
     if (widget.quoteProfider.getQuoteList
         .firstWhere((map) => map.containsKey("Heart rate"), orElse: () => {})
         .isEmpty) {
       // Start the timer when the widget is created
       Timer.periodic(const Duration(seconds: 1), (Timer timer) {
         // Update the state text every second
-        Map<String, String> sleepData = widget.quoteProfider.getQuoteList
+        Map<String, String> heartData = widget.quoteProfider.getQuoteList
             .firstWhere((map) => map.containsKey("Heart rate"),
                 orElse: () => {});
-        _controller.add(sleepData);
+        _controller.add(heartData);
 
-        if (sleepData["Heart rate"] != null) {
+        if (heartData["Heart rate"] != null) {
           timer.cancel();
         }
       });
     } else {
-      Map<String, String> sleepData = widget.quoteProfider.getQuoteList
+      Map<String, String> heartData = widget.quoteProfider.getQuoteList
           .firstWhere((map) => map.containsKey("Heart rate"), orElse: () => {});
-      _controller.add(sleepData);
+      _controller.add(heartData);
     }
+  }
+
+  void _getStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    var status = prefs.getBool('status');
+
+    setState(() => this.status = status ?? false);
   }
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-
+    String text = "Tips to improve your heart rate";
+    _getStatus();
     return Scaffold(
       body: Scaffold(
         backgroundColor: backGroundColor,
@@ -108,7 +120,9 @@ class _HealthKPIHeartState extends State<HealthKPIHeart> {
                           Container(
                             padding: const EdgeInsets.only(top: 13.0),
                             child: Text(
-                              widget.value,
+                              widget.healthDataProvider.heartRate == 0
+                                  ? 'No Data'
+                                  : '${widget.healthDataProvider.heartRate} bpm',
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 16.0,
@@ -189,9 +203,9 @@ class _HealthKPIHeartState extends State<HealthKPIHeart> {
                                 stream: _controller.stream,
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {
-                                    String sleepText =
+                                    String heartText =
                                         snapshot.data?["Heart rate"] ?? "";
-                                    if (sleepText == "") {
+                                    if (heartText == "") {
                                       return const SizedBox(
                                         height: 50.0,
                                         width: 50.0,
@@ -200,7 +214,7 @@ class _HealthKPIHeartState extends State<HealthKPIHeart> {
                                       );
                                     } else {
                                       return Text(
-                                        sleepText,
+                                        heartText,
                                         style: const TextStyle(
                                             color: Colors.white),
                                         textAlign: TextAlign.center,
@@ -225,13 +239,35 @@ class _HealthKPIHeartState extends State<HealthKPIHeart> {
                               child: ElevatedButton(
                                 onPressed: () {
                                   // Button action
+                                  status
+                                      ? Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => HealthGpt(
+                                                healthDataProvider:
+                                                    widget.healthDataProvider,
+                                                question: text,
+                                                route: "heart"),
+                                          ),
+                                        )
+                                      : Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                TermsAndConditionsPage(
+                                                    healthDataProvider: widget
+                                                        .healthDataProvider,
+                                                    question: text,
+                                                    route: "heart"),
+                                          ),
+                                        );
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: textPurple,
                                 ),
-                                child: const Text(
-                                  'Healthy tips for heart',
-                                  style: TextStyle(
+                                child: Text(
+                                  text,
+                                  style: const TextStyle(
                                     color: Color(0xff4B007E),
                                   ),
                                 ),
