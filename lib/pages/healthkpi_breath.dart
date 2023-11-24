@@ -185,7 +185,7 @@ class _HealthKPIBreathState extends State<HealthKPIBreath> {
                                 ),
                               ),
                               child: const Text(
-                                'What VO2max tells you?',
+                                'What V0₂max tells you?',
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 24.0,

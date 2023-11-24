@@ -64,7 +64,7 @@ class _HealthKPISleepState extends State<HealthKPISleep> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-    String text = "Tips for a better night sleep";
+    String text = "Tips for a better night's sleep";
     _getStatus();
     return Scaffold(
       body: Scaffold(
