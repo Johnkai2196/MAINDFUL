@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:innovation_project/constants/constants.dart';
+import 'package:innovation_project/providers/health_providers.dart';
 import 'package:innovation_project/providers/quote_providers.dart';
 // import 'package:innovation_project/pages/healthgpt_page.dart';
 import 'package:innovation_project/widgets/custom_app_bar.dart';
@@ -9,14 +10,13 @@ import 'package:innovation_project/widgets/custom_app_bar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HealthKPIHeart extends StatefulWidget {
-  final String title;
-  final String value;
+  final HealthDataProvider healthDataProvider;
   final QuoteProvider quoteProfider;
-  const HealthKPIHeart(
-      {super.key,
-      required this.title,
-      required this.value,
-      required this.quoteProfider});
+  const HealthKPIHeart({
+    super.key,
+    required this.healthDataProvider,
+    required this.quoteProfider,
+  });
 
   @override
   State<HealthKPIHeart> createState() => _HealthKPIHeartState();
@@ -108,7 +108,9 @@ class _HealthKPIHeartState extends State<HealthKPIHeart> {
                           Container(
                             padding: const EdgeInsets.only(top: 13.0),
                             child: Text(
-                              widget.value,
+                              widget.healthDataProvider.heartRate == 0
+                                  ? 'No Data'
+                                  : '${widget.healthDataProvider.heartRate} bpm',
                               style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 16.0,
