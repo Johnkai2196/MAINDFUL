@@ -2,12 +2,15 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:innovation_project/constants/constants.dart';
+import 'package:innovation_project/pages/healthgpt_page.dart';
+import 'package:innovation_project/pages/term_and_condition_page.dart';
 import 'package:innovation_project/providers/health_providers.dart';
 import 'package:innovation_project/providers/quote_providers.dart';
 // import 'package:innovation_project/pages/healthgpt_page.dart';
 import 'package:innovation_project/widgets/custom_app_bar.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HealthKPIBreath extends StatefulWidget {
   final HealthDataProvider healthDataProvider;
@@ -25,36 +28,45 @@ class HealthKPIBreath extends StatefulWidget {
 class _HealthKPIBreathState extends State<HealthKPIBreath> {
   final StreamController<Map<String, String>> _controller =
       StreamController<Map<String, String>>();
-
+  late bool status;
   @override
   void initState() {
     super.initState();
-
+    _getStatus();
     if (widget.quoteProfider.getQuoteList
         .firstWhere((map) => map.containsKey('VO2MAX'), orElse: () => {})
         .isEmpty) {
       // Start the timer when the widget is created
       Timer.periodic(const Duration(seconds: 1), (Timer timer) {
         // Update the state text every second
-        Map<String, String> sleepData = widget.quoteProfider.getQuoteList
+        Map<String, String> v02Data = widget.quoteProfider.getQuoteList
             .firstWhere((map) => map.containsKey('VO2MAX'), orElse: () => {});
-        _controller.add(sleepData);
+        _controller.add(v02Data);
 
-        if (sleepData["VO2MAX"] != null) {
+        if (v02Data["VO2MAX"] != null) {
           timer.cancel();
         }
       });
     } else {
-      Map<String, String> sleepData = widget.quoteProfider.getQuoteList
+      Map<String, String> v02Data = widget.quoteProfider.getQuoteList
           .firstWhere((map) => map.containsKey('VO2MAX'), orElse: () => {});
-      _controller.add(sleepData);
+      _controller.add(v02Data);
     }
+  }
+
+  void _getStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    var status = prefs.getBool('status');
+
+    setState(() => this.status = status ?? false);
   }
 
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
-
+    String text = "Tips on improving cardiovascularity";
+    _getStatus();
     return Scaffold(
       body: Scaffold(
         backgroundColor: backGroundColor,
@@ -190,9 +202,9 @@ class _HealthKPIBreathState extends State<HealthKPIBreath> {
                                 stream: _controller.stream,
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {
-                                    String sleepText =
+                                    String v02Text =
                                         snapshot.data?["VO2MAX"] ?? "";
-                                    if (sleepText == "") {
+                                    if (v02Text == "") {
                                       return const SizedBox(
                                         height: 50.0,
                                         width: 50.0,
@@ -201,7 +213,7 @@ class _HealthKPIBreathState extends State<HealthKPIBreath> {
                                       );
                                     } else {
                                       return Text(
-                                        sleepText,
+                                        v02Text,
                                         style: const TextStyle(
                                             color: Colors.white),
                                         textAlign: TextAlign.center,
@@ -226,13 +238,35 @@ class _HealthKPIBreathState extends State<HealthKPIBreath> {
                               child: ElevatedButton(
                                 onPressed: () {
                                   // Button action
+                                  status
+                                      ? Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => HealthGpt(
+                                                healthDataProvider:
+                                                    widget.healthDataProvider,
+                                                question: text,
+                                                route: "breath"),
+                                          ),
+                                        )
+                                      : Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                TermsAndConditionsPage(
+                                                    healthDataProvider: widget
+                                                        .healthDataProvider,
+                                                    question: text,
+                                                    route: "breath"),
+                                          ),
+                                        );
                                 },
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: textPurple,
                                 ),
-                                child: const Text(
-                                  'How to breath',
-                                  style: TextStyle(
+                                child: Text(
+                                  text,
+                                  style: const TextStyle(
                                     color: Color(0xff4B007E),
                                   ),
                                 ),

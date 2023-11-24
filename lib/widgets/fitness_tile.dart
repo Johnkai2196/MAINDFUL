@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:innovation_project/constants/constants.dart';
 import 'package:innovation_project/pages/healthgpt_page.dart';
-import 'package:innovation_project/pages/healthkpi.dart';
+import 'package:innovation_project/pages/healthkpi_sleep.dart';
 import 'package:innovation_project/pages/healthkpi_breath.dart';
 import 'package:innovation_project/pages/healthkpi_heart.dart';
 import 'package:innovation_project/pages/healthkpi_steps.dart';
@@ -29,7 +29,7 @@ class SleepCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => HealthKPI(
+            builder: (context) => HealthKPISleep(
                 healthDataProvider: healthDataProvider,
                 quoteProfider: quoteProvider),
             settings: const RouteSettings(name: '/sleep'),
@@ -324,6 +324,7 @@ class _ChatCardState extends State<ChatCard> {
     double cardWidth = MediaQuery.of(context).size.width * 0.85;
     double cardHeight = MediaQuery.of(context).size.width * 0.2;
     _getStatus();
+
     return GestureDetector(
       onTap: () {
         status

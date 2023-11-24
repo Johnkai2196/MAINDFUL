@@ -42,18 +42,18 @@ class _HealthKPIStepsState extends State<HealthKPISteps> {
       // Start the timer when the widget is created
       Timer.periodic(const Duration(seconds: 1), (Timer timer) {
         // Update the state text every second
-        Map<String, String> sleepData = widget.quoteProfider.getQuoteList
+        Map<String, String> stepData = widget.quoteProfider.getQuoteList
             .firstWhere((map) => map.containsKey("Steps"), orElse: () => {});
-        _controller.add(sleepData);
+        _controller.add(stepData);
 
-        if (sleepData["Steps"] != null) {
+        if (stepData["Steps"] != null) {
           timer.cancel();
         }
       });
     } else {
-      Map<String, String> sleepData = widget.quoteProfider.getQuoteList
+      Map<String, String> stepData = widget.quoteProfider.getQuoteList
           .firstWhere((map) => map.containsKey("Steps"), orElse: () => {});
-      _controller.add(sleepData);
+      _controller.add(stepData);
     }
   }
 
@@ -68,6 +68,7 @@ class _HealthKPIStepsState extends State<HealthKPISteps> {
   @override
   Widget build(BuildContext context) {
     double screenWidth = MediaQuery.of(context).size.width;
+    String text = "Tips to increase activity";
     _getStatus();
     return Scaffold(
       body: Scaffold(
@@ -203,9 +204,9 @@ class _HealthKPIStepsState extends State<HealthKPISteps> {
                                 stream: _controller.stream,
                                 builder: (context, snapshot) {
                                   if (snapshot.hasData) {
-                                    String sleepText =
+                                    String stepText =
                                         snapshot.data?["Steps"] ?? "";
-                                    if (sleepText == "") {
+                                    if (stepText == "") {
                                       return const SizedBox(
                                         height: 50.0,
                                         width: 50.0,
@@ -214,7 +215,7 @@ class _HealthKPIStepsState extends State<HealthKPISteps> {
                                       );
                                     } else {
                                       return Text(
-                                        sleepText,
+                                        stepText,
                                         style: const TextStyle(
                                             color: Colors.white),
                                         textAlign: TextAlign.center,
@@ -246,8 +247,7 @@ class _HealthKPIStepsState extends State<HealthKPISteps> {
                                             builder: (context) => HealthGpt(
                                                 healthDataProvider:
                                                     widget.healthDataProvider,
-                                                question:
-                                                    "Healthy tips for heart",
+                                                question: text,
                                                 route: "step"),
                                           ),
                                         )
@@ -258,8 +258,7 @@ class _HealthKPIStepsState extends State<HealthKPISteps> {
                                                 TermsAndConditionsPage(
                                                     healthDataProvider: widget
                                                         .healthDataProvider,
-                                                    question:
-                                                        "Healthy tips for heart",
+                                                    question: text,
                                                     route: "step"),
                                           ),
                                         );
@@ -267,9 +266,9 @@ class _HealthKPIStepsState extends State<HealthKPISteps> {
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: textPurple,
                                 ),
-                                child: const Text(
-                                  'Healthy tips for heart',
-                                  style: TextStyle(
+                                child: Text(
+                                  text,
+                                  style: const TextStyle(
                                     color: Color(0xff4B007E),
                                   ),
                                 ),
