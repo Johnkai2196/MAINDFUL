@@ -16,11 +16,13 @@ import 'package:provider/provider.dart';
 
 class HealthGpt extends StatefulWidget {
   final HealthDataProvider healthDataProvider;
-
-  const HealthGpt({
-    super.key,
-    required this.healthDataProvider,
-  });
+  final String question;
+  final String route;
+  const HealthGpt(
+      {super.key,
+      required this.healthDataProvider,
+      this.question = "",
+      this.route = ""});
 
   @override
   State<HealthGpt> createState() => _HealthGptState();
@@ -39,6 +41,11 @@ class _HealthGptState extends State<HealthGpt> {
     textController = TextEditingController();
     focusNode = FocusNode();
     super.initState();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      preMadeQuestion();
+      scrollListToBottom();
+    });
     _listScrollController.addListener(() {
       if (_listScrollController.position.userScrollDirection ==
           ScrollDirection.forward) {
@@ -68,137 +75,140 @@ class _HealthGptState extends State<HealthGpt> {
     final healthDataProvider = widget.healthDataProvider;
     List<ChatModel> combinedList =
         chatProvider.chatList + chatProvider.promptlist;
-    return Scaffold(
-      backgroundColor: Colors.black,
-      appBar: CustomAppBar(
-        withIcon: "delete",
-        backArrow: true,
-        skipTermAndCondition: true,
-        typing: _isTyping,
-      ),
-      body: SafeArea(
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                Flexible(
-                  child: ListView.builder(
-                    controller: _listScrollController,
-                    itemCount: combinedList.length,
-                    itemBuilder: (context, index) {
-                      final dynamic role = combinedList[index].role;
-                      final isSender = role == "user";
-                      final isPrompt = role == "prompt";
-                      if (isPrompt || isSender) {
-                        if (isSender) {
-                          return ChatWidget(
-                            message: combinedList[index].context,
-                            isSender: isSender,
-                          );
-                        } else {
-                          return GestureDetector(
-                            onTap: () {
-                              textController.text = combinedList[index].context;
-                              chatProvider.promptlist.clear();
-                              sendMessage(
-                                  chatProvider: chatProvider,
-                                  healthDataProvider: healthDataProvider);
-                            },
-                            child: ChatWidget(
+    return WillPopScope(
+      onWillPop: () async => false,
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        appBar: CustomAppBar(
+            withIcon: "delete",
+            backArrow: true,
+            typing: _isTyping,
+            route: widget.route),
+        body: SafeArea(
+          child: Stack(
+            children: [
+              Column(
+                children: [
+                  Flexible(
+                    child: ListView.builder(
+                      controller: _listScrollController,
+                      itemCount: combinedList.length,
+                      itemBuilder: (context, index) {
+                        final dynamic role = combinedList[index].role;
+                        final isSender = role == "user";
+                        final isPrompt = role == "prompt";
+                        if (isPrompt || isSender) {
+                          if (isSender) {
+                            return ChatWidget(
                               message: combinedList[index].context,
-                              isSender: isPrompt,
-                            ),
-                          );
+                              isSender: isSender,
+                            );
+                          } else {
+                            return GestureDetector(
+                              onTap: () {
+                                textController.text =
+                                    combinedList[index].context;
+                                chatProvider.promptlist.clear();
+                                sendMessage(
+                                    chatProvider: chatProvider,
+                                    healthDataProvider: healthDataProvider);
+                              },
+                              child: ChatWidget(
+                                message: combinedList[index].context,
+                                isSender: isPrompt,
+                              ),
+                            );
+                          }
                         }
-                      }
-                      return ChatWidget(
-                        message: combinedList[index].context,
-                        isSender: isSender,
-                        shouldAnimate: combinedList.length - 1 == index,
-                      );
-                    },
+                        return ChatWidget(
+                          message: combinedList[index].context,
+                          isSender: isSender,
+                          shouldAnimate: combinedList.length - 1 == index,
+                        );
+                      },
+                    ),
                   ),
-                ),
-                if (_isTyping) ...[
-                  const SpinKitThreeBounce(
-                    color: Colors.white,
-                    size: 24,
+                  if (_isTyping) ...[
+                    const SpinKitThreeBounce(
+                      color: Colors.white,
+                      size: 24,
+                    ),
+                  ],
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Material(
+                    color: lightGrey,
+                    borderRadius: const BorderRadius.all(
+                      Radius.circular(20),
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: TextField(
+                              focusNode: focusNode,
+                              style: const TextStyle(color: Colors.white),
+                              controller: textController,
+                              onSubmitted: (value) async {
+                                chatProvider.promptlist.clear();
+                                await sendMessage(
+                                    chatProvider: chatProvider,
+                                    healthDataProvider: healthDataProvider);
+                              },
+                              decoration: const InputDecoration.collapsed(
+                                hintText: "Type your question here",
+                                hintStyle: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: textPurple,
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(20),
+                              ),
+                            ),
+                            child: IconButton(
+                              onPressed: () async {
+                                chatProvider.promptlist.clear();
+                                await sendMessage(
+                                    chatProvider: chatProvider,
+                                    healthDataProvider: healthDataProvider);
+                              },
+                              icon: Icon(
+                                Icons.check,
+                                color: darkerPurple,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
                 ],
-                const SizedBox(
-                  height: 15,
-                ),
-                Material(
-                  color: lightGrey,
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(20),
-                  ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      children: [
-                        Expanded(
-                          child: TextField(
-                            focusNode: focusNode,
-                            style: const TextStyle(color: Colors.white),
-                            controller: textController,
-                            onSubmitted: (value) async {
-                              chatProvider.promptlist.clear();
-                              await sendMessage(
-                                  chatProvider: chatProvider,
-                                  healthDataProvider: healthDataProvider);
-                            },
-                            decoration: const InputDecoration.collapsed(
-                              hintText: "Type your question here",
-                              hintStyle: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: textPurple,
-                            borderRadius: const BorderRadius.all(
-                              Radius.circular(20),
-                            ),
-                          ),
-                          child: IconButton(
-                            onPressed: () async {
-                              chatProvider.promptlist.clear();
-                              await sendMessage(
-                                  chatProvider: chatProvider,
-                                  healthDataProvider: healthDataProvider);
-                            },
-                            icon: Icon(
-                              Icons.check,
-                              color: darkerPurple,
-                            ),
-                          ),
-                        ),
-                      ],
+              ),
+              if (_isScrollingUp)
+                Positioned(
+                  top: null,
+                  bottom: 80,
+                  left: 0,
+                  right: 0,
+                  child: FloatingActionButton(
+                    backgroundColor: textPurple,
+                    mini: true,
+                    onPressed: () {
+                      scrollListToBottom();
+                    },
+                    child: Icon(
+                      Icons.arrow_downward,
+                      color: darkerPurple,
                     ),
                   ),
                 ),
-              ],
-            ),
-            if (_isScrollingUp)
-              Positioned(
-                top: null,
-                bottom: 80,
-                left: 0,
-                right: 0,
-                child: FloatingActionButton(
-                  backgroundColor: textPurple,
-                  mini: true,
-                  onPressed: () {
-                    scrollListToBottom();
-                  },
-                  child: Icon(
-                    Icons.arrow_downward,
-                    color: darkerPurple,
-                  ),
-                ),
-              ),
-          ],
+            ],
+          ),
         ),
       ),
     );
@@ -239,6 +249,7 @@ class _HealthGptState extends State<HealthGpt> {
     try {
       String text = textController.text;
       scrollListToBottom();
+
       setState(
         () {
           _isTyping = true;
@@ -260,6 +271,18 @@ class _HealthGptState extends State<HealthGpt> {
           _isTyping = false;
         },
       );
+    }
+  }
+
+  Future<void> preMadeQuestion() async {
+    if (widget.question != "") {
+      final chatProviders = Provider.of<ChatProvider>(context, listen: false);
+      textController.text = widget.question;
+      chatProviders.promptlist.clear();
+
+      sendMessage(
+          chatProvider: chatProviders,
+          healthDataProvider: widget.healthDataProvider);
     }
   }
 }

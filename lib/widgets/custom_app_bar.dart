@@ -13,18 +13,18 @@ class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String withIcon;
   final Function()? onIconPressed;
   final bool backArrow;
-  final bool skipTermAndCondition;
+
   final bool typing;
   final bool walkThrough;
-  const CustomAppBar({
-    super.key,
-    this.onIconPressed,
-    this.withIcon = "",
-    this.backArrow = false,
-    this.skipTermAndCondition = false,
-    this.typing = false,
-    this.walkThrough = false,
-  });
+  final String route;
+  const CustomAppBar(
+      {super.key,
+      this.onIconPressed,
+      this.withIcon = "",
+      this.backArrow = false,
+      this.typing = false,
+      this.walkThrough = false,
+      this.route = ""});
 
   @override
   State<CustomAppBar> createState() => _CustomAppBarState();
@@ -75,9 +75,10 @@ class _CustomAppBarState extends State<CustomAppBar> {
                         backgroundColor: Colors.red,
                       ),
                     )
-                  : widget.skipTermAndCondition
+                  : widget.route == ""
                       ? Navigator.of(context).popUntil((route) => route.isFirst)
-                      : Navigator.of(context).pop();
+                      : Navigator.of(context).popUntil(
+                          (route) => route.settings.name == '/${widget.route}');
             },
           )
         : widget.walkThrough

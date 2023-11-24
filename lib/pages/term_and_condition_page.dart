@@ -9,10 +9,13 @@ import 'package:url_launcher/url_launcher.dart';
 
 class TermsAndConditionsPage extends StatelessWidget {
   final HealthDataProvider healthDataProvider;
-  const TermsAndConditionsPage({
-    super.key,
-    required this.healthDataProvider,
-  });
+  final String question;
+  final String route;
+  const TermsAndConditionsPage(
+      {super.key,
+      required this.healthDataProvider,
+      this.question = "",
+      this.route = ""});
 
   @override
   Widget build(BuildContext context) {
@@ -127,8 +130,9 @@ class TermsAndConditionsPage extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) => HealthGpt(
-                            healthDataProvider: healthDataProvider,
-                          ),
+                              healthDataProvider: healthDataProvider,
+                              question: question,
+                              route: route),
                         ),
                       );
                     },

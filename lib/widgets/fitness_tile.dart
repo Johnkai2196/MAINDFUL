@@ -27,11 +27,13 @@ class SleepCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => HealthKPI(
-                    title: "Sleep",
-                    value: title,
-                    quoteProfider: quoteProvider,
-                  )),
+            builder: (context) => HealthKPI(
+              title: "Sleep",
+              value: title,
+              quoteProfider: quoteProvider,
+            ),
+            settings: const RouteSettings(name: '/sleep'),
+          ),
         );
       },
       child: Center(
@@ -93,8 +95,10 @@ class HeartCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => HealthKPIHeart(
-                  title: "Heart", value: beats, quoteProfider: quoteProvider)),
+            builder: (context) => HealthKPIHeart(
+                title: "Heart", value: beats, quoteProfider: quoteProvider),
+            settings: const RouteSettings(name: '/heart'),
+          ),
         );
       },
       child: Center(
@@ -143,11 +147,13 @@ class HeartCard extends StatelessWidget {
 }
 
 class StepsCard extends StatelessWidget {
-  final String steps;
+  final HealthDataProvider healthDataProvider;
   final QuoteProvider quoteProvider;
 
   const StepsCard(
-      {super.key, required this.steps, required this.quoteProvider});
+      {super.key,
+      required this.healthDataProvider,
+      required this.quoteProvider});
 
   @override
   Widget build(BuildContext context) {
@@ -159,8 +165,11 @@ class StepsCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => HealthKPISteps(
-                  title: "Steps", value: steps, quoteProfider: quoteProvider)),
+            builder: (context) => HealthKPISteps(
+                healthDataProvider: healthDataProvider,
+                quoteProfider: quoteProvider),
+            settings: const RouteSettings(name: '/step'),
+          ),
         );
       },
       child: Center(
@@ -191,7 +200,9 @@ class StepsCard extends StatelessWidget {
                 const SizedBox(
                     height: 8), // Add spacing between the icon and text
                 Text(
-                  steps,
+                  healthDataProvider.steps == 0
+                      ? 'No Data'
+                      : '${healthDataProvider.steps}',
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 32,
@@ -222,11 +233,13 @@ class BreathingCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => HealthKPIBreath(
-                    title: "Breath",
-                    value: breath,
-                    quoteProfider: quoteProvider,
-                  )),
+            builder: (context) => HealthKPIBreath(
+              title: "Breath",
+              value: breath,
+              quoteProfider: quoteProvider,
+            ),
+            settings: const RouteSettings(name: '/breath'),
+          ),
         );
       },
       child: Center(

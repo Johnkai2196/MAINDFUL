@@ -106,10 +106,10 @@ class _HealthKPIState extends State<HealthKPI> {
                           ),
                           Container(
                             padding: const EdgeInsets.only(top: 13.0),
-                            child: const Text(
-                              'No data',
+                            child: Text(
+                              widget.value,
                               //value,
-                              style: TextStyle(
+                              style: const TextStyle(
                                 color: Colors.white,
                                 fontSize: 16.0,
                                 fontWeight: FontWeight.bold,
