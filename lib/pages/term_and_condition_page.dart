@@ -33,9 +33,9 @@ class TermsAndConditionsPage extends StatelessWidget {
                 height: cardHeight,
                 clipBehavior: Clip.antiAlias,
                 decoration: ShapeDecoration(
-                  color: const Color(0xFF373437),
+                  color: surfaceContainerHighest,
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12),
+                    borderRadius: BorderRadius.circular(20),
                   ),
                 ),
                 child: Column(
@@ -43,11 +43,11 @@ class TermsAndConditionsPage extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     const Padding(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.all(16),
                       child: Text(
-                        'Terms and Conditions',
+                        'Terms and conditions',
                         style: TextStyle(
-                          fontSize: 20,
+                          fontSize: 24,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,
                         ),
@@ -56,7 +56,7 @@ class TermsAndConditionsPage extends StatelessWidget {
                     Expanded(
                       child: SingleChildScrollView(
                         child: Padding(
-                          padding: const EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(16),
                           child: Text.rich(
                             TextSpan(
                               text:
@@ -97,30 +97,29 @@ class TermsAndConditionsPage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  OutlinedButton(
+                  TextButton(
                     onPressed: () {
                       // Add functionality for the button
                       Navigator.pop(context);
                     },
-                    style: OutlinedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                            100.0), // Adjust the radius as needed
-                      ),
-                      side: BorderSide(
-                        color: textWhite, // Set the color of the border
-                        width: 0.5, // Set the width of the border
-                      ),
-                    ),
+                    style: TextButton.styleFrom(
+                        // backgroundColor: textPurple,
+                        // shape: RoundedRectangleBorder(
+                        //   borderRadius: BorderRadius.circular(
+                        //       100.0), // Adjust the radius as needed
+                        // ),
+                        ),
                     child: const Text(
                       'Decline',
                       style: TextStyle(
-                          // You can customize the text style if needed
-                          ),
+                        color: Color.fromRGBO(223, 183, 255, 1),
+                        fontSize: 14,
+                        // You can customize the text style if needed
+                      ),
                     ),
                   ),
-                  const SizedBox(width: 8),
-                  OutlinedButton(
+                  const SizedBox(width: 10),
+                  ElevatedButton(
                     onPressed: () {
                       _setPreferences();
                       Navigator.push(
@@ -132,21 +131,20 @@ class TermsAndConditionsPage extends StatelessWidget {
                         ),
                       );
                     },
-                    style: OutlinedButton.styleFrom(
+                    style: TextButton.styleFrom(
+                      backgroundColor: textPurple,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(
                             100.0), // Adjust the radius as needed
                       ),
-                      side: BorderSide(
-                        color: textWhite, // Set the color of the border
-                        width: 0.5, // Set the width of the border
-                      ),
                     ),
-                    child: Text(
+                    child: const Text(
                       'Accept',
                       style: TextStyle(
                         // You can customize the text style if needed
-                        color: darkerPurple,
+                        color: Color.fromRGBO(75, 0, 126, 1),
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
