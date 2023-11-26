@@ -313,7 +313,7 @@ class _ChatCardState extends State<ChatCard> {
 
   void _getStatus() async {
     final prefs = await SharedPreferences.getInstance();
-
+    // prefs.clear();
     var status = prefs.getBool('status');
 
     setState(() => this.status = status ?? false);
