@@ -28,28 +28,41 @@ class HealthKPIBreath extends StatefulWidget {
 class _HealthKPIBreathState extends State<HealthKPIBreath> {
   final StreamController<Map<String, String>> _controller =
       StreamController<Map<String, String>>();
+  final StreamController<Map<String, String>> _controller2 =
+      StreamController<Map<String, String>>();
   late bool status;
   @override
   void initState() {
     super.initState();
     _getStatus();
     if (widget.quoteProfider.getQuoteList
-        .firstWhere((map) => map.containsKey('VO2MAX'), orElse: () => {})
-        .isEmpty) {
+            .firstWhere((map) => map.containsKey('VO2MAX'), orElse: () => {})
+            .isEmpty ||
+        widget.quoteProfider.gethealthQuoteList
+            .firstWhere((map) => map.containsKey("VO2MAX"), orElse: () => {})
+            .isEmpty) {
       // Start the timer when the widget is created
       Timer.periodic(const Duration(seconds: 1), (Timer timer) {
         // Update the state text every second
         Map<String, String> v02Data = widget.quoteProfider.getQuoteList
             .firstWhere((map) => map.containsKey('VO2MAX'), orElse: () => {});
+        Map<String, String> healthv02Data = widget
+            .quoteProfider.gethealthQuoteList
+            .firstWhere((map) => map.containsKey("VO2MAX"), orElse: () => {});
+        _controller2.add(healthv02Data);
         _controller.add(v02Data);
 
-        if (v02Data["VO2MAX"] != null) {
+        if (v02Data["VO2MAX"] != null && healthv02Data["VO2MAX"] != null) {
           timer.cancel();
         }
       });
     } else {
       Map<String, String> v02Data = widget.quoteProfider.getQuoteList
           .firstWhere((map) => map.containsKey('VO2MAX'), orElse: () => {});
+      Map<String, String> healthv02Data = widget
+          .quoteProfider.gethealthQuoteList
+          .firstWhere((map) => map.containsKey("VO2MAX"), orElse: () => {});
+      _controller2.add(healthv02Data);
       _controller.add(v02Data);
     }
   }
@@ -160,9 +173,22 @@ class _HealthKPIBreathState extends State<HealthKPIBreath> {
                             flex: 1,
                             child: Container(
                               margin: const EdgeInsets.symmetric(vertical: 8.0),
-                              child: const Text(
-                                'You have impressive endurance capacity.',
-                                style: TextStyle(color: Colors.white),
+                              child: StreamBuilder<Map<String, String>>(
+                                stream: _controller2.stream,
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    String stepText =
+                                        snapshot.data?["VO2MAX"] ?? "";
+                                    return Text(
+                                      stepText,
+                                      style:
+                                          const TextStyle(color: Colors.white),
+                                      textAlign: TextAlign.center,
+                                    );
+                                  } else {
+                                    return const Text("");
+                                  }
+                                },
                               ),
                             ),
                           ),

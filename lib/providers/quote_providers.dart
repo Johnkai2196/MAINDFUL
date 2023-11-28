@@ -6,7 +6,7 @@ class QuoteProvider extends ChangeNotifier {
   List<Map<String, String>> preQuote = [];
   List<Map<String, String>> get getQuoteList => preQuote;
   List<Map<String, String>> healthQuote = [];
-  List<Map<String, String>> get gethealthQuoteList => preQuote;
+  List<Map<String, String>> get gethealthQuoteList => healthQuote;
 
   Future<void> sendMessageAndGetAnswerKPI() async {
     Map<String, String> messageMap = {
@@ -39,12 +39,15 @@ class QuoteProvider extends ChangeNotifier {
 
   Future<void> sendMessageAndGetAnswerHealth(
       HealthDataProvider healthDataProvider) async {
-    print(healthDataProvider.heartRate);
     Map<String, String> messageMap = {
-      "Sleep": "Give me a 50 words long motivational text on sleep",
-      "Heart rate": "Give me a 50 words long motivational text on heart rate",
-      "VO2MAX": " Give me a 50 words long motivational text on VO2MAX",
-      "Steps": "Give me a 50 words long motivational text on daily steps"
+      "Sleep":
+          "This is my healt sleep data ${healthDataProvider.sleepData}. How did I sleep last night? Keep the answer under 7 words long and do not include statistics. Only if you cannot find data for last night tell the user that there is no data available from last night.",
+      "Heart rate":
+          "This is my healt heart rate data ${healthDataProvider.heartRate}. How would you evaluate my average heart rate of today? Keep the answer under 7 words long and do not include statistics. Only if you cannot find data for my heart rate, tell the user that there is no data available.",
+      "VO2MAX":
+          "This is my healt VO2AX data ${healthDataProvider.v02Max}. General guideline for VO2MAX:\nExcellent: >60\nGood: 51-60\nAverage: 41-50\nFair: 31-40\nPoor: <30\n\nHow would you evaluate my VO2MAX of today in comparison to general guideline of vo2max? Keep the answer under 7 words long and do not include statistics. Only if you cannot find data for todays VO2MAX tell the user that there is no data available.",
+      "Steps":
+          "This is my healt step data ${healthDataProvider.steps}. How would you assess my step count for today? Keep the answer under 7 words long and do not include statistics. Only if you cannot find data for todays steps tell the user that there is no data available.",
     };
 
     // Create a list of Future objects for each message
@@ -64,7 +67,7 @@ class QuoteProvider extends ChangeNotifier {
 
     // Add all the results to preQuote
     healthQuote.add(Map.from(messageMap));
-    print(healthQuote);
+
     notifyListeners();
   }
 }

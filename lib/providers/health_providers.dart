@@ -61,7 +61,8 @@ class HealthDataProvider extends ChangeNotifier {
       }
       for (var element in v02max) {
         var elementValueString = element.value.toJson();
-        v02MaxAvg += int.parse(elementValueString["numericValue"]);
+
+        v02MaxAvg += double.parse(elementValueString["numericValue"]).round();
       }
 
       if (v02max.isNotEmpty) {
