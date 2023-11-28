@@ -17,7 +17,11 @@
 
 ## UI
 
-<img src="https://github.com/Johnkai2196/innovation_project/assets/79135621/93df5581-5c4e-4ba7-9cf3-6c61a19d0d4c" width="300">
+<img src="https://github.com/Johnkai2196/innovation_project/assets/73104201/b2ac87e8-67c9-4c9d-a3b6-680938ba43be" alt="Main Chat" width="300">
+
+<img src="https://github.com/Johnkai2196/innovation_project/assets/73104201/168a5070-c088-4523-a8ba-82b3e841147c" alt="KPI Pages" width="300">
+
+<img src="https://github.com/Johnkai2196/innovation_project/assets/73104201/1f92b82d-1e37-4836-aa49-1dbb16145d71" alt="Chat Pages" width="300">
 
 ## Authors
 
