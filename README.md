@@ -5,11 +5,6 @@
 ## Project Description
 Maindful is a project carried out by group of Metropolia UAS students as a part of their studies. Maindful allows the user to interact with their health data stored in their smartphones health application through OpenAI's LLM.
 Maindful is supported only on iOS devices.
-## Built With
-
-* Flutter
-* Dart
-* OpenAI - API
   
 ## Features
 
