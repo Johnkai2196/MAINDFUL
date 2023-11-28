@@ -4,7 +4,7 @@
 
 ## Project Description
 Maindful is a project carried out by group of Metropolia UAS students as a part of their studies. Maindful allows the user to interact with their health data stored in their smartphones health application through OpenAI's LLM.
-
+Maindful is supported only on iOS devices.
 ## Built With
 
 * Flutter
@@ -31,6 +31,49 @@ Maindful is a project carried out by group of Metropolia UAS students as a part 
 ## Disclaimer
 MAINDFUL is provided for general informational purposes only and is not intended as a substitute for professional medical advice, diagnosis, or treatment. Large language models, such as those provided by OpenAI, are known to hallucinate and at times return false information. The use of MAINDFUL is at your own risk. Always consult a qualified healthcare provider for personalized advice regarding your health and well-being. Aggregated HealthKit data for the past 7 days will be uploaded to OpenAI.  Your data will be preserved for 30 days by OpenAI. Your data will not be used to train the AI models of OpenAI. Please refer to the OpenAI [privacy policy](https://openai.com/policies/privacy-policy) for more information.
 
+## Setup
+**FOR NON-MAC USERS**
+
+**Step 0.** You need to have flutter installed in your computer. Guide on how to install flutter in [here](https://docs.flutter.dev/get-started/install).
+
+**Step 1.** Clone this repository
+```bash
+git clone https://github.com/Johnkai2196/innovation_project
+```
+
+**Step 2.** Open the repository in your software development environment.
+
+**Step 3.** Create a .env file inside lib folder.
+
+**Step 4.** Inside the .env file write: TOKEN = [YOUR OPENAI API-KEY]. OpenAI's API keys can be generated from their website. 
+
+**Step 5. (NON-MAC USERS ONLY)** Run the following commands in your terminal and enjoy the application!: 
+```bash
+flutter pub get
+```
+```bash
+flutter run
+```
+**Step 5.1 (MAC USERS ONLY)** Run the following command in your terminal:
+```bash
+flutter pub get
+```
+**Step 5.2 (MAC USERS ONLY)** Open XCode and the ios folder of the repository in XCode.
+
+**Step 5.3 (MAC USERS ONLY)** Click the Runner.
+
+**Step 5.4 (MAC USERS ONLY)** Select Signing & Capabilities on the top-bar of the window.
+
+**Step 5.5 (MAC USERS ONLY)** For the following step, a Apple developer account is required. You can create one for free on Apple's website.
+
+**Step 5.6 (MAC USER ONLY)** Select Personal Team as your team from the dropdown-menu.
+
+**Step 5.7 (MAC USERS ONLY)** Add HealthKit through Capabilites.
+
+**Step 5.8 (MAC USERS ONLY)** Run the following command in your terminal and enjoy the application!: 
+```bash
+flutter run
+```
 
 ## Authors
 
