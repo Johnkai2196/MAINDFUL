@@ -28,29 +28,47 @@ class HealthKPIHeart extends StatefulWidget {
 class _HealthKPIHeartState extends State<HealthKPIHeart> {
   final StreamController<Map<String, String>> _controller =
       StreamController<Map<String, String>>();
+  final StreamController<Map<String, String>> _controller2 =
+      StreamController<Map<String, String>>();
+
   late bool status;
   @override
   void initState() {
     super.initState();
     _getStatus();
     if (widget.quoteProfider.getQuoteList
-        .firstWhere((map) => map.containsKey("Heart rate"), orElse: () => {})
-        .isEmpty) {
+            .firstWhere((map) => map.containsKey("Heart rate"),
+                orElse: () => {})
+            .isEmpty ||
+        widget.quoteProfider.gethealthQuoteList
+            .firstWhere((map) => map.containsKey("Heart rate"),
+                orElse: () => {})
+            .isEmpty) {
       // Start the timer when the widget is created
       Timer.periodic(const Duration(seconds: 1), (Timer timer) {
         // Update the state text every second
         Map<String, String> heartData = widget.quoteProfider.getQuoteList
             .firstWhere((map) => map.containsKey("Heart rate"),
                 orElse: () => {});
+        Map<String, String> healthHeartData = widget
+            .quoteProfider.gethealthQuoteList
+            .firstWhere((map) => map.containsKey("Heart rate"),
+                orElse: () => {});
+        _controller2.add(healthHeartData);
         _controller.add(heartData);
 
-        if (heartData["Heart rate"] != null) {
+        if (heartData["Heart rate"] != null &&
+            healthHeartData["Heart rate"] != null) {
           timer.cancel();
         }
       });
     } else {
       Map<String, String> heartData = widget.quoteProfider.getQuoteList
           .firstWhere((map) => map.containsKey("Heart rate"), orElse: () => {});
+      Map<String, String> healthHeartData = widget
+          .quoteProfider.gethealthQuoteList
+          .firstWhere((map) => map.containsKey("Heart rate"), orElse: () => {});
+      _controller2.add(healthHeartData);
       _controller.add(heartData);
     }
   }
@@ -161,9 +179,22 @@ class _HealthKPIHeartState extends State<HealthKPIHeart> {
                             flex: 1,
                             child: Container(
                               margin: const EdgeInsets.symmetric(vertical: 8.0),
-                              child: const Text(
-                                'Your heart is doing great!',
-                                style: TextStyle(color: Colors.white),
+                              child: StreamBuilder<Map<String, String>>(
+                                stream: _controller2.stream,
+                                builder: (context, snapshot) {
+                                  if (snapshot.hasData) {
+                                    String stepText =
+                                        snapshot.data?["Heart rate"] ?? "";
+                                    return Text(
+                                      stepText,
+                                      style:
+                                          const TextStyle(color: Colors.white),
+                                      textAlign: TextAlign.center,
+                                    );
+                                  } else {
+                                    return const Text("");
+                                  }
+                                },
                               ),
                             ),
                           ),
