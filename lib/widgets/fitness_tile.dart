@@ -1,11 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:innovation_project/constants/constants.dart';
 import 'package:innovation_project/pages/healthgpt_page.dart';
+import 'package:innovation_project/pages/healthkpi_sleep.dart';
+import 'package:innovation_project/pages/healthkpi_breath.dart';
+import 'package:innovation_project/pages/healthkpi_heart.dart';
+import 'package:innovation_project/pages/healthkpi_steps.dart';
+import 'package:innovation_project/pages/term_and_condition_page.dart';
+
 import 'package:innovation_project/providers/health_providers.dart';
+import 'package:innovation_project/providers/quote_providers.dart';
+
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SleepCard extends StatelessWidget {
-  final String title;
-  const SleepCard({super.key, required this.title});
+  final HealthDataProvider healthDataProvider;
+  final QuoteProvider quoteProvider;
+  const SleepCard(
+      {super.key,
+      required this.quoteProvider,
+      required this.healthDataProvider});
 
   @override
   Widget build(BuildContext context) {
@@ -13,17 +26,25 @@ class SleepCard extends StatelessWidget {
     double cardHeight = MediaQuery.of(context).size.width * 0.4;
     return GestureDetector(
       onTap: () {
-        print("Sleep card tapped");
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HealthKPISleep(
+                healthDataProvider: healthDataProvider,
+                quoteProfider: quoteProvider),
+            settings: const RouteSettings(name: '/sleep'),
+          ),
+        );
       },
       child: Center(
         child: Card(
-          elevation: 8,
+          elevation: 10,
           color: surfaceContainerHighest,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
             side: const BorderSide(
               color: Colors.black,
-              width: 2.0,
+              width: 2.5,
             ),
           ),
           child: SizedBox(
@@ -43,7 +64,9 @@ class SleepCard extends StatelessWidget {
                 const SizedBox(
                     height: 8), // Add spacing between the icon and text
                 Text(
-                  title,
+                  healthDataProvider.sleepData == ''
+                      ? 'No Data'
+                      : healthDataProvider.sleepData,
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 32,
@@ -60,8 +83,12 @@ class SleepCard extends StatelessWidget {
 }
 
 class HeartCard extends StatelessWidget {
-  final String beats;
-  const HeartCard({super.key, required this.beats});
+  final HealthDataProvider healthDataProvider;
+  final QuoteProvider quoteProvider;
+  const HeartCard(
+      {super.key,
+      required this.quoteProvider,
+      required this.healthDataProvider});
 
   @override
   Widget build(BuildContext context) {
@@ -69,17 +96,25 @@ class HeartCard extends StatelessWidget {
     double cardHeight = MediaQuery.of(context).size.width * 0.4;
     return GestureDetector(
       onTap: () {
-        print("Heart card tapped");
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HealthKPIHeart(
+                healthDataProvider: healthDataProvider,
+                quoteProfider: quoteProvider),
+            settings: const RouteSettings(name: '/heart'),
+          ),
+        );
       },
       child: Center(
         child: Card(
-          elevation: 8, // Adjust the elevation to control the shadow depth
+          elevation: 10, // Adjust the elevation to control the shadow depth
           color: surfaceContainerHighest,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
             side: const BorderSide(
               color: Colors.black, // Set the border color
-              width: 2.0, // Set the border width
+              width: 2.5, // Set the border width
             ),
           ),
           child: SizedBox(
@@ -99,8 +134,9 @@ class HeartCard extends StatelessWidget {
                 const SizedBox(
                     height: 8), // Add spacing between the icon and text
                 Text(
-                  // "",
-                  beats,
+                  healthDataProvider.heartRate == 0
+                      ? 'No Data'
+                      : '${healthDataProvider.heartRate} bpm',
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 32,
@@ -117,26 +153,40 @@ class HeartCard extends StatelessWidget {
 }
 
 class StepsCard extends StatelessWidget {
-  final String steps;
-  const StepsCard({super.key, required this.steps});
+  final HealthDataProvider healthDataProvider;
+  final QuoteProvider quoteProvider;
+
+  const StepsCard(
+      {super.key,
+      required this.healthDataProvider,
+      required this.quoteProvider});
 
   @override
   Widget build(BuildContext context) {
     double cardWidth = MediaQuery.of(context).size.width * 0.45;
     double cardHeight = MediaQuery.of(context).size.width * 0.4;
+
     return GestureDetector(
       onTap: () {
-        print("Steps card tapped");
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HealthKPISteps(
+                healthDataProvider: healthDataProvider,
+                quoteProfider: quoteProvider),
+            settings: const RouteSettings(name: '/step'),
+          ),
+        );
       },
       child: Center(
         child: Card(
-          elevation: 8, // Adjust the elevation to control the shadow depth
+          elevation: 10, // Adjust the elevation to control the shadow depth
           color: surfaceContainerHighest,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
             side: const BorderSide(
               color: Colors.black, // Set the border color
-              width: 2.0, // Set the border width
+              width: 2.5, // Set the border width
             ),
           ),
           child: SizedBox(
@@ -156,7 +206,7 @@ class StepsCard extends StatelessWidget {
                 const SizedBox(
                     height: 8), // Add spacing between the icon and text
                 Text(
-                  steps,
+                  '${healthDataProvider.steps}',
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 32,
@@ -173,8 +223,13 @@ class StepsCard extends StatelessWidget {
 }
 
 class BreathingCard extends StatelessWidget {
-  final String breath;
-  const BreathingCard({super.key, required this.breath});
+  final HealthDataProvider healthDataProvider;
+
+  final QuoteProvider quoteProvider;
+  const BreathingCard(
+      {super.key,
+      required this.quoteProvider,
+      required this.healthDataProvider});
 
   @override
   Widget build(BuildContext context) {
@@ -182,17 +237,26 @@ class BreathingCard extends StatelessWidget {
     double cardHeight = MediaQuery.of(context).size.width * 0.4;
     return GestureDetector(
       onTap: () {
-        print("Breathing card tapped");
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => HealthKPIBreath(
+              healthDataProvider: healthDataProvider,
+              quoteProfider: quoteProvider,
+            ),
+            settings: const RouteSettings(name: '/breath'),
+          ),
+        );
       },
       child: Center(
         child: Card(
-          elevation: 8, // Adjust the elevation to control the shadow depth
+          elevation: 10, // Adjust the elevation to control the shadow depth
           color: surfaceContainerHighest,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10.0),
             side: const BorderSide(
               color: Colors.black, // Set the border color
-              width: 2.0, // Set the border width
+              width: 2.5, // Set the border width
             ),
           ),
           child: SizedBox(
@@ -212,7 +276,9 @@ class BreathingCard extends StatelessWidget {
                 const SizedBox(
                     height: 8), // Add spacing between the icon and text
                 Text(
-                  breath,
+                  healthDataProvider.v02Max == 0
+                      ? 'No Data'
+                      : '${healthDataProvider.v02Max} VO₂max',
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 32,
@@ -228,23 +294,56 @@ class BreathingCard extends StatelessWidget {
   }
 }
 
-class ChatCard extends StatelessWidget {
+class ChatCard extends StatefulWidget {
   final HealthDataProvider healthDataProvider;
+
   const ChatCard({super.key, required this.healthDataProvider});
+
+  @override
+  State<ChatCard> createState() => _ChatCardState();
+}
+
+class _ChatCardState extends State<ChatCard> {
+  late bool status;
+  @override
+  void initState() {
+    super.initState();
+    _getStatus();
+  }
+
+  void _getStatus() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    var status = prefs.getBool('status');
+
+    setState(() => this.status = status ?? false);
+  }
 
   @override
   Widget build(BuildContext context) {
     double cardWidth = MediaQuery.of(context).size.width * 0.85;
     double cardHeight = MediaQuery.of(context).size.width * 0.2;
+    _getStatus();
+
     return GestureDetector(
       onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                HealthGpt(healthDataProvider: healthDataProvider),
-          ),
-        );
+        status
+            ? Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => HealthGpt(
+                    healthDataProvider: widget.healthDataProvider,
+                  ),
+                ),
+              )
+            : Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => TermsAndConditionsPage(
+                    healthDataProvider: widget.healthDataProvider,
+                  ),
+                ),
+              );
       },
       child: Center(
         child: Card(

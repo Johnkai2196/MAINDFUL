@@ -1,4 +1,4 @@
-// ignore_for_file: avoid_print
+import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:health/health.dart';
@@ -36,14 +36,14 @@ class HealthDataProvider extends ChangeNotifier {
       try {
         steps = await health.getTotalStepsInInterval(midnight, now);
       } catch (error) {
-        print("Caught exception in getTotalStepsInInterval: $error");
+        log("Caught exception in getTotalStepsInInterval: $error");
       }
       if (steps != null) {
         _steps = steps;
         notifyListeners();
       }
     } else {
-      print("Authorization not granted - error in authorization");
+      log("Authorization not granted - error in authorization");
     }
   }
 
@@ -57,11 +57,12 @@ class HealthDataProvider extends ChangeNotifier {
           HealthDataType.VO2MAX,
         ]);
       } catch (error) {
-        print("Caught exception in getting V02Max: $error");
+        log("Caught exception in getting V02Max: $error");
       }
       for (var element in v02max) {
         var elementValueString = element.value.toJson();
-        v02MaxAvg += int.parse(elementValueString["numericValue"]);
+
+        v02MaxAvg += double.parse(elementValueString["numericValue"]).round();
       }
 
       if (v02max.isNotEmpty) {
@@ -71,7 +72,7 @@ class HealthDataProvider extends ChangeNotifier {
         notifyListeners();
       }
     } else {
-      print("Authorization not granted - error in authorization");
+      log("Authorization not granted - error in authorization");
     }
   }
 
@@ -86,19 +87,16 @@ class HealthDataProvider extends ChangeNotifier {
           HealthDataType.HEART_RATE,
         ]);
       } catch (error) {
-        print("Caught exception in getting hearth rate: $error");
+        log("Caught exception in getting hearth rate: $error");
       }
       hearthRate.sort((a, b) => b.dateFrom.compareTo(a.dateFrom));
       if (hearthRate.isNotEmpty) {
-        print(
-            "Hearth rate: ${hearthRate.first.value.toJson()["numericValue"]}");
-
         _heartRate =
             num.parse(hearthRate.first.value.toJson()["numericValue"]).toInt();
         notifyListeners();
       }
     } else {
-      print("Authorization not granted - error in authorization");
+      log("Authorization not granted - error in authorization");
     }
   }
 
@@ -118,7 +116,7 @@ class HealthDataProvider extends ChangeNotifier {
               yesterday, now, [HealthDataType.SLEEP_IN_BED]);
         }
       } catch (error) {
-        print("Caught exception in getting Sleep: $error");
+        log("Caught exception in getting Sleep: $error");
       }
 
       if (sleep.isNotEmpty) {
@@ -162,14 +160,22 @@ class HealthDataProvider extends ChangeNotifier {
 
         int hours = totalMinutes ~/ 60;
         int minutes = totalMinutes % 60;
+
         String formattedMinutes =
             minutes < 10 ? '0$minutes' : minutes.toString();
-
-        _sleepData = "${hours}h ${formattedMinutes}min";
+        if (hours > 0 || minutes > 0) {
+          _sleepData = "${hours}h ${formattedMinutes}min";
+          notifyListeners();
+        } else {
+          _sleepData = "No Data";
+          notifyListeners();
+        }
+      } else {
+        _sleepData = "No Data";
         notifyListeners();
       }
     } else {
-      print("Authorization not granted - error in authorization");
+      log("Authorization not granted - error in authorization");
     }
   }
 
@@ -285,7 +291,7 @@ class HealthDataProvider extends ChangeNotifier {
 
       notifyListeners();
     } else {
-      print("Authorization not granted - error in authorization");
+      log("Authorization not granted - error in authorization");
     }
   }
 }
