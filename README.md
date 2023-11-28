@@ -21,5 +21,5 @@
 
 ## Authors
 
-[Johnkai Cortez](https://github.com/Johnkai2196 "Johnkai Cortez"), [Jenna Hakulinen](https://github.com/jennahakulinen "Jenna Hakulinen") and [Kata Sara-aho](https://github.com/kvtvs "Kata Sara-aho")
+[Johnkai Cortez](https://github.com/Johnkai2196 "Johnkai Cortez"), [Jenna Hakulinen](https://github.com/jennahakulinen "Jenna Hakulinen"), [Andreas Greenberg](https://github.com/AndyGreenie "Andreas Greenberg") and [Kata Sara-aho](https://github.com/kvtvs "Kata Sara-aho")
 
