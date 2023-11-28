@@ -38,4 +38,4 @@ MAINDFUL is provided for general informational purposes only and is not intended
 
 ## License
 
-This project is licensed under the MIT License. See [Licenses]() for more information.
+This project is licensed under the MIT License. See [Licenses](https://github.com/Johnkai2196/innovation_project/blob/main/LICENCE.txt) for more information.
