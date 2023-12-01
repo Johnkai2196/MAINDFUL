@@ -41,13 +41,13 @@ class QuoteProvider extends ChangeNotifier {
       HealthDataProvider healthDataProvider) async {
     Map<String, String> messageMap = {
       "Sleep":
-          "This is my healt sleep data ${healthDataProvider.sleepData}. How did I sleep last night? Keep the answer under 7 words long and do not include statistics. Only if you cannot find data for last night tell the user that there is no data available from last night.",
+          "This is my sleep data: ${healthDataProvider.sleepData}. How did I sleep last night? Keep the answer under 7 words long and do not include statistics. Only if you cannot find data for last night tell the user that there is no data available from last night.",
       "Heart rate":
-          "This is my healt heart rate data ${healthDataProvider.heartRate}. How would you evaluate my average heart rate of today? Keep the answer under 7 words long and do not include statistics. Only if you cannot find data for my heart rate, tell the user that there is no data available.",
+          "This is my healt heart rate data: ${healthDataProvider.heartRate}. How would you evaluate my average heart rate of today? Keep the answer under 7 words long and do not include statistics. Only if you cannot find data for my heart rate, tell the user that there is no data available.",
       "VO2MAX":
-          "This is my healt VO2AX data ${healthDataProvider.v02Max}. General guideline for VO2MAX:\nExcellent: >60\nGood: 51-60\nAverage: 41-50\nFair: 31-40\nPoor: <30\n\nHow would you evaluate my VO2MAX of today in comparison to general guideline of vo2max? Keep the answer under 7 words long and do not include statistics. Only if you cannot find data for todays VO2MAX tell the user that there is no data available.",
+          "This is my healt VO2AX data: ${healthDataProvider.v02Max}. General guideline for VO2MAX:\nExcellent: >60\nGood: 51-60\nAverage: 41-50\nFair: 31-40\nPoor: <30\n\nHow would you evaluate my VO2MAX of today in comparison to general guideline of vo2max? Keep the answer under 7 words long and do not include statistics. Only if you cannot find data for todays VO2MAX tell the user that there is no data available.",
       "Steps":
-          "This is my healt step data ${healthDataProvider.steps}. How would you assess my step count for today? Keep the answer under 7 words long and do not include statistics. Only if you cannot find data for todays steps tell the user that there is no data available.",
+          "This is my step data: ${healthDataProvider.steps}. How would you assess my step count for today? Keep the answer under 7 words long and do not include statistics. Only if you cannot find data for todays steps tell the user that there is no data available.",
     };
 
     // Create a list of Future objects for each message
