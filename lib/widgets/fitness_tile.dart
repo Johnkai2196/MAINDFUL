@@ -206,7 +206,9 @@ class StepsCard extends StatelessWidget {
                 const SizedBox(
                     height: 8), // Add spacing between the icon and text
                 Text(
-                  '${healthDataProvider.steps}',
+                  healthDataProvider.steps == 0
+                      ? 'No Data'
+                      : '${healthDataProvider.steps}',
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 32,
