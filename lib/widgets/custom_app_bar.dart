@@ -417,5 +417,4 @@ class _CustomAppBarState extends State<CustomAppBar> {
 Future<void> saveData() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.setBool('first', true);
-  print('saved');
 }
