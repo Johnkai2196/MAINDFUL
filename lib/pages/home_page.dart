@@ -46,7 +46,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
         NotificationApi(context).cancelAllNotifications();
         NotificationApi(context).scheduleNotification(
           title: 'MAINDFUL',
-          body: 'Hi, you have not checked your health in the last 24 hours.',
+          body: 'Remember to check your AI powered health-analysis for today!',
         );
         break;
       case AppLifecycleState.resumed:
