@@ -46,19 +46,19 @@ class NotificationApi {
   Future scheduleNotification(
       {int id = 0, String? title, String? body, String? payLoad}) async {
     // Add 24 hours to the current time
-    DateTime newDateTime = DateTime.now().add(const Duration(seconds: 10));
+    DateTime newDateTime = DateTime.now().add(const Duration(hours: 24));
+
+    // Convert the DateTime object to a TZDateTime object
+    tz.TZDateTime scheduledDate = tz.TZDateTime.from(newDateTime, tz.local);
 
     return notificationsPlugin.zonedSchedule(
-        id,
-        title,
-        body,
-        tz.TZDateTime.from(
-          newDateTime,
-          tz.local,
-        ),
-        await notificationDetails(),
+        id, title, body, scheduledDate, await notificationDetails(),
         androidAllowWhileIdle: true,
         uiLocalNotificationDateInterpretation:
             UILocalNotificationDateInterpretation.absoluteTime);
+  }
+
+  Future<void> cancelAllNotifications() async {
+    await notificationsPlugin.cancelAll();
   }
 }

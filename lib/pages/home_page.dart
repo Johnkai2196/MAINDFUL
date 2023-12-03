@@ -18,7 +18,7 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   HealthDataProvider healthDataProvider = HealthDataProvider();
   QuoteProvider quoteProvider = QuoteProvider();
 
@@ -27,12 +27,33 @@ class _HomePageState extends State<HomePage> {
     super.initState();
     tz.initializeTimeZones();
     NotificationApi(context).initNotification();
-    NotificationApi(context).scheduleNotification(
-      title: 'MAINDFUL',
-      body: 'Hi, you have not checked your health in the last 24 hours.',
-    );
 
     authorize();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    switch (state) {
+      case AppLifecycleState.inactive:
+        // The app is in an inactive state
+        NotificationApi(context).cancelAllNotifications();
+        NotificationApi(context).scheduleNotification(
+          title: 'MAINDFUL',
+          body: 'Hi, you have not checked your health in the last 24 hours.',
+        );
+        break;
+      default:
+        // Handle other app lifecycle states
+        break;
+    }
   }
 
   static final types = [
