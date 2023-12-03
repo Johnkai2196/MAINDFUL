@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 
 import 'package:innovation_project/providers/health_providers.dart';
 import 'package:innovation_project/providers/quote_providers.dart';
+import 'package:innovation_project/services/notification_api.dart';
 import 'package:innovation_project/widgets/custom_app_bar.dart';
 import 'package:innovation_project/widgets/fitness_tile.dart';
 import 'package:health/health.dart';
-
+import 'package:timezone/data/latest.dart' as tz;
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomePage extends StatefulWidget {
@@ -17,14 +18,43 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   HealthDataProvider healthDataProvider = HealthDataProvider();
   QuoteProvider quoteProvider = QuoteProvider();
 
   @override
   void initState() {
     super.initState();
+    tz.initializeTimeZones();
+    NotificationApi(context).initNotification();
+    NotificationApi(context).cancelAllNotifications();
     authorize();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    super.didChangeAppLifecycleState(state);
+    switch (state) {
+      case AppLifecycleState.inactive:
+        NotificationApi(context).cancelAllNotifications();
+        NotificationApi(context).scheduleNotification(
+          title: 'MAINDFUL',
+          body: 'Remember to check your AI powered health-analysis for today!',
+        );
+        break;
+      case AppLifecycleState.resumed:
+        NotificationApi(context).cancelAllNotifications();
+        break;
+      default:
+        break;
+    }
   }
 
   static final types = [
@@ -35,7 +65,7 @@ class _HomePageState extends State<HomePage> {
     HealthDataType.HEART_RATE,
   ];
 
-  final permssions = types.map((e) => HealthDataAccess.READ_WRITE).toList();
+  final permssions = types.map((e) => HealthDataAccess.READ).toList();
 
   HealthFactory health = HealthFactory(useHealthConnectIfAvailable: true);
 
