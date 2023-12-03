@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 
 import 'package:innovation_project/providers/health_providers.dart';
 import 'package:innovation_project/providers/quote_providers.dart';
+import 'package:innovation_project/services/notification_api.dart';
 import 'package:innovation_project/widgets/custom_app_bar.dart';
 import 'package:innovation_project/widgets/fitness_tile.dart';
 import 'package:health/health.dart';
-
+import 'package:timezone/data/latest.dart' as tz;
 import 'package:flutter_svg/flutter_svg.dart';
 
 class HomePage extends StatefulWidget {
@@ -24,6 +25,13 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    tz.initializeTimeZones();
+    NotificationApi(context).initNotification();
+    NotificationApi(context).scheduleNotification(
+      title: 'MAINDFUL',
+      body: 'Hi, you have not checked your health in the last 24 hours.',
+    );
+
     authorize();
   }
 
