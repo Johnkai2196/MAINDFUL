@@ -65,7 +65,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     HealthDataType.HEART_RATE,
   ];
 
-  final permssions = types.map((e) => HealthDataAccess.READ_WRITE).toList();
+  final permssions = types.map((e) => HealthDataAccess.READ).toList();
 
   HealthFactory health = HealthFactory(useHealthConnectIfAvailable: true);
 
