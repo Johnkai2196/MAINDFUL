@@ -27,7 +27,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     super.initState();
     tz.initializeTimeZones();
     NotificationApi(context).initNotification();
-
+    NotificationApi(context).cancelAllNotifications();
     authorize();
     WidgetsBinding.instance.addObserver(this);
   }
@@ -43,15 +43,16 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     super.didChangeAppLifecycleState(state);
     switch (state) {
       case AppLifecycleState.inactive:
-        // The app is in an inactive state
         NotificationApi(context).cancelAllNotifications();
         NotificationApi(context).scheduleNotification(
           title: 'MAINDFUL',
           body: 'Hi, you have not checked your health in the last 24 hours.',
         );
         break;
+      case AppLifecycleState.resumed:
+        NotificationApi(context).cancelAllNotifications();
+        break;
       default:
-        // Handle other app lifecycle states
         break;
     }
   }
