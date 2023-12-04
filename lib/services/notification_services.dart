@@ -43,7 +43,7 @@ class NotificationService {
 
   Future scheduleNotification(
       {int id = 0, String? title, String? body, String? payLoad}) async {
-    DateTime newDateTime = DateTime.now().add(const Duration(seconds: 24));
+    DateTime newDateTime = DateTime.now().add(const Duration(hours: 24));
     tz.TZDateTime scheduledDate = tz.TZDateTime.from(newDateTime, tz.local);
 
     return notificationsPlugin.zonedSchedule(
