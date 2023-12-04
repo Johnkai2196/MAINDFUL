@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:innovation_project/providers/health_providers.dart';
 import 'package:innovation_project/providers/quote_providers.dart';
-import 'package:innovation_project/services/notification_api.dart';
+import 'package:innovation_project/services/notification_services.dart';
 import 'package:innovation_project/widgets/custom_app_bar.dart';
 import 'package:innovation_project/widgets/fitness_tile.dart';
 import 'package:health/health.dart';
@@ -26,8 +26,8 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
   void initState() {
     super.initState();
     tz.initializeTimeZones();
-    NotificationApi(context).initNotification();
-    NotificationApi(context).cancelAllNotifications();
+    NotificationService(context).initNotification();
+    NotificationService(context).cancelAllNotifications();
     authorize();
     WidgetsBinding.instance.addObserver(this);
   }
@@ -43,14 +43,14 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
     super.didChangeAppLifecycleState(state);
     switch (state) {
       case AppLifecycleState.inactive:
-        NotificationApi(context).cancelAllNotifications();
-        NotificationApi(context).scheduleNotification(
+        NotificationService(context).cancelAllNotifications();
+        NotificationService(context).scheduleNotification(
           title: 'MAINDFUL',
           body: 'Remember to check your AI powered health-analysis for today!',
         );
         break;
       case AppLifecycleState.resumed:
-        NotificationApi(context).cancelAllNotifications();
+        NotificationService(context).cancelAllNotifications();
         break;
       default:
         break;
