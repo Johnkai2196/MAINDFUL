@@ -102,22 +102,13 @@ class TermsAndConditionsPage extends StatelessWidget {
                 children: [
                   TextButton(
                     onPressed: () {
-                      // Add functionality for the button
                       Navigator.pop(context);
                     },
-                    style: TextButton.styleFrom(
-                        // backgroundColor: textPurple,
-                        // shape: RoundedRectangleBorder(
-                        //   borderRadius: BorderRadius.circular(
-                        //       100.0), // Adjust the radius as needed
-                        // ),
-                        ),
                     child: const Text(
                       'Decline',
                       style: TextStyle(
                         color: Color.fromRGBO(223, 183, 255, 1),
                         fontSize: 14,
-                        // You can customize the text style if needed
                       ),
                     ),
                   ),
@@ -138,14 +129,12 @@ class TermsAndConditionsPage extends StatelessWidget {
                     style: TextButton.styleFrom(
                       backgroundColor: textPurple,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(
-                            100.0), // Adjust the radius as needed
+                        borderRadius: BorderRadius.circular(100.0),
                       ),
                     ),
                     child: const Text(
                       'Accept',
                       style: TextStyle(
-                        // You can customize the text style if needed
                         color: Color.fromRGBO(75, 0, 126, 1),
                         fontSize: 16,
                         fontWeight: FontWeight.bold,

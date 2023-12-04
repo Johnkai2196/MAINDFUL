@@ -26,8 +26,7 @@ class MyApp extends StatelessWidget {
           create: (_) => ChatProvider(),
         ),
         ChangeNotifierProvider(
-          create: (_) =>
-              HealthDataProvider(), // Add the HealthDataProvider here
+          create: (_) => HealthDataProvider(),
         ),
         ChangeNotifierProvider(
           create: (_) => QuoteProvider(),

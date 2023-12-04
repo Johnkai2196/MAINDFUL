@@ -133,8 +133,7 @@ class _HomePageState extends State<HomePage> with WidgetsBindingObserver {
               width: cardWidth,
               height: cardHeight,
               child: Column(
-                mainAxisSize:
-                    MainAxisSize.min, // Adjust according to your needs
+                mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   ChatCard(healthDataProvider: healthDataProvider),

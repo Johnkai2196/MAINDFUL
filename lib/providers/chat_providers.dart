@@ -20,8 +20,7 @@ class ChatProvider with ChangeNotifier {
 
   void addUserMessage({required String message}) {
     chatList.add(ChatModel(context: message, role: "user"));
-    messageHistory.add(
-        {"role": "user", "content": message}); // Add user message to history
+    messageHistory.add({"role": "user", "content": message});
     notifyListeners();
   }
 
@@ -90,10 +89,7 @@ class ChatProvider with ChangeNotifier {
 
     chatList.addAll(await ApiService.sendMessage(messages: messages));
 
-    messageHistory.add({
-      "role": "assistant",
-      "content": chatList.last.context
-    }); // Add assistant message to history
+    messageHistory.add({"role": "assistant", "content": chatList.last.context});
     notifyListeners();
   }
 }

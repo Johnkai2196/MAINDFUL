@@ -2,13 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
 import 'package:innovation_project/constants/constants.dart';
-// import 'package:innovation_project/constants/constants.dart';
 
 import 'package:innovation_project/providers/chat_providers.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-// Custom appbar to display the logo and the delete icon
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String withIcon;
   final Function()? onIconPressed;
@@ -160,7 +158,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                             style: TextStyle(color: textPurple),
                           ),
                           onPressed: () {
-                            Navigator.of(context).pop(); // Closes the dialog
+                            Navigator.of(context).pop();
                           },
                         ),
                         ElevatedButton(
@@ -181,9 +179,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
                             ),
                           ),
                           onPressed: () {
-                            // Place your deletion logic here
                             chatProvider.resetChat();
-                            Navigator.of(context).pop(); // Closes the dialog
+                            Navigator.of(context).pop();
                           },
                         ),
                       ],
@@ -273,14 +270,14 @@ class _CustomAppBarState extends State<CustomAppBar> {
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                _showPreviousDialog(context, 0); // Go to the previous dialog
+                _showPreviousDialog(context, 0);
               },
               child: const Text(''),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop('OK');
-                _showNextDialog(context, 2); // Start the sequence with Dialog 2
+                _showNextDialog(context, 2);
               },
               child: const Text(
                 'Next',
@@ -367,8 +364,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
                           icon: const Icon(Icons.close, color: Colors.white),
                           onPressed: () {
                             Navigator.of(context).pop();
-                            _showPreviousDialog(
-                                context, 0); // Go to the previous dialog
+                            _showPreviousDialog(context, 0);
                           },
                         )
                       : Container(),

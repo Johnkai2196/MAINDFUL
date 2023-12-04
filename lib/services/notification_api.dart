@@ -5,7 +5,7 @@ import 'package:timezone/timezone.dart' as tz;
 class NotificationApi {
   final FlutterLocalNotificationsPlugin notificationsPlugin =
       FlutterLocalNotificationsPlugin();
-  final BuildContext context; // Add this line to store the context
+  final BuildContext context;
 
   NotificationApi(this.context);
   Future<void> initNotification() async {
@@ -24,7 +24,6 @@ class NotificationApi {
     await notificationsPlugin.initialize(initializationSettings,
         onDidReceiveNotificationResponse:
             (NotificationResponse notificationResponse) async {
-      // Navigate to the homepage after showing the notification
       Navigator.pushReplacementNamed(context, '/');
     });
   }
@@ -44,10 +43,7 @@ class NotificationApi {
 
   Future scheduleNotification(
       {int id = 0, String? title, String? body, String? payLoad}) async {
-    // Add 24 hours to the current time
     DateTime newDateTime = DateTime.now().add(const Duration(hours: 24));
-
-    // Convert the DateTime object to a TZDateTime object
     tz.TZDateTime scheduledDate = tz.TZDateTime.from(newDateTime, tz.local);
 
     return notificationsPlugin.zonedSchedule(

@@ -27,7 +27,7 @@ class HealthDataProvider extends ChangeNotifier {
   String get sleepData => _sleepData;
 
   Map<String, Map<String, dynamic>> get weeklyHealthData => _weeklyHealthData;
-
+// steps
   Future fetchStepData(HealthFactory health) async {
     int? steps;
     bool requested = await health.requestAuthorization([HealthDataType.STEPS]);
@@ -47,6 +47,7 @@ class HealthDataProvider extends ChangeNotifier {
     }
   }
 
+// v02max
   Future fetchV02MaxData(HealthFactory health) async {
     List<HealthDataPoint> v02max = [];
     bool requested = await health.requestAuthorization([HealthDataType.VO2MAX]);
@@ -281,7 +282,7 @@ class HealthDataProvider extends ChangeNotifier {
             dataTypeData['avgValue'] = dataTypeData['avgValue'] / 7;
             break;
           default:
-            break; // Handle any other data types here if needed
+            break;
         }
         dataTypeData.remove('count');
       }

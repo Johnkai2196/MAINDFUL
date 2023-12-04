@@ -6,7 +6,6 @@ import 'package:innovation_project/pages/healthgpt_page.dart';
 import 'package:innovation_project/pages/term_and_condition_page.dart';
 import 'package:innovation_project/providers/health_providers.dart';
 import 'package:innovation_project/providers/quote_providers.dart';
-// import 'package:innovation_project/pages/healthgpt_page.dart';
 import 'package:innovation_project/widgets/custom_app_bar.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';

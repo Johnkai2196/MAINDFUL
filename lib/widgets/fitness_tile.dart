@@ -70,7 +70,6 @@ class SleepCard extends StatelessWidget {
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 32,
-                    // fontFamily: "ConcertOne",
                   ),
                 ),
               ],
@@ -140,7 +139,6 @@ class HeartCard extends StatelessWidget {
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 32,
-                    // fontFamily: "ConcertOne",
                   ),
                 ),
               ],
@@ -212,7 +210,6 @@ class StepsCard extends StatelessWidget {
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 32,
-                    // fontFamily: "ConcertOne",
                   ),
                 ),
               ],
@@ -284,7 +281,6 @@ class BreathingCard extends StatelessWidget {
                   style: const TextStyle(
                     color: Colors.white,
                     fontSize: 32,
-                    // fontFamily: "ConcertOne",
                   ),
                 ),
               ],
