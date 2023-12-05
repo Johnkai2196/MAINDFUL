@@ -10,6 +10,7 @@ Maindful is supported only on iOS devices.
 
 * Conversational user-interface for easy health-data interaction through natural language
 * Apple Health-data integration for strainghtforward data-usage. Currently the application supports Heart Rate, VO2MAX, Sleep and steps.
+* Walkthrough to guide the user in usage of the application
 * Pre-made prompts
 * Support for open questions regarding users health data. 
 * Short-analysis on KPI pages 
