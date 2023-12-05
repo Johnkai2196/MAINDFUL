@@ -14,14 +14,20 @@ Maindful is supported only on iOS devices.
 * Support for open questions regarding users health data. 
 * Short-analysis on KPI pages 
 * Simple and user-friendly UI
+* Reminder notification performed after 24 hours of not using the application
 
 ## UI
 
-<img src="https://github.com/Johnkai2196/innovation_project/assets/73104201/b2ac87e8-67c9-4c9d-a3b6-680938ba43be" alt="Main Chat" width="250">
+<p align="center">
+  <img src="https://github.com/Johnkai2196/innovation_project/assets/73104201/b2ac87e8-67c9-4c9d-a3b6-680938ba43be.png" alt="Main Chat" width="300">
+  <img src="https://github.com/Johnkai2196/innovation_project/assets/73104201/168a5070-c088-4523-a8ba-82b3e841147c.png" alt="KPI Pages" width="300">
+</p>
 
-<img src="https://github.com/Johnkai2196/innovation_project/assets/73104201/168a5070-c088-4523-a8ba-82b3e841147c" alt="KPI Pages" width="250">
 
-<img src="https://github.com/Johnkai2196/innovation_project/assets/73104201/1f92b82d-1e37-4836-aa49-1dbb16145d71" alt="Chat Pages" width="250">
+<p align="center">
+  <img src="https://github.com/Johnkai2196/innovation_project/assets/73104201/1f92b82d-1e37-4836-aa49-1dbb16145d71.png" alt="Chat Pages" width="300">
+  <img src="https://github.com/Johnkai2196/MAINDFUL/assets/73104201/6377b736-d13d-4582-9b66-9368dfaed3a3.png" alt="Notification" width="300">
+</p>
 
 ## Disclaimer
 MAINDFUL is provided for general informational purposes only and is not intended as a substitute for professional medical advice, diagnosis, or treatment. Large language models, such as those provided by OpenAI, are known to hallucinate and at times return false information. The use of MAINDFUL is at your own risk. Always consult a qualified healthcare provider for personalized advice regarding your health and well-being. Aggregated HealthKit data for the past 7 days will be uploaded to OpenAI.  Your data will be preserved for 30 days by OpenAI. Your data will not be used to train the AI models of OpenAI. Please refer to the OpenAI [privacy policy](https://openai.com/policies/privacy-policy) for more information.
